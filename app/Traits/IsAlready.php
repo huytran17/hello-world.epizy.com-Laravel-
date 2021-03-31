@@ -4,19 +4,23 @@ namespace App\Traits;
 
 trait IsAlready {
 
+    private $__email_verified_at = 'email_verified_at', 
+            $__email_subscribed_at = 'email_subscribed_at', 
+            $__deleted_at = 'deleted_at';
+
 	public function isDeleted()
 	{
-	    return self::isAlready('deleted_at');
+	    return self::isAlready($this->__deleted_at);
 	}
 
 	public function isVerified()
     {
-        return self::isAlready('email_verified_at');
+        return self::isAlready($this->__email_verified_at);
     }
 
     public function isSubscribed()
     {
-        return self::isAlready('email_subscribed_at');
+        return self::isAlready($this->__email_subscribed_at);
     }
 
 	public function isAlready($attribute)
