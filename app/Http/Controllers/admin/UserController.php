@@ -105,9 +105,9 @@ class UserController extends Controller
     public function perform(Request $rq)
     {
         $val = $rq->ex_opera;
-
     }
-    public function ClassName($PARAMETERS)
+
+    public function haha($PARAMETERS)
     {
         
     }
