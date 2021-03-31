@@ -6,7 +6,7 @@ trait UserRole {
 
 	public function getRole($user, $action)
 	{
-	    return $action === 0 ? $this->getRoleUpgrade($user) : $this->getRoleDowngrade($user);
+	    return $action === 1 ? $this->getRoleUpgrade($user) : $this->getRoleDowngrade($user);
 	}
 	public function getRoleUpgrade($user)
 	{
