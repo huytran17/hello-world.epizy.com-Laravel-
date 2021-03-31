@@ -4,6 +4,10 @@ namespace App\Traits;
 
 trait UserRole {
 
+	public function getRole($user, $action)
+	{
+	    return $action === 0 ? $this->getRoleUpgrade($user) : $this->getRoleDowngrade($user);
+	}
 	public function getRoleUpgrade($user)
 	{
 	    if ($user->isSuperAdmin()) return 0;
