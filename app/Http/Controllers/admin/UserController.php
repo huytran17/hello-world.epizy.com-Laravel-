@@ -109,6 +109,6 @@ class UserController extends Controller
 
     public function lock(Request $rq)
     {
-        return 0;
+        return 'false';
     }
 }
