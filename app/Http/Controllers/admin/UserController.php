@@ -95,9 +95,20 @@ class UserController extends Controller
         return $this->user->upgrade($uid);
     }
 
+    public function downgrade(Request $rq)
+    {
+        $uid = base64_decode($rq->uid);
+
+        return $this->user->upgrade($uid);
+    }
+
     public function perform(Request $rq)
     {
         $val = $rq->ex_opera;
+
+    }
+    public function ClassName($PARAMETERS)
+    {
         
     }
 }
