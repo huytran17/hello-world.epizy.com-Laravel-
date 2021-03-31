@@ -215,18 +215,19 @@ class User extends Authenticatable
     {
         $user = $this->getById($uid)->firstOrFail();
 
-        $role = $this->getRoleUpgrade($user);
-
-        $this->getById($uid)->updateUser([
-            'role' => $role
-        ]);
+        $this->updateRole($user);
     }
 
     public function downgrade($uid)
     {
         $user = $this->getById($uid)->firstOrFail();
 
-        $role = $this->getRoleDowngrade($user);
+        $this->updateRole($user);
+    }
+
+    public function updateRole($user)
+    {
+        $role = $this->getRoleUpgrade($user);
 
         $this->getById($uid)->updateUser([
             'role' => $role
@@ -242,5 +243,4 @@ class User extends Authenticatable
             dd($ex->getMessage());
         }
     }
-
 }
