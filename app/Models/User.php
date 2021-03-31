@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\TimestampFormat;
 use App\Traits\IsAlready;
+use App\Traits\UserRole;
 use Avatar;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes, TimestampFormat, IsAlready;
+    use HasFactory, Notifiable, SoftDeletes, TimestampFormat, IsAlready, UserRole;
 
     const SUPER_ADMIN_TYPE = 0, LOWER_ADMIN_TYPE = 1, CLIENT_TYPE = 2;
 
@@ -190,6 +191,11 @@ class User extends Authenticatable
         return $query->where('role', $role);
     }
 
+    public function scopeGetUserById($query, $id)
+    {
+        return $query->where('id', $id);
+    }
+
     public function getByRole($role)
     {
         return $this->getUserByRole($role);
@@ -198,6 +204,43 @@ class User extends Authenticatable
     public function getInMonth($month, $year)
     {
         return $this->getNewInMonth($month, $year)->withTrashed();
+    }
+
+    public function getById($uid)
+    {
+        return $this->getUserById($uid);
+    }
+
+    public function upgrade($uid)
+    {
+        $user = $this->getById($uid)->firstOrFail();
+
+        $role = $this->getRoleUpgrade($user);
+
+        $this->getById($uid)->updateUser([
+            'role' => $role
+        ]);
+    }
+
+    public function downgrade($uid)
+    {
+        $user = $this->getById($uid)->firstOrFail();
+
+        $role = $this->getRoleDowngrade($user);
+
+        $this->getById($uid)->updateUser([
+            'role' => $role
+        ]);
+    }
+
+    public function updateUser($data)
+    {
+        try {
+            $this->update($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
 }

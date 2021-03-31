@@ -11,7 +11,7 @@
         			4 => 'Khôi phục',
         			5 => 'Xóa vĩnh viễn'
         		], 0, ['class' => 'form-control'], [0]) !!}
-        		{!! Form::submit('Thực hiện', ['id' => 'ex_opera']) !!}
+        		{!! Form::button('Thực hiện', ['id' => 'ex_opera']) !!}
         	{!! Form::close() !!}
             @can('user.create')
                 {{ Html::link(route('admin.user.create'), 'Thêm', ['class' => 'btn btn-primary']) }}

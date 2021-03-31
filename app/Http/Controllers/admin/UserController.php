@@ -8,9 +8,11 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    protected $_user;
+
     public function __construct(User $user)
     {
-        $this->user = $user;
+        $this->_user = $user;
     }
     /**
      * Display a listing of the resource.
@@ -92,14 +94,14 @@ class UserController extends Controller
     {
         $uid = base64_decode($rq->uid);
 
-        return $this->user->upgrade($uid);
+        return $this->_user->upgrade($uid);
     }
 
     public function downgrade(Request $rq)
     {
         $uid = base64_decode($rq->uid);
 
-        return $this->user->upgrade($uid);
+        return $this->_user->downgrade($uid);
     }
 
     public function perform(Request $rq)
