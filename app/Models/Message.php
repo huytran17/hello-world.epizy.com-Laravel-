@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Traits\TimestampFormat;
+
+class Message extends Model
+{
+    use HasFactory, TimestampFormat;
+
+    protected $fillable = [
+    	'content', 'user_id'
+    ];
+
+    protected $appends = [
+    	'time_created'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User')->withTrashed();
+    }
+
+    public function isMine()
+    {
+        return $this->attributes['id'] === auth()->id();
+    }
+
+    public function scopeGetByUserRole($query, $role)
+    {
+        return $this->whereHas('user', function($query) use ($role) {
+            $query->where('role', $role);
+        })->with('user');
+    }
+
+    public function getTimeCreatedAttribute()
+    {
+        return $this->Hs_Created();
+    }
+
+    public function lowerMessages()
+    {
+        return $this->getByUserRole(1)->get();
+    }
+
+    public function superMessages()
+    {
+        return $this->getByUserRole(0)->get();
+    }
+}
