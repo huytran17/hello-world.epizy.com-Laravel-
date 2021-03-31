@@ -107,7 +107,7 @@ class UserController extends Controller
         $val = $rq->ex_opera;
     }
 
-    public function haha($PARAMETERS)
+    public function lock(Request $rq)
     {
         
     }
