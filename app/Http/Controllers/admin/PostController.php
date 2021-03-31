@@ -40,7 +40,14 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("admin.post.create");
+        // return view("admin.post.create");
+
+        $parent_cates = $this->_cate->getParentWith(['id', 'title'])->get();
+
+        return view('admin.post.create',[
+            // 'post'=>$post, 
+            'parent_cates' => $parent_cates,
+        ]);
     }
 
     /**

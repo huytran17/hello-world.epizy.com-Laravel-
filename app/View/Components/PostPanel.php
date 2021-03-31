@@ -15,7 +15,7 @@ class PostPanel extends Component
      */
     public function __construct(Post $post)
     {
-        $this->posts = $post->with(['user', 'category'])->withTrashed()->paginate(15);
+        $this->posts = $post->with(['user', 'category'])->withTrashed()->latest()->paginate(15);
     }
 
     /**
