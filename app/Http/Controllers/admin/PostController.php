@@ -33,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+        return view("admin.post.create");
     }
 
     /**
@@ -42,10 +42,8 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreatePostRequest $rq)
-    {        
-        return $this->_post->store($rq->all());
-    }
+
+    
 
     /**
      * Display the specified resource.
@@ -66,7 +64,7 @@ class PostController extends Controller
      */
     public function edit(Request $rq)
     {
-        $post = $this->_post->getById(base64_decode($id));
+        $post = $this->_post->getById(base64_decode($rq->id));
 
         $this->authorize('post.update',$post);
 
@@ -134,7 +132,7 @@ class PostController extends Controller
                 $this->restore($id);
                 break;
             case 3:
-                $this->forceDelete($id)
+                $this->forceDelete($id);
                 break;
             default:
                 // code...
