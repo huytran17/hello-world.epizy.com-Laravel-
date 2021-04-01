@@ -85,13 +85,43 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $rq)
     {
-        //
+        $uid = base64_decode($rq->uid);
+
+        return $this->_category->destroy($uid);
+    }
+
+    public function restore(Request $rq)
+    {
+        $uid = base64_decode($rq->uid);
+
+        return $this->_category->restore($uid);
+    }
+
+    public function forceDelete(Request $rq)
+    {
+        $uid = base64_decode($rq->uid);
+
+        return $this->_category->forceDelete($uid);
     }
 
     public function perform(Request $rq)
     {
-        
+        $val = $rq->operabox;
+
+        switch ($val) {
+            case 1:
+                $this->destroy();
+                break;
+            case 2:
+                $this->restore();
+                break;
+            case 3:
+                $this->forceDelete();
+                break;
+            default:
+                break;
+        }
     }
 }

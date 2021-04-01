@@ -214,19 +214,19 @@ class User extends Authenticatable
     //user role
     public function upgrade($uid)
     {
-        $this->updateRole($user, 1);
+        $this->updateRole($uid, 1);
     }
 
     public function downgrade($uid)
     {
-        $this->updateRole($user, 0);
+        $this->updateRole($uid, 0);
     }
 
-    public function updateRole($user, $action)
+    public function updateRole($uid, $action)
     {
-        $role = UserRoleService::getRole($user, $action);
-
         $user = $this->getById($uid)->firstOrFail();
+        
+        $role = UserRoleService::getRole($user, $action);
 
         $user->updateUser([
             'role' => $role
