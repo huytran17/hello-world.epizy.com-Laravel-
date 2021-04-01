@@ -76,4 +76,16 @@ class Category extends Model
     {
         return $this->getCategoryById($id);
     }
+
+    
+
+    public function updateCategory($data)
+    {
+        try {
+            $this->update($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
 }
