@@ -54,7 +54,11 @@ class UserController extends Controller
      */
     public function show(Request $rq)
     {
-        $this->authorize('user.view', auth()->user());
+        $user = $this->_user->getById(base64_decode($rq->id));
+
+        $this->authorize('user.view', $user);
+
+        return view('admin.user.show',['user'=>$user]);
     }
 
     /**
@@ -65,7 +69,11 @@ class UserController extends Controller
      */
     public function edit(Request $rq)
     {
-        //
+        $user = $this->_user->getById(base64_decode($rq->id));
+
+        $this->authorize('user.update', $user);
+
+        return view('admin.user.edit',['user'=>$user]);
     }
 
     /**
@@ -75,9 +83,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $rq)
     {
-        //
+        $user = $this->_user->getById(base64_decode($rq->id));
+
+        $this->authorize('user.update', $user);
+
+        return $user->updateUser($rq->all());
     }
 
     /**
@@ -86,9 +98,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $rq)
+    public function destroy($uid)
     {
-        $uid = base64_decode($rq->uid);
+        // $uid = base64_decode($rq->uid);
 
         $user = $this->_user->getById($uid);
 
@@ -97,9 +109,9 @@ class UserController extends Controller
         return $this->_user->destroyUser($user);
     }
 
-    public function restore(Request $rq)
+    public function restore($uid)
     {
-        $uid = base64_decode($rq->uid);
+        // $uid = base64_decode($rq->uid);
 
         $user = $this->_user->getById($uid);
 
@@ -108,9 +120,9 @@ class UserController extends Controller
         return $this->_user->restoreUser($user);
     }
 
-    public function forceDelete(Request $rq)
+    public function forceDelete($uid)
     {
-        $uid = base64_decode($rq->uid);
+        // $uid = base64_decode($rq->uid);
 
         $user = $this->_user->getById($uid);
 
@@ -119,16 +131,16 @@ class UserController extends Controller
         return $this->_user->forceDeleteUser($user);
     }
 
-    public function upgrade(Request $rq)
+    public function upgrade($uid)
     {
-        $uid = base64_decode($rq->uid);
+        // $uid = base64_decode($rq->uid);
 
         return $this->_user->upgrade($uid);
     }
 
-    public function downgrade(Request $rq)
+    public function downgrade($uid)
     {
-        $uid = base64_decode($rq->uid);
+        // $uid = base64_decode($rq->uid);
 
         return $this->_user->downgrade($uid);
     }
@@ -136,22 +148,22 @@ class UserController extends Controller
     public function perform(Request $rq)
     {
         $val = $rq->operabox;
-
+        $id = base64_decode($rq->id);
         switch ($val) {
             case 1:
-                $this->destroy();
+                $this->destroy($id);
                 break;
             case 2:
-                $this->upgrade();
+                $this->upgrade($id);
                 break;
             case 3:
-                $this->downgrade();
+                $this->downgrade($id);
                 break;
             case 4:
-                $this->restore();
+                $this->restore($id);
                 break;
             case 5:
-                $this->forceDelete();
+                $this->forceDelete($id);
                 break;
             default:
                 break;

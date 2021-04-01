@@ -90,4 +90,5 @@ class UserPolicy
     {
         return $user->isSuperAdmin();
     }
+
 }
