@@ -89,21 +89,21 @@ class CategoryController extends Controller
     {
         $id = base64_decode($rq->id);
 
-        return $this->_category->destroy($id);
+        return $this->_category->destroyCategory($id);
     }
 
     public function restore(Request $rq)
     {
         $id = base64_decode($rq->id);
 
-        return $this->_category->restore($id);
+        return $this->_category->restoreCategory($id);
     }
 
     public function forceDelete(Request $rq)
     {
         $id = base64_decode($rq->id);
 
-        return $this->_category->forceDelete($id);
+        return $this->_category->forceDeleteCategory($id);
     }
 
     public function perform(Request $rq)
