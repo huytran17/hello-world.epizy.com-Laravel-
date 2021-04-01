@@ -54,7 +54,9 @@ class CategoryController extends Controller
      */
     public function show(Request $rq)
     {
-        
+        $cate = $this->_category->getById(base64_decode($rq->id));
+
+        return view('admin.category.show', ['cate' => $cate]);
     }
 
     /**
