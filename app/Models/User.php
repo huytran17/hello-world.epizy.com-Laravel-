@@ -211,17 +211,17 @@ class User extends Authenticatable
         return $this->getUserById($uid);
     }
 
-    public function destroy($uid)
+    public static function destroyUser($uid)
     {
         return $this->getById($uid)->delete();
     }
 
-    public function restore($uid)
+    public function restoreUser($uid)
     {
         return $this->getById($uid)->restore();
     }
 
-    public function forceDelete($uid)
+    public function forceDeleteUser($uid)
     {
         return $this->getById($uid)->forceDelete();
     }
