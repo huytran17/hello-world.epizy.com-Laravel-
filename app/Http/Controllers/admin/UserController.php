@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\CreateUserRequest;
 
 class UserController extends Controller
 {
@@ -31,7 +32,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -40,9 +41,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $rq)
     {
-        //
+        return $this->_user->store($rq->all());
     }
 
     /**
@@ -89,21 +90,33 @@ class UserController extends Controller
     {
         $uid = base64_decode($rq->uid);
 
-        return $this->_user->destroyUser();
+        $user = $this->_user->getById($uid);
+
+        $this->authorize('user.delete', $user);
+
+        return $this->_user->destroyUser($user);
     }
 
     public function restore(Request $rq)
     {
         $uid = base64_decode($rq->uid);
 
-        return $this->_user->restoreUser();
+        $user = $this->_user->getById($uid);
+
+        $this->authorize('user.restore', $user);
+
+        return $this->_user->restoreUser($user);
     }
 
     public function forceDelete(Request $rq)
     {
         $uid = base64_decode($rq->uid);
 
-        return $this->_user->forceDeleteUser();
+        $user = $this->_user->getById($uid);
+
+        $this->authorize('user.forceDelete', $user);
+
+        return $this->_user->forceDeleteUser($user);
     }
 
     public function upgrade(Request $rq)

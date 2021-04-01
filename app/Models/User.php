@@ -163,19 +163,6 @@ class User extends Authenticatable
         return $this->role === 0 ? 'Super Admin' : ($this->role === 1 ? 'Vice Admin' : 'Client');
     }
 
-    public function createUser($data)
-    {
-        $user = $this;
-        try {
-            $user = $this->create($data);
-        }
-        catch (\Illuminate\Database\QueryException $ex) {
-            dd($ex->getMessage());
-        }
-
-        return $user;
-    }
-
     public function makeHash($value)
     {
         return Hash::make($value);
@@ -211,19 +198,19 @@ class User extends Authenticatable
         return $this->getUserById($uid);
     }
 
-    public static function destroyUser($uid)
+    public static function destroyUser($user)
     {
-        return $this->getById($uid)->delete();
+        return $user->delete();
     }
 
-    public function restoreUser($uid)
+    public function restoreUser($user)
     {
-        return $this->getById($uid)->restore();
+        return $user->restore();
     }
 
-    public function forceDeleteUser($uid)
+    public function forceDeleteUser($user)
     {
-        return $this->getById($uid)->forceDelete();
+        return $user->forceDelete();
     }
 
     //user role
@@ -256,6 +243,24 @@ class User extends Authenticatable
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());
         }
+    }
+
+    public function store($data)
+    {
+        return $this->createUser($data);
+    }
+    
+    public function createUser($data)
+    {
+        $user = $this;
+        try {
+            $user = $this->create($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+
+        return $user;
     }
 
 }
