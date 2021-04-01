@@ -4,9 +4,16 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Feedback;
 
 class FeedbackController extends Controller
 {
+    protected $_feed;
+
+    public function __construct(Feedback $feed)
+    {
+        $this->_feed = $feed;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.feedback-panel');
     }
 
     /**
@@ -24,7 +31,7 @@ class FeedbackController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -44,9 +51,9 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $rq)
     {
-        //
+        return view('admin.feedback.show');
     }
 
     /**
@@ -78,8 +85,17 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $rq)
     {
-        //
+        $feed = $this->_feed->getById(base64_decode($rq->id));
+
+        return $this->_feed->destroyFeedback($feed);
+    }
+
+    public function forceDelete(Request $rq)
+    {
+        $feed = $this->_feed->getById(base64_decode($rq->id));
+        
+        return $this->_feed->forceDeleteFeedback($feed);
     }
 }

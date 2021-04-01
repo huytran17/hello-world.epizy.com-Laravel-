@@ -40,4 +40,19 @@ class Comment extends Model
     {
         return json_decode($value);
     }
+
+    public function destroyComment($comment)
+    {
+        return $comment->delete();
+    }
+
+    public function forceDeleteComment($comment)
+    {
+        return $comment->forceDelete();
+    }
+
+    public function restoreComment($comment)
+    {
+        return $comment->restore();
+    }
 }

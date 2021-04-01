@@ -134,7 +134,7 @@ class PostController extends Controller
                 $this->restore($id);
                 break;
             case 3:
-                $this->forceDelete($id);
+                $this->forceDelete($id)
                 break;
             default:
                 // code...

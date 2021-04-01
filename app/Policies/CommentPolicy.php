@@ -10,10 +10,6 @@ class CommentPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user, $ability)
-    {
-        return $user->isAdministrator();
-    }
 
     /**
      * Determine whether the user can view any models.
@@ -58,7 +54,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
-        return $user->id === $comment->user->id;
+        
     }
 
     /**
@@ -70,7 +66,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment)
     {
-        return $user->id === $comment->user->id;
+        return $user->isAdministrator();
     }
 
     /**
@@ -82,7 +78,7 @@ class CommentPolicy
      */
     public function restore(User $user, Comment $comment)
     {
-        
+        return $user->isAdministrator();
     }
 
     /**
@@ -94,6 +90,6 @@ class CommentPolicy
      */
     public function forceDelete(User $user, Comment $comment)
     {
-        
+        return $user->isAdministrator();
     }
 }
