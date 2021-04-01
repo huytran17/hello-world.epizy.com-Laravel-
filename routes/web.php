@@ -174,6 +174,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		Route::get('create', [
 			'as' => 'admin.cate.create',
 			'uses' => 'CategoryController@create',
+			'middleware' => 'can:category.create'
+		]);
+
+		Route::post('store', [
+			'as' => 'admin.cate.store',
+			'uses' => 'CategoryController@store',
+			'middleware' => 'can:category.store'
 		]);
 
 		Route::post('perform', [

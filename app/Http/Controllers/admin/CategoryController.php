@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Http\Requests\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -31,7 +32,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return 0;
+        return view('admin.category.create');
     }
 
     /**
@@ -40,9 +41,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $rq)
     {
-        //
+        return $this->_category->store($rq->all());
     }
 
     /**
@@ -89,21 +90,33 @@ class CategoryController extends Controller
     {
         $id = base64_decode($rq->id);
 
-        return $this->_category->destroyCategory($id);
+        $cate = $this->_category->getById($id);
+
+        $this->authorize('category.delete', $cate);
+
+        return $this->_category->destroyCategory($cate);
     }
 
     public function restore(Request $rq)
     {
         $id = base64_decode($rq->id);
 
-        return $this->_category->restoreCategory($id);
+        $cate = $this->_category->getById($id);
+
+        $this->authorize('category.restore', $cate);
+
+        return $this->_category->restoreCategory($cate);
     }
 
     public function forceDelete(Request $rq)
     {
         $id = base64_decode($rq->id);
 
-        return $this->_category->forceDeleteCategory($id);
+        $cate = $this->_category->getById($id);
+
+        $this->authorize('category.forceDelete', $cate);
+
+        return $this->_category->forceDeleteCategory($cate);
     }
 
     public function perform(Request $rq)
