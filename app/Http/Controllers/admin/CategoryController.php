@@ -67,7 +67,11 @@ class CategoryController extends Controller
      */
     public function edit(Request $rq)
     {
-        //
+        $cate = $this->_category->getById(base64_decode($rq->id));
+
+        $this->authorize('category.update', $cate);
+
+        return view('admin.category.edit', ['cate' => $cate]);
     }
 
     /**
@@ -77,9 +81,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $rq)
     {
-        //
+        $cate = $this->_category->getById(base64_decode($rq->id));
+
+        $this->authorize('category.update', $cate);
+
+        return $cate->updateCategory($rq->all());
     }
 
     /**
@@ -88,10 +96,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $rq)
+    public function destroy($id)
     {
-        $id = base64_decode($rq->id);
-
         $cate = $this->_category->getById($id);
 
         $this->authorize('category.delete', $cate);
@@ -99,10 +105,8 @@ class CategoryController extends Controller
         return $this->_category->destroyCategory($cate);
     }
 
-    public function restore(Request $rq)
+    public function restore($id)
     {
-        $id = base64_decode($rq->id);
-
         $cate = $this->_category->getById($id);
 
         $this->authorize('category.restore', $cate);
@@ -110,10 +114,8 @@ class CategoryController extends Controller
         return $this->_category->restoreCategory($cate);
     }
 
-    public function forceDelete(Request $rq)
+    public function forceDelete($id)
     {
-        $id = base64_decode($rq->id);
-
         $cate = $this->_category->getById($id);
 
         $this->authorize('category.forceDelete', $cate);
@@ -125,15 +127,17 @@ class CategoryController extends Controller
     {
         $val = $rq->operabox;
 
+        $id = base64_decode($rq->id);
+
         switch ($val) {
             case 1:
-                $this->destroy();
+                $this->destroy($id);
                 break;
             case 2:
-                $this->restore();
+                $this->restore($id);
                 break;
             case 3:
-                $this->forceDelete();
+                $this->forceDelete($id);
                 break;
             default:
                 break;
