@@ -106,7 +106,27 @@ class UserController extends Controller
 
     public function perform(Request $rq)
     {
-        $val = $rq->ex_opera;
+        $val = $rq->operabox;
+
+        switch ($val) {
+            case 1:
+                $this->destroy();
+                break;
+            case 2:
+                $this->upgrade();
+                break;
+            case 3:
+                $this->downgrade();
+                break;
+            case 4:
+                $this->restore();
+                break;
+            case 5:
+                $this->forceDelete();
+                break;
+            default:
+                break;
+        }
     }
 
     public function lock(Request $rq)
