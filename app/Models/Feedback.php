@@ -21,4 +21,24 @@ class Feedback extends Model
     {
         return $this->belongsTo('App\Models\User')->withTrashed();
     }
+
+    public function scopeGetFeedbackById($query, $id)
+    {
+        return $query->where('id', $id)->withTrashed();
+    }
+
+    public function getById($id)
+    {
+        return $this->getFeedbackById($id);
+    }
+
+    public function destroyFeedback($feed)
+    {
+        return $feed->delete();
+    }
+
+    public function forceDeleteFeedback($feed)
+    {
+        return $feed->forceDelete();
+    }
 }

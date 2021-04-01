@@ -212,4 +212,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		]);
 	});
 
+	Route::group(['prefix' => 'comment'], function() {
+		Route::post('destroy', [
+			'as' => 'admin.comment.destroy',
+			'uses' => 'CommentController@destroy'
+		]);
+	});
+
 });
