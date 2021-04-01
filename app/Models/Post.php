@@ -92,4 +92,46 @@ class Post extends Model
         return $this->getPostById($id);
     }
 
+    public function destroyPost($post)
+    {
+        return $post->delete();
+    }
+
+    public function restorePost($post)
+    {
+        return $post->restore();
+    }
+
+    public function forceDeletePost($post)
+    {
+        return $post->forceDelete();
+    }
+
+    public function updatePost($post)
+    {
+        try {
+            $this->update($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
+
+    public function store($data)
+    {
+        return $this->createPost($data);
+    }
+    
+    public function createPost($data)
+    {
+        $post = $this;
+        try {
+            $post = $this->create($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+
+        return $post;
+    }
 }
