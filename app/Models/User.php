@@ -211,6 +211,7 @@ class User extends Authenticatable
         return $this->getUserById($uid);
     }
 
+    //user role
     public function upgrade($uid)
     {
         $this->updateRole($user, 1);
