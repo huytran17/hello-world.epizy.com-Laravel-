@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\TimestampFormat;
 use App\Traits\IsAlready;
-use App\Traits\UserRole;
+use App\Services\UserRoleService;
 use Avatar;
 
 class User extends Authenticatable
@@ -213,23 +213,21 @@ class User extends Authenticatable
 
     public function upgrade($uid)
     {
-        $user = $this->getById($uid)->firstOrFail();
-
         $this->updateRole($user, 1);
     }
 
     public function downgrade($uid)
     {
-        $user = $this->getById($uid)->firstOrFail();
-
         $this->updateRole($user, 0);
     }
 
     public function updateRole($user, $action)
     {
-        $role = $this->getRole($user, $action);
+        $role = UserRoleService::getRole($user, $action);
 
-        $this->getById($uid)->updateUser([
+        $user = $this->getById($uid)->firstOrFail();
+
+        $user->updateUser([
             'role' => $role
         ]);
     }
