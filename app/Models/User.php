@@ -211,6 +211,17 @@ class User extends Authenticatable
         return $this->getUserById($uid);
     }
 
+    public function destroy($uid)
+    {
+        
+    }
+
+    public function restore($uid)
+    {
+        $this->controllUser();
+    }
+
+
     //user role
     public function upgrade($uid)
     {
@@ -242,4 +253,5 @@ class User extends Authenticatable
             dd($ex->getMessage());
         }
     }
+
 }

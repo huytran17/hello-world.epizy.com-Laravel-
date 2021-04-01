@@ -92,6 +92,13 @@ class UserController extends Controller
         return $this->_user->desstroy();
     }
 
+    public function restore(Request $rq)
+    {
+        $uid = base64_decode();
+
+        return $this->_user->restore();
+    }
+
     public function upgrade(Request $rq)
     {
         $uid = base64_decode($rq->uid);
@@ -129,10 +136,5 @@ class UserController extends Controller
             default:
                 break;
         }
-    }
-
-    public function lock(Request $rq)
-    {
-        return 'false';
     }
 }
