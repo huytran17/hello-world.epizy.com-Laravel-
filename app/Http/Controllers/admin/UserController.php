@@ -87,21 +87,21 @@ class UserController extends Controller
      */
     public function destroy(Request $rq)
     {
-        $uid = base64_decode($rq->id);
+        $uid = base64_decode($rq->uid);
 
         return $this->_user->destroy();
     }
 
     public function restore(Request $rq)
     {
-        $uid = base64_decode($rq->id);
+        $uid = base64_decode($rq->uid);
 
         return $this->_user->restore();
     }
 
     public function forceDelete(Request $rq)
     {
-        $uid = base64_decode($rq->id);
+        $uid = base64_decode($rq->uid);
 
         return $this->_user->forceDelete();
     }
