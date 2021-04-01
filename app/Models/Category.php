@@ -77,19 +77,24 @@ class Category extends Model
         return $this->getCategoryById($id);
     }
 
-    public function destroyCategory($uid)
+    public function destroyCategory($cate)
     {
-        return $this->getById($uid)->delete();
+        return $cate->delete();
     }
 
-    public function restoreCategory($uid)
+    public function restoreCategory($cate)
     {
-        return $this->getById($uid)->restore();
+        return $cate->restore();
     }
 
-    public function forceDeleteCategory($uid)
+    public function forceDeleteCategory($cate)
     {
-        return $this->getById($uid)->forceDelete();
+        return $cate->forceDelete();
+    }
+
+    public function store($data)
+    {
+        return $this->createCategory($data);
     }
 
     public function updateCategory($data)
@@ -100,5 +105,17 @@ class Category extends Model
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());
         }
+    }
+
+    public function createCategory($data)
+    {
+        $category = $this;
+        try {
+            $category = $this->create($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+        return $category;
     }
 }
