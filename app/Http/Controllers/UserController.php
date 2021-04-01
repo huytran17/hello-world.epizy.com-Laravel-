@@ -8,11 +8,11 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    protected $user;
+    protected $_user;
 
     public function __construct(User $user)
     {
-        $this->user = $user;    
+        $this->_user = $user;    
     }
     /**
      * Display a listing of the resource.

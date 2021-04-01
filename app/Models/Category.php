@@ -77,7 +77,20 @@ class Category extends Model
         return $this->getCategoryById($id);
     }
 
-    
+    public function destroyCategory($uid)
+    {
+        return $this->getById($uid)->delete();
+    }
+
+    public function restoreCategory($uid)
+    {
+        return $this->getById($uid)->restore();
+    }
+
+    public function forceDeleteCategory($uid)
+    {
+        return $this->getById($uid)->forceDelete();
+    }
 
     public function updateCategory($data)
     {

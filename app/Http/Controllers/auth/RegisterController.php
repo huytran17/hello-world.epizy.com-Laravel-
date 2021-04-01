@@ -9,20 +9,20 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
-	protected $user;
+	protected $_user;
 
     public function __construct(User $user)
     {
-    	$this->user = $user;    
+    	$this->_user = $user;    
     }
 
     public function register(UserRegisterRequest $rq)
     {
-        $user = $this->user->createUser([
+        $user = $this->_user->createUser([
             'name' => $rq->name,
             'email' => $rq->email,
             'slug' => $rq->name,
-            'password' => $this->user->makeHash($rq->password),
+            'password' => $this->_user->makeHash($rq->password),
         ]);
 
         auth()->login($user);
