@@ -213,14 +213,18 @@ class User extends Authenticatable
 
     public function destroy($uid)
     {
-        
+        return $this->getById($uid)->delete();
     }
 
     public function restore($uid)
     {
-        $this->controllUser();
+        return $this->getById($uid)->restore();
     }
 
+    public function forceDelete($uid)
+    {
+        return $this->getById($uid)->forceDelete();
+    }
 
     //user role
     public function upgrade($uid)
