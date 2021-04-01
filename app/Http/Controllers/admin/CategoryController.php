@@ -87,23 +87,23 @@ class CategoryController extends Controller
      */
     public function destroy(Request $rq)
     {
-        $uid = base64_decode($rq->uid);
+        $id = base64_decode($rq->id);
 
-        return $this->_category->destroy($uid);
+        return $this->_category->destroy($id);
     }
 
     public function restore(Request $rq)
     {
-        $uid = base64_decode($rq->uid);
+        $id = base64_decode($rq->id);
 
-        return $this->_category->restore($uid);
+        return $this->_category->restore($id);
     }
 
     public function forceDelete(Request $rq)
     {
-        $uid = base64_decode($rq->uid);
+        $id = base64_decode($rq->id);
 
-        return $this->_category->forceDelete($uid);
+        return $this->_category->forceDelete($id);
     }
 
     public function perform(Request $rq)

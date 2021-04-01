@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         $uid = base64_decode();
 
-        return $this->_user->desstroy();
+        return $this->_user->destroy();
     }
 
     public function restore(Request $rq)
