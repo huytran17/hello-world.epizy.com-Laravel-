@@ -89,13 +89,26 @@ class FeedbackController extends Controller
     {
         $feed = $this->_feed->getById(base64_decode($rq->id));
 
+        $this->authorize('feedback.delete', $feed);
+
         return $this->_feed->destroyFeedback($feed);
     }
 
     public function forceDelete(Request $rq)
     {
         $feed = $this->_feed->getById(base64_decode($rq->id));
+
+        $this->authorize('feedback.forceDelete', $feed);
         
         return $this->_feed->forceDeleteFeedback($feed);
+    }
+
+    public function restore(Request $rq)
+    {
+        $feed = $this->_feed->getById(base64_decode($rq->id));
+
+        $this->authorize('feedback.restore', $feed);
+        
+        return $this->_feed->restoreFeedback($feed);
     }
 }

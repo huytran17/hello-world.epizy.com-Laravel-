@@ -41,4 +41,9 @@ class Feedback extends Model
     {
         return $feed->forceDelete();
     }
+
+    public function restoreFeedback($feed)
+    {
+        return $feed->restore();
+    }
 }
