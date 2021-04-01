@@ -87,49 +87,37 @@ class UserController extends Controller
      */
     public function destroy(Request $rq)
     {
-<<<<<<< HEAD
         $uid = base64_decode($rq->uid);
-=======
-        $id = base64_decode($rq->id);
->>>>>>> 1f10e3c973db46ff53c9235ced1fc8b96beba0ce
 
-        return $this->_user->destroy($id);
+        return $this->_user->destroyUser();
     }
 
     public function restore(Request $rq)
     {
-<<<<<<< HEAD
         $uid = base64_decode($rq->uid);
-=======
-        $id = base64_decode($rq->id);
->>>>>>> 1f10e3c973db46ff53c9235ced1fc8b96beba0ce
 
-        return $this->_user->restore($id);
+        return $this->_user->restoreUser();
     }
 
     public function forceDelete(Request $rq)
     {
-<<<<<<< HEAD
         $uid = base64_decode($rq->uid);
-=======
-        $id = base64_decode($rq->id);
->>>>>>> 1f10e3c973db46ff53c9235ced1fc8b96beba0ce
 
-        return $this->_user->forceDelete($id);
+        return $this->_user->forceDeleteUser();
     }
 
     public function upgrade(Request $rq)
     {
-        $id = base64_decode($rq->uid);
+        $uid = base64_decode($rq->uid);
 
-        return $this->_user->upgrade($id);
+        return $this->_user->upgrade($uid);
     }
 
     public function downgrade(Request $rq)
     {
-        $id = base64_decode($rq->id);
+        $uid = base64_decode($rq->uid);
 
-        return $this->_user->downgrade($id);
+        return $this->_user->downgrade($uid);
     }
 
     public function perform(Request $rq)
