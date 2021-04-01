@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\CreateUserRequest;
 
 class UserController extends Controller
 {
@@ -31,7 +32,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -40,9 +41,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $rq)
     {
-        //
+        return $this->_user->store($rq->all());
     }
 
     /**
@@ -87,37 +88,49 @@ class UserController extends Controller
      */
     public function destroy(Request $rq)
     {
-        $id = base64_decode($rq->id);
+        $uid = base64_decode($rq->uid);
 
-        return $this->_user->destroy($id);
+        $user = $this->_user->getById($uid);
+
+        $this->authorize('user.delete', $user);
+
+        return $this->_user->destroyUser($user);
     }
 
     public function restore(Request $rq)
     {
-        $id = base64_decode($rq->id);
+        $uid = base64_decode($rq->uid);
 
-        return $this->_user->restore($id);
+        $user = $this->_user->getById($uid);
+
+        $this->authorize('user.restore', $user);
+
+        return $this->_user->restoreUser($user);
     }
 
     public function forceDelete(Request $rq)
     {
-        $id = base64_decode($rq->id);
+        $uid = base64_decode($rq->uid);
 
-        return $this->_user->forceDelete($id);
+        $user = $this->_user->getById($uid);
+
+        $this->authorize('user.forceDelete', $user);
+
+        return $this->_user->forceDeleteUser($user);
     }
 
     public function upgrade(Request $rq)
     {
-        $id = base64_decode($rq->uid);
+        $uid = base64_decode($rq->uid);
 
-        return $this->_user->upgrade($id);
+        return $this->_user->upgrade($uid);
     }
 
     public function downgrade(Request $rq)
     {
-        $id = base64_decode($rq->id);
+        $uid = base64_decode($rq->uid);
 
-        return $this->_user->downgrade($id);
+        return $this->_user->downgrade($uid);
     }
 
     public function perform(Request $rq)
