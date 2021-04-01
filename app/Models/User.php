@@ -16,7 +16,7 @@ use Avatar;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes, TimestampFormat, IsAlready, UserRole;
+    use HasFactory, Notifiable, SoftDeletes, TimestampFormat, IsAlready;
 
     const SUPER_ADMIN_TYPE = 0, LOWER_ADMIN_TYPE = 1, CLIENT_TYPE = 2;
 
