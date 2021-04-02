@@ -41,7 +41,7 @@
                         <td>{{ $c->id }}</td>
                         <td>
                             @can('category.view', $c)
-                            <a href="{{ route('admin.cate.show', ['id' => $c->encrypted_id]) }}">{{ $c->title }}</a>
+                            <a href="{{ route('admin.cate.edit', ['id' => $c->encrypted_id]) }}">{{ $c->title }}</a>
                             @else
                             {{ $c->title }}
                             @endcan

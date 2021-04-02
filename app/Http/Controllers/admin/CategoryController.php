@@ -54,7 +54,7 @@ class CategoryController extends Controller
      */
     public function show(Request $rq)
     {
-        $cate = $this->_category->getById(base64_decode($rq->id));
+        $cate = $this->_category->getById(base64_decode($rq->id))->firstOrFail();
 
         return view('admin.category.show', ['cate' => $cate]);
     }
@@ -67,11 +67,13 @@ class CategoryController extends Controller
      */
     public function edit(Request $rq)
     {
-        $cate = $this->_category->getById(base64_decode($rq->id));
+        $cate = $this->_category->getById(base64_decode($rq->id))->firstOrFail();
 
         $this->authorize('category.update', $cate);
 
-        return view('admin.category.edit', ['cate' => $cate]);
+        $parents = $this->_category->getParentWith(['id', 'title'])->get();
+
+        return view('admin.category.edit', ['cate' => $cate, 'parents' => $parents]);
     }
 
     /**
@@ -83,7 +85,7 @@ class CategoryController extends Controller
      */
     public function update(Request $rq)
     {
-        $cate = $this->_category->getById(base64_decode($rq->id));
+        $cate = $this->_category->getById(base64_decode($rq->id))->firstOrFail();
 
         $this->authorize('category.update', $cate);
 
@@ -98,7 +100,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $cate = $this->_category->getById($id);
+        $cate = $this->_category->getById($id)->firstOrFail();
 
         $this->authorize('category.delete', $cate);
 
@@ -107,7 +109,7 @@ class CategoryController extends Controller
 
     public function restore($id)
     {
-        $cate = $this->_category->getById($id);
+        $cate = $this->_category->getById($id)->firstOrFail();
 
         $this->authorize('category.restore', $cate);
 
@@ -116,7 +118,7 @@ class CategoryController extends Controller
 
     public function forceDelete($id)
     {
-        $cate = $this->_category->getById($id);
+        $cate = $this->_category->getById($id)->firstOrFail();
 
         $this->authorize('category.forceDelete', $cate);
 
