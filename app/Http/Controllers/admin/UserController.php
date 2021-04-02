@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function show(Request $rq)
     {
-        $user = $this->_user->getById(base64_decode($rq->id));
+        $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
         $this->authorize('user.view', $user);
 
@@ -69,7 +69,7 @@ class UserController extends Controller
      */
     public function edit(Request $rq)
     {
-        $user = $this->_user->getById(base64_decode($rq->id));
+        $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
         $this->authorize('user.update', $user);
 
@@ -85,7 +85,7 @@ class UserController extends Controller
      */
     public function update(Request $rq)
     {
-        $user = $this->_user->getById(base64_decode($rq->id));
+        $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
         $this->authorize('user.update', $user);
 
@@ -102,7 +102,7 @@ class UserController extends Controller
     {
         // $uid = base64_decode($rq->uid);
 
-        $user = $this->_user->getById($uid);
+        $user = $this->_user->getById($uid)->firstOrFail();
 
         $this->authorize('user.delete', $user);
 
@@ -113,7 +113,7 @@ class UserController extends Controller
     {
         // $uid = base64_decode($rq->uid);
 
-        $user = $this->_user->getById($uid);
+        $user = $this->_user->getById($uid)->firstOrFail();
 
         $this->authorize('user.restore', $user);
 
@@ -124,7 +124,7 @@ class UserController extends Controller
     {
         // $uid = base64_decode($rq->uid);
 
-        $user = $this->_user->getById($uid);
+        $user = $this->_user->getById($uid)->firstOrFail();
 
         $this->authorize('user.forceDelete', $user);
 
