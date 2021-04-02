@@ -5,16 +5,19 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
-    protected $_post;
+    protected $_post, $_cate;
 
-    public function __construct(Post $post)
+    public function __construct(Post $post, Category $cate)
     {
         $this->_post = $post;
+
+        $this->_cate = $cate;
     }
     /**
      * Display a listing of the resource.
@@ -68,7 +71,12 @@ class PostController extends Controller
 
         $this->authorize('post.update',$post);
 
-        return view('admin.post.edit',['$post'=>$post]);
+        $parent_cates = $this->_cate->getParentWith(['id', 'title'])->get();
+
+        return view('admin.post.edit',[
+            'post'=>$post, 
+            'parent_cates' => $parent_cates,
+        ]);
     }
 
     /**

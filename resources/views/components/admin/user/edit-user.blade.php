@@ -8,11 +8,11 @@
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('name','Tên') !!}
-						{!! Form::text('name',null,['class'=>'form-control']) !!}
+						{!! Form::text('name',$user->name,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('email','Email') !!}
-						{!! Form::text('email',null,['class'=>'form-control','disabled'=>'disabled']) !!}
+						{!! Form::text('email',$user->email,['class'=>'form-control','disabled'=>'disabled']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('password','Mật khẩu') !!}

@@ -6,14 +6,17 @@ use Illuminate\View\Component;
 
 class EditPost extends Component
 {
+    public $post, $parentCates;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($post, $parentCates)
     {
-        //
+        $this->post = $post;
+
+        $this->parentCates = $parentCates;
     }
 
     /**

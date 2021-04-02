@@ -3,6 +3,6 @@
 		Thông tin bài viết
 	</x-slot>
 	<x-slot name="content">
-		<x-admin.post.edit-post></x-admin>
+		<x-admin.post.edit-post :post="$post" :parentCates="$parent_cates" />
 	</x-slot>
 </x-home>
