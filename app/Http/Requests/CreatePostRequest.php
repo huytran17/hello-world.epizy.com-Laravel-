@@ -34,7 +34,8 @@ class CreatePostRequest extends FormRequest
             'description' => 'string|max:255',
             'thumbnail_photo_path' => 'file|mimes:jpeg,png,webp,jpg|max:1024',
             'content' =>'required|string',
-            'meta_data' =>'required'
+            'keywords' =>'required',
+            'source' =>'required',
         ];
     }
     \

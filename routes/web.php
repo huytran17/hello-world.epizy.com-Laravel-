@@ -156,6 +156,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'uses' => 'UserController@create',
 		]);
 
+		Route::post('store', [
+			'as' => 'admin.user.store',
+			'uses' => 'UserController@store',
+			'middleware' => 'can:user.store'
+		]);
+
 		Route::post('perform', [
 			'as' => 'admin.user.perform',
 			'uses' => 'UserController@perform'
