@@ -175,6 +175,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'middleware' => 'can:category.view'
 		]);
 
+		Route::get('edit', [
+			'as' => 'admin.cate.edit',
+			'uses' => 'CategoryController@edit',
+		]);
+
 		Route::get('create', [
 			'as' => 'admin.cate.create',
 			'uses' => 'CategoryController@create',
@@ -185,6 +190,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'as' => 'admin.cate.store',
 			'uses' => 'CategoryController@store',
 			'middleware' => 'can:category.store'
+		]);
+
+		Route::post('update', [
+			'as' => 'admin.cate.update',
+			'uses' => 'CategoryController@update',
 		]);
 
 		Route::post('perform', [
