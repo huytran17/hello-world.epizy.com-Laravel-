@@ -18,4 +18,24 @@ class Website extends Model
     	'keywords',
     	'author'
     ];
+
+    public function scopeGetSiteFirst($query)
+    {
+        return $query->first();
+    }
+
+    public function getSite()
+    {
+        return $this->getSiteFirst();
+    }
+
+    public function updateSite($data)
+    {
+        try {
+            $this->update($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
 }

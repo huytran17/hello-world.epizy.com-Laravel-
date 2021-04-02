@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Website;
 use Illuminate\Http\Request;
+use App\Http\Requests\WebsiteUpdateRequest;
 
 class WebsiteController extends Controller
 {
+    protected $_site;
+
+    public function __construct(Website $site)
+    {
+        $this->_site = $site;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class WebsiteController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.setting-panel');
     }
 
     /**
@@ -57,7 +64,11 @@ class WebsiteController extends Controller
      */
     public function edit(Website $website)
     {
-        //
+        $site = $this->_site->getSite();
+
+        $this->authorize('website.update', $site);
+
+        return view('admin.site.edit', ['site' => $site]);
     }
 
     /**
@@ -67,9 +78,13 @@ class WebsiteController extends Controller
      * @param  \App\Models\Website  $website
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Website $website)
+    public function update(WebsiteUpdateRequest $rq)
     {
-        //
+        $site = $this->_site->getSite();
+
+        $this->authorize('website.update', $site);
+
+        return $this->_site->updateSite($rq->all());
     }
 
     /**

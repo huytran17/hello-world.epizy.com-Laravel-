@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\View;
 
-class StoreCategoryRequest extends FormRequest
+class WebsiteUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,14 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'title' => 'requied|string|max:255',
             'description' => 'required|string|max:255',
-            'thumbnail_photo_path' => 'file|mimes:jpeg,png,webp,jpg|max:1024'
+            'keywords' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'logo_photo_path' => 'file|mimes:jpeg,jpg,png,webp|max:1024',
+            'shortcut_photo_path' => 'file|mimes:jpeg,jpg,png,webp|max:1024',
+            'favicon_photo_path' => 'file|mimes:jpeg,jpg,png,webp|max:1024',
         ];
     }
 
@@ -41,7 +46,9 @@ class StoreCategoryRequest extends FormRequest
             'max' => 'Tối đa 255 kí tự',
             'file' => 'File không hợp lệ',
             'mimes' => 'Cho phép định dạng jpeg,png,webp,jpg',
-            'max.thumbnail_photo_path' => 'Kích thước tối đa 1MB'
+            'max.logo_photo_path' => 'Kích thước tối đa 1MB',
+            'max.shortcut_photo_path' => 'Kích thước tối đa 1MB',
+            'max.favicon_photo_path' => 'Kích thước tối đa 1MB'
         ];
     }
 
@@ -49,7 +56,7 @@ class StoreCategoryRequest extends FormRequest
     {
         throw new HttpResponseException(response()->axios([
                 'error' => true,
-                'toast_notice' => View::make('admin.toast', ['content' => $validator->errors()->first()])->render(),
+                'toast_notice' => View::make('client.toast', ['content' => $validator->errors()->first()])->render(),
             ])
         );
     }
