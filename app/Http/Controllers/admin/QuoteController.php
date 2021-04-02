@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Quote;
+use App\Http\Requests\CreateQuoteRequest;
+use App\Http\Requests\UpdateQuoteRequest;
 
 class QuoteController extends Controller
 {
@@ -31,7 +33,7 @@ class QuoteController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.quote.create');
     }
 
     /**
@@ -40,9 +42,9 @@ class QuoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateQuoteRequest $rq)
     {
-        //
+        return $this->_quote->store($rq->all());
     }
 
     /**
@@ -67,6 +69,8 @@ class QuoteController extends Controller
         $quote = $this->_quote->getById(base64_decode($rq->id))->firstOrFail();
 
         $this->authorize('quote.update', $quote);
+
+        return view('admin.quote.edit',['quote'=>$quote]);
     }
 
     /**
@@ -76,9 +80,13 @@ class QuoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateQuoteRequest $rq)
     {
-        //
+        $quote = $this->_quote->getById(base64_decode($rq->id))->firstOrFail();
+
+        $this->authorize('quote.update', $quote);
+
+        return $this->updateQuote($rq->all());
     }
 
     /**
@@ -89,11 +97,27 @@ class QuoteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $quote = $this->_quote->getById($id);
+
+        $this->authorize('quote.edit', $quote);
+
+        return $this->_quote->destroyQuote();
     }
 
     public function perform(Request $rq)
     {
-        
+      $val = $rq->operabox;
+      $id = base64_decode($rq->id);
+      
+
+      switch ($val) {
+          case 1:
+              $this->destroy($id);
+              break;
+          
+          default:
+              // code...
+              break;
+      }
     }
 }

@@ -58,4 +58,10 @@ class Quote extends Model
     {
         return $this->belongsTo('App\Models\User')->withTrashed();
     }
+
+
+    public function destroyQuote($quote)
+    {
+        return $quote->forceDelete();
+    }
 }
