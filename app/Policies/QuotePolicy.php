@@ -66,7 +66,7 @@ class QuotePolicy
      */
     public function delete(User $user, Quote $quote)
     {
-        //
+        return $user->isAdministrator();
     }
 
     /**
@@ -90,6 +90,34 @@ class QuotePolicy
      */
     public function forceDelete(User $user, Quote $quote)
     {
-        //
+        return $user->isAdministrator();
+    }
+
+     public function store($data)
+    {
+        return $this->createQuote($data);
+    }
+    
+    public function updateQuote($post)
+    {
+        try {
+            $this->update($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
+
+    public function createQuote($data)
+    {
+        $quote = $this;
+        try {
+            $user = $this->create($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+
+        return $quote;
     }
 }
