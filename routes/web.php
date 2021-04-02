@@ -93,14 +93,18 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 	Route::group(['prefix' => 'site'], function() {
 		Route::get('setting', [
 			'as' => 'admin.site.setting',
-			'uses' => 'HomeController@setting',
+			'uses' => 'WebsiteController@setting',
 			'middleware' => 'can:website.viewAny'
+		]);
+
+		Route::get('edit', [
+			'as' => 'admin.site.edit',
+			'uses' => 'WebsiteController@edit',
 		]);
 		
 		Route::post('update', [
 			'as' => 'admin.site.',
-			'uses' => 'HomeController@update',
-			'middleware' => 'can:website.viewAny'
+			'uses' => 'WebsiteController@update',
 		]);
 	});
 
