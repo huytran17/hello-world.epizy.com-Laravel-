@@ -8,23 +8,23 @@
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('name','Tên') !!}
-						{!! Form::text('name',null,['class'=>'form-control']) !!}
+						{!! Form::text('name',$site->name,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('title','Tiêu đề trang') !!}
-						{!! Form::text('title',null,['class'=>'form-control']) !!}
+						{!! Form::text('title',$site->title,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('description','Mô tả trang') !!}
-						{!! Form::textarea('description',null,['class'=>'form-control']) !!}
+						{!! Form::textarea('description',$site->description,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('keywords','Từ khoá') !!}
-						{!! Form::text('keywords',null,['class'=>'form-control']) !!}
+						{!! Form::text('keywords',$site->keywords,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('author','Admin') !!}
-						{!! Form::text('author',null,['class'=>'form-control']) !!}
+						{!! Form::text('author',$site->author,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 	                    {!! Form::label('logo_photo_path','Logo') !!}
