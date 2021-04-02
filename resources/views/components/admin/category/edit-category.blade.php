@@ -31,7 +31,9 @@
 	    				<select name="parent_id" id="parent_id">
 	    					<option value="" disabled="disabled" selected="selected">{{ __('---Tùy chọn---') }}</option>
 	    					@foreach($parents as $p) 
-	    						<option value="{{ $p->id }}">{{ $p->title }}</option>
+	    						@if($p->id !== $cate->id)
+	    							<option value="{{ $p->id }}">{{ $p->title }}</option>
+	    						@endif
 	    					@endforeach
 	    				</select>
 	    			</div>
