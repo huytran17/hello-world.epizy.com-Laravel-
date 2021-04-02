@@ -146,9 +146,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'middleware' => 'can:user.viewAny'
 		]);
 
-		Route::get('show', [
-			'as' => 'admin.user.show',
-			'uses' => 'UserController@show',
+		Route::get('edit', [
+			'as' => 'admin.user.edit',
+			'uses' => 'UserController@edit',
 		]);
 
 		Route::get('create', [
