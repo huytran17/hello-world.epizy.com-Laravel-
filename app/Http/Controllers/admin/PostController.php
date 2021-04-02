@@ -64,7 +64,7 @@ class PostController extends Controller
      */
     public function edit(Request $rq)
     {
-        $post = $this->_post->getById(base64_decode($rq->id));
+        $post = $this->_post->getById(base64_decode($rq->id))->firstOrFail();
 
         $this->authorize('post.update',$post);
 
@@ -95,7 +95,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = $this->_post->getById(base64_decode($id));
+        $post = $this->_post->getById(base64_decode($id))->firstOrFail();
 
         $this->authorize('post.delete', $post);
 
@@ -104,7 +104,7 @@ class PostController extends Controller
     
     public function restore($id)
     {
-        $post = $this->_post->getById(base64_decode($id));
+        $post = $this->_post->getById(base64_decode($id))->firstOrFail();
 
         $this->authorize('post.restore', $post);
 
@@ -113,7 +113,7 @@ class PostController extends Controller
 
     public function forceDelete($id)
     {
-        $post = $this->_post->getById(base64_decode($id));
+        $post = $this->_post->getById(base64_decode($id))->firstOrFail();
 
         $this->authorize('post.forceDelete', $post);
 

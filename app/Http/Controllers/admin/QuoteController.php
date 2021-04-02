@@ -97,7 +97,7 @@ class QuoteController extends Controller
      */
     public function destroy($id)
     {
-        $quote = $this->_quote->getById($id);
+        $quote = $this->_quote->getById($id)->firstOrFail();
 
         $this->authorize('quote.edit', $quote);
 
