@@ -62,7 +62,7 @@ class WebsiteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $rq)
     {
         $site = $this->_site->getSite();
 

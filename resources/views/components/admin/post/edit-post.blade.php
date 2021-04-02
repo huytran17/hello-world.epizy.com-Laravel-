@@ -8,27 +8,31 @@
             <div class="form-row">
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('title','Tiêu đề bài viết') !!}
-                    {!! Form::text('title',null,['class'=>'form-control']) !!}
+                    {!! Form::text('title',$post->title,['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('description','Mô tả') !!}
-                    {!! Form::text('description',null,['class'=>'form-control']) !!}
+                    {!! Form::textarea('description',$post->description,['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('thumbnail_photo_path','Thumbnail') !!}
-                    {!! Form::text('thumbnail_photo_path',null,['class'=>'form-control']) !!}
+                    <div class="current_img">
+                        <div class="thumbnail">
+                            <img src="{{$post->thumbnail_photo_path}}" alt="{{$post->slug}}">
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('content','Nội dung') !!}
-                    {!! Form::text('content',null,['class'=>'form-control']) !!}
+                    {!! Form::textarea('content',$post->content,['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('keywords','') !!}
-                    {!! Form::text('keywords',null,['class'=>'form-control']) !!}
+                    {!! Form::text('keywords',$post->meta_data->keywords,['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('source','') !!}
-                    {!! Form::text('source',null,['class'=>'form-control']) !!}
+                    {!! Form::text('source',$post->meta_data->source,['class'=>'form-control']) !!}
                 </div>
             </div>
             <div class="form-group col-12 col-md-6">

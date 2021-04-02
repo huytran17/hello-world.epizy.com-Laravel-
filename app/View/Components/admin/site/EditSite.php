@@ -1,22 +1,20 @@
 <?php
 
-namespace App\View\Components\admin\quote;
+namespace App\View\Components\admin\site;
 
 use Illuminate\View\Component;
 
-class EditQuote extends Component
+class EditSite extends Component
 {
-
-
-    public $quote;
+    public $site;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($quote)
+    public function __construct($site)
     {
-        $this->quote = $quote;
+        $this->site = $site;
     }
 
     /**
@@ -26,6 +24,6 @@ class EditQuote extends Component
      */
     public function render()
     {
-        return view('components.admin.quote.edit-quote');
+        return view('components.admin.site.edit-site');
     }
 }

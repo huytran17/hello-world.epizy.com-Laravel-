@@ -3,6 +3,6 @@
 		Chỉnh sửa châm ngôn
 	</x-slot>
 	<x-slot name="content">
-		<x-admin.quote.edit-quote></x-admin>
+		<x-admin.quote.edit-quote :quote="$quote" />
 	</x-slot>
 </x-home>

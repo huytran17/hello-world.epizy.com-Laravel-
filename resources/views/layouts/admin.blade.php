@@ -74,7 +74,7 @@
                     </li>
                     @can('website.viewAny', auth()->user())
                         <li class="item">
-                            <a href="{{ route('admin.site.setting') }}" class="nav-link">Cài đặt</a>
+                            <a href="{{ route('admin.site.edit') }}" class="nav-link">Cài đặt</a>
                         </li>
                     @endcan
                     <li class="item">

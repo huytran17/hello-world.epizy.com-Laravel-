@@ -64,4 +64,32 @@ class Quote extends Model
     {
         return $quote->forceDelete();
     }
+
+    public function updateQuote($post)
+    {
+        try {
+            $this->update($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
+
+    public function store($data)
+    {
+        return $this->createQuote($data);
+    }
+    
+    public function createQuote($data)
+    {
+        $quote = $this;
+        try {
+            $quote = $this->create($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+
+        return $quote;
+    }
 }

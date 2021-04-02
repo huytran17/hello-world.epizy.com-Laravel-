@@ -8,11 +8,11 @@
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('content','Nội dung châm ngôn') !!}
-						{!! Form::text('content',null,['class'=>'form-control']) !!}
+						{!! Form::text('content',$quote->content,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('author','Tác giả') !!}
-						{!! Form::text('author',null,['class'=>'form-control']) !!}
+						{!! Form::text('author',$quote->author,['class'=>'form-control']) !!}
 					</div>
 				</div>
 			{!!Form::close()!!}
