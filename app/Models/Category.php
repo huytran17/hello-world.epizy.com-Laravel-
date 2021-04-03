@@ -43,6 +43,11 @@ class Category extends Model
         return $this->belongsTo('App\Models\Category', 'parent_id')->withTrashed();
     }
 
+    public function children()
+    {
+        return $this->hasMany('App\Models\Category', 'parent_id')->withTrashed();
+    }
+
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = Str::slug($value);

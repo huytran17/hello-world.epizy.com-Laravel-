@@ -49,8 +49,8 @@
                         <td>{{ $c->description }}</td>
                         <td>
                             @if (empty($c->parent))
-                                <x-badge class="success">
-                                    {{ __('Mục cha') }}
+                                <x-badge class="light">
+                                    <a href="{{ route('admin.cate.show', ['id' => $c->encrypted_id]) }}">{{ __('Mục cha') }}</a>
                                 </x-badge>
                             @else <a href="{{ route('admin.cate.show', ['id' => $c->encrypted_id]) }}">{{ $c->parent->title }}</a>
                             @endif

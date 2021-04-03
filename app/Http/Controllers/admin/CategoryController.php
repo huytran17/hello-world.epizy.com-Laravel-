@@ -54,7 +54,7 @@ class CategoryController extends Controller
      */
     public function show(Request $rq)
     {
-        $cate = $this->_category->getById(base64_decode($rq->id))->firstOrFail();
+        $cate = $this->_category->getById(base64_decode($rq->id))->with(['children', 'posts'])->firstOrFail();
 
         return view('admin.category.show', ['cate' => $cate]);
     }
