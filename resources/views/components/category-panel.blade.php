@@ -36,7 +36,7 @@
                     @foreach($categories as $c)
                     <tr>
                     	<td>
-                    		<input type="checkbox" name="checkbox" id="{{ $c->id }}">
+                    		<input type="checkbox" name="checkbox" value="{{ $c->id }}">
                     	</td>
                         <td>{{ $c->id }}</td>
                         <td>

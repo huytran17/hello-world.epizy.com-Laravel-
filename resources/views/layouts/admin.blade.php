@@ -98,6 +98,8 @@
     <script type="text/javascript" src="{{ asset('js/admin/Chart.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin/Chart.min.js') }}"></script>
     <script src="{{ asset('js/admin/app.js') }}" charset="utf-8" defer></script>
+    <script src="{{ asset('js/admin/category.js') }}" charset="utf-8" defer></script>
+    <script src="{{ asset('js/admin/user.js') }}" charset="utf-8" defer></script>
     @yield('script')
 </body>
 </html>

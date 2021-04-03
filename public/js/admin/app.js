@@ -4,3 +4,13 @@ function toggle(source) {
         checkboxes[i].checked = source.checked;
     }
 }
+
+function getCheckboxChecked() {
+	var checkboxs = [];
+
+	$("input:checkbox[name=type]:checked").each(function(){
+	    checkboxs.push($(this).val());
+	});
+
+	return checkboxs;
+}
