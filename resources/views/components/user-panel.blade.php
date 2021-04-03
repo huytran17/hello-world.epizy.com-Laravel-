@@ -3,15 +3,15 @@
         <h4 class="w-100 text-center">{{ __('Thành viên') }}</h4>
         <div class="opera-box mr-auto w-100 row p-0 m-0">
         	{!! Form::open(['method' => 'post', 'route' => ['admin.user.perform']]) !!}
-        		{!! Form::selectRequired('operabox', [
+        		{!! Form::selectRequired('user_box', [
         			0 => '---Chọn một---',
         			1 => 'Khóa',
         			2 => 'Nâng cấp',
         			3 => 'Hạ cấp',
         			4 => 'Khôi phục',
         			5 => 'Xóa vĩnh viễn'
-        		], 0, ['class' => 'form-control','id'=>'operabox'], [0]) !!}
-        		{!! Form::button('Thực hiện', ['id' => 'ex_opera']) !!}
+        		], 0, ['class' => 'form-control','id'=>'user_box'], [0]) !!}
+        		{!! Form::button('Thực hiện', ['id' => 'ex_userbox']) !!}
         	{!! Form::close() !!}
             @can('user.create')
                 {{ Html::link(route('admin.user.create'), 'Thêm', ['class' => 'btn btn-primary']) }}

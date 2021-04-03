@@ -1,7 +1,12 @@
 class User{
+
+	constructor(){
+		this.checkboxes = [];
+	}
 	async destroy(){
 
-
+		this.checkboxes = app.getCheckboxChecked();
+		console.log(this.checkboxes);
 	};
 	
 	async restore(){
@@ -17,11 +22,11 @@ class User{
 
 var user = new User;
 
-$('#ex_opera').click(function(){
-	console.log('bắt đầu tìm kiếm');
+$('#ex_userbox').click(function(){
+	console.log('bắt đầu');
 
-	let type = $('#operabox').val();
-	console.log(type);
+	let type = parseInt($('#user_box').val());
+	
 
 	switch(type){
 		case 1:
@@ -40,6 +45,7 @@ $('#ex_opera').click(function(){
 			user.forceDelete();
 			break;
 		default:
+			console.log("hihi");
 			break;
 	}
 });
