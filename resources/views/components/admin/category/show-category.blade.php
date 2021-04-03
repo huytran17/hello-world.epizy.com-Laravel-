@@ -4,9 +4,8 @@
             <li class="item cate-item">
                 <a href="{{ route('admin.cate.edit', ['id' => $cate->encrypted_id]) }}">{{ $cate->title }}</a>
             </li>
-            @if (!empty($cate->children))
             @foreach ($cate->children as $c)
-            	<li class="item cate-item">
+	            <li class="item cate-item">
 	                <ul class="list cate-children">
 	                    <li class="item cate-item">
 	                        <a href="{{ route('admin.cate.edit', ['id' => $c->encrypted_id]) }}">{{ $c->title }}</a>
@@ -23,6 +22,14 @@
 	                </ul>
 	            </li>
             @endforeach
+            @if (!empty($cate->posts))
+	            <ul class="list list-post">
+	                @foreach ($cate->posts as $p)
+	                <li>
+	                    <a href="{{ route('admin.post.edit', ['id' => $p->encrypted_id]) }}">{{ $p->title }}</a>
+	                </li>
+	                @endforeach
+	            </ul>
             @endif
         </ul>
     </div>
