@@ -2,48 +2,35 @@ class Category {
 
 	constructor() {
 		this.checkboxes = [];
-		this.route = null;
+		this.route = $('.opera-box form').attr('action');
+		this.type = 0;
 	}
 
-	async destroy() {
+	set selectType(type) {
+		this.type = type;
+	}
+
+	get selectType() {
+		return this.type;
+	}
+
+	async perform() {
 		this.checkboxes = app.getCheckboxChecked();
 
-		this.route = $('.opera-box form').attr('action');
-
 		var res = await axios.post(this.route, {
-			id: this.checkboxes,
+			id_arr: this.checkboxes,
+			type: this.type
 		});
 
-		if (res.data.error==false) {
-			location.reload();
-		}
-		else console.log('loi')
-
-	}
-	async restore() {
-
-	}
-	async forceDelete() {
-
+		if (res.data.error==false) location.reload();
+		else console.log('error')
 	}
 }
 
 var category = new Category;
 
 $('#ex_catebox').click(function() {
-	let type = parseInt($('#catebox').val());
-	
-	switch (type) {
-		case 1:
-			category.destroy();
-			break;
-		case 2:
-			category.restore();
-			break;
-		case 3:
-			category.forceDelete();
-			break;
-		default:
-			break;
-	}
+	category.selectType = parseInt($('#catebox').val());
+
+	category.perform();
 });

@@ -100,38 +100,44 @@ class CategoryController extends Controller
      */
     public function destroy(Request $rq)
     {
-        return $this->_category->destroyCategory($rq->id);
+        $this->_category->destroyCategory($rq->id_arr);
+
+        return response()->json([
+            'error' => false,
+        ]);
     }
 
-    public function restore($id)
+    public function restore(Request $rq)
     {
-        $cate = $this->_category->getById($id)->firstOrFail();
+        $this->_category->restoreCategory($rq->id_arr);
 
-        return $this->_category->restoreCategory($cate);
+        return response()->json([
+            'error' => false,
+        ]);
     }
 
-    public function forceDelete($id)
+    public function forceDelete(Request $rq)
     {
-        $cate = $this->_category->getById($id)->firstOrFail();
+        $this->_category->forceDeleteCategory($rq->id_arr);
 
-        return $this->_category->forceDeleteCategory($cate);
+        return response()->json([
+            'error' => false,
+        ]);
     }
 
     public function perform(Request $rq)
     {
-        $val = $rq->operabox;
+        $type = $rq->type;
 
-        $id = base64_decode($rq->id);
-
-        switch ($val) {
+        switch ($type) {
             case 1:
-                $this->destroy($id);
+                return $this->destroy($rq);
                 break;
             case 2:
-                $this->restore($id);
+                return $this->restore($rq);
                 break;
             case 3:
-                $this->forceDelete($id);
+                return $this->forceDelete($rq);
                 break;
             default:
                 break;

@@ -8,13 +8,13 @@ function toggle(source) {
 class App {
 
     getCheckboxChecked() {
-        var checkboxs = [];
+        var checkboxes = [];
 
         $("input[type=checkbox]:checked").each(function() {
-            checkboxs.push($(this).val());
+            checkboxes.push($(this).val());
         });
 
-        return checkboxs;
+        return checkboxes;
     }
 }
 

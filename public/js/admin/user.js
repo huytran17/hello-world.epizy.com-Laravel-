@@ -2,17 +2,16 @@ class User{
 
 	constructor(){
 		this.checkboxes = [];
-		this.route = null;
+		this.route = $('.opera-box form').attr('action');
+		this.type = 0;
 	}
 	async destroy(){
 
 		this.checkboxes = app.getCheckboxChecked();
-		console.log(this.checkboxes);
-
-		this.route = $('.opera-box form').attr('action');
 
 		var res  = await axios.post(this.route, {
-			id: this.checkboxes,
+			id_arr: this.checkboxes,
+			type: this.type
 		});
 
 		if (res.data.error == false) {
@@ -37,7 +36,6 @@ $('#ex_userbox').click(function(){
 	console.log('bắt đầu');
 
 	let type = parseInt($('#user_box').val());
-	
 
 	switch(type){
 		case 1:

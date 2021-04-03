@@ -92,10 +92,7 @@ class Category extends Model
     {
         try {
             DB::transaction(function() use ($id_arr) {
-                $this->whereIn($id_arr)->get()->delete();
-                return response()->axios([
-                    'error' => false
-                ]);
+                $this->whereIn('id', $id_arr)->delete();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
@@ -103,11 +100,11 @@ class Category extends Model
         }
     }
 
-    public function restoreCategory($id)
+    public function restoreCategory($id_arr)
     {
         try {
-            DB::transaction(function() use ($id) {
-                return $this->getById($id)->restore();
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->restore();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
@@ -115,11 +112,11 @@ class Category extends Model
         }
     }
 
-    public function forceDeleteCategory($id)
+    public function forceDeleteCategory($id_arr)
     {
         try {
-            DB::transaction(function() use ($id) {
-                return $this->getById($id)->forceDelete();
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->forceDelete();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
