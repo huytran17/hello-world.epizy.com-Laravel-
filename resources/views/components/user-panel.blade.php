@@ -10,7 +10,7 @@
         			3 => 'Hạ cấp',
         			4 => 'Khôi phục',
         			5 => 'Xóa vĩnh viễn'
-        		], 0, ['class' => 'form-control'], [0]) !!}
+        		], 0, ['class' => 'form-control','id'=>'operabox'], [0]) !!}
         		{!! Form::button('Thực hiện', ['id' => 'ex_opera']) !!}
         	{!! Form::close() !!}
             @can('user.create')
