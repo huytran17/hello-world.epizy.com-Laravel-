@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Website;
 use Illuminate\Http\Request;
-use App\Http\Requests\WebsiteUpdateRequest;
 
 class WebsiteController extends Controller
 {
@@ -68,7 +67,7 @@ class WebsiteController extends Controller
      * @param  \App\Models\Website  $website
      * @return \Illuminate\Http\Response
      */
-    public function update(WebsiteUpdateRequest $rq)
+    public function update(Request $rq)
     {
         
     }

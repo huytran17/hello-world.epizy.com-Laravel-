@@ -4,9 +4,16 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Message;
 
 class MessageController extends Controller
 {
+    protected $_message;
+
+    public function __construct(Message $message)
+    {
+        $this->_message = $message;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        return view('admin.conversation');
+        return view('admin.conversation-panel');
     }
 
     /**
@@ -78,8 +85,12 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $rq)
     {
-        //
+        $message = $this->_message->getById(base64_decode($rq->id))->firstOrFail();
+
+        $this->authorize('message.delete', $message);
+
+        return $this->_message->destroyMessage($message);
     }
 }

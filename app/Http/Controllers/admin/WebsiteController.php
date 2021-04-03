@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Models\Website;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\WebsiteUpdateRequest;
 
 class WebsiteController extends Controller
 {
@@ -78,7 +79,7 @@ class WebsiteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(WebsiteUpdateRequest $request, $id)
     {
         $site = $this->_site->getSite();
 

@@ -37,6 +37,11 @@ class Message extends Model
         })->with('user');
     }
 
+    public function scopeGetMessageById($query, $id)
+    {
+        return $query->where('id', $id);
+    }
+
     public function getTimeCreatedAttribute()
     {
         return $this->Hs_Created();
@@ -51,4 +56,18 @@ class Message extends Model
     {
         return $this->getByUserRole(0)->get();
     }
-}
+
+    public function getById($id)
+    {
+        return $this->getMessageById($id);
+    }
+
+    public function destroyMessage($message)
+    {
+        try {
+            $message->delete($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
