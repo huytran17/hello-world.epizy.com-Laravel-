@@ -8,8 +8,8 @@
         			1 => 'Khóa',
         			2 => 'Khôi phục',
         			3 => 'Xóa vĩnh viễn'
-        		], 0, ['class' => 'form-control'], [0]) !!}
-        		{!! Form::submit('Thực hiện', ['id' => 'ex_opera']) !!}
+        		], 0, ['class' => 'form-control', 'id' => 'operabox'], [0]) !!}
+        		{!! Form::button('Thực hiện', ['id' => 'ex_opera']) !!}
         	{!! Form::close() !!}
             @can('category.create')
                 {{ Html::link(route('admin.cate.create'), 'Thêm', ['class' => 'btn btn-primary']) }}

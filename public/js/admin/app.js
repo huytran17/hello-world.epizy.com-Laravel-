@@ -5,12 +5,17 @@ function toggle(source) {
     }
 }
 
-function getCheckboxChecked() {
-	var checkboxs = [];
+class App {
 
-	$("input:checkbox[name=type]:checked").each(function(){
-	    checkboxs.push($(this).val());
-	});
+    getCheckboxChecked() {
+        var checkboxs = [];
 
-	return checkboxs;
+        $("input:checkbox[name=type]:checked").each(function() {
+            checkboxs.push($(this).val());
+        });
+
+        return checkboxs;
+    }
 }
+
+var app = new App;
