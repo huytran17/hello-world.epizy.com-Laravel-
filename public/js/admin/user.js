@@ -2,11 +2,22 @@ class User{
 
 	constructor(){
 		this.checkboxes = [];
+		this.route = null;
 	}
 	async destroy(){
 
 		this.checkboxes = app.getCheckboxChecked();
 		console.log(this.checkboxes);
+
+		this.route = $('.opera-box form').attr('action');
+
+		var res  = await axios.post(this.route, {
+			id: this.checkboxes,
+		});
+
+		if (res.data.error == false) {
+			location.relaod();
+		} else console.log("loi");
 	};
 	
 	async restore(){

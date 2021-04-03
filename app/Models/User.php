@@ -198,11 +198,14 @@ class User extends Authenticatable
         return $this->getUserById($uid);
     }
 
-    public static function destroyUser($user)
+    public static function destroyUser($id_arr)
     {
         try {
-            DB::transaction(function() use ($user) {
-                return $user->delete();
+            DB::transaction(function() use ($id_arr) {
+              $this->whereIn($id_arr)->get()->delete();
+              return respone()->axios([
+                    'error' => false
+                ]);
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
