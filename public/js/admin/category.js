@@ -31,6 +31,5 @@ var category = new Category;
 
 $('#ex_catebox').click(function() {
 	category.selectType = parseInt($('#catebox').val());
-
 	category.perform();
 });
