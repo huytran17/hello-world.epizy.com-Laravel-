@@ -88,11 +88,14 @@ class Category extends Model
         return $this->getCategoryById($id);
     }
 
-    public function destroyCategory($id)
+    public function destroyCategory($id_arr)
     {
         try {
-            DB::transaction(function() use ($id) {
-                return $this->getById($id)->delete();
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn($id_arr)->get()->delete();
+                return response()->axios([
+                    'error' => false
+                ]);
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {

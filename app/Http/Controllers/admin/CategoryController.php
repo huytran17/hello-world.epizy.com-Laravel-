@@ -98,20 +98,14 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $rq)
     {
-        $cate = $this->_category->getById($id)->firstOrFail();
-
-        $this->authorize('category.delete', $cate);
-
-        return $this->_category->destroyCategory($cate);
+        return $this->_category->destroyCategory($rq->id);
     }
 
     public function restore($id)
     {
         $cate = $this->_category->getById($id)->firstOrFail();
-
-        $this->authorize('category.restore', $cate);
 
         return $this->_category->restoreCategory($cate);
     }
@@ -119,8 +113,6 @@ class CategoryController extends Controller
     public function forceDelete($id)
     {
         $cate = $this->_category->getById($id)->firstOrFail();
-
-        $this->authorize('category.forceDelete', $cate);
 
         return $this->_category->forceDeleteCategory($cate);
     }

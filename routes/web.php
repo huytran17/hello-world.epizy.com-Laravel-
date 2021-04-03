@@ -159,7 +159,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 
 		Route::post('perform', [
 			'as' => 'admin.user.perform',
-			'uses' => 'UserController@perform'
+			'uses' => 'UserController@perform',
+			'middleware' => 'can:user.superAdmin'
 		]);
 	});
 
@@ -200,7 +201,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 
 		Route::post('perform', [
 			'as' => 'admin.cate.perform',
-			'uses' => 'CategoryController@perform'
+			'uses' => 'CategoryController@perform',
+			'middleware' => 'can:category.superAdmin'
 		]);
 	});
 

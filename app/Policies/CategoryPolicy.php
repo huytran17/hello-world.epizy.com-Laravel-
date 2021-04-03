@@ -91,4 +91,9 @@ class CategoryPolicy
     {
         return $user->isSuperAdmin();
     }
+
+    public function superAdmin(User $user)
+    {
+        return $user->isSuperAdmin();
+    }
 }
