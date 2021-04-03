@@ -94,17 +94,38 @@ class Post extends Model
 
     public function destroyPost($post)
     {
-        return $post->delete();
+        try {
+            DB::transaction(function() use ($post) {
+                return $post->delete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function restorePost($post)
     {
-        return $post->restore();
+        try {
+            DB::transaction(function() use ($post) {
+                return $post->restore();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function forceDeletePost($post)
     {
-        return $post->forceDelete();
+        try {
+            DB::transaction(function() use ($post) {
+                return $post->forceDelete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function updatePost($post)

@@ -65,7 +65,9 @@ class Message extends Model
     public function destroyMessage($message)
     {
         try {
-            $message->delete($data);
+            DB::transaction(function() use ($message) {
+                return $message->delete($data);
+            });
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());

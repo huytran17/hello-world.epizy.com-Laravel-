@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 class Feedback extends Model
 {
@@ -34,16 +35,37 @@ class Feedback extends Model
 
     public function destroyFeedback($feed)
     {
-        return $feed->delete();
+        try {
+            DB::transaction(function() use ($uid) {
+                return $feed->delete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function forceDeleteFeedback($feed)
     {
-        return $feed->forceDelete();
+        try {
+            DB::transaction(function() use ($feed) {
+                return $feed->forceDelete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function restoreFeedback($feed)
     {
-        return $feed->restore();
+        try {
+            DB::transaction(function() use ($feed) {
+                return $feed->restore();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 }

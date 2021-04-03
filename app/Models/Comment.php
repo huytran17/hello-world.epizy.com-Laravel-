@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 class Comment extends Model
 {
@@ -43,16 +44,37 @@ class Comment extends Model
 
     public function destroyComment($comment)
     {
-        return $comment->delete();
+        try {
+            DB::transaction(function() use ($comment) {
+                return $comment->delete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function forceDeleteComment($comment)
     {
-        return $comment->forceDelete();
+        try {
+            DB::transaction(function() use ($comment) {
+                return $comment->forceDelete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function restoreComment($comment)
     {
-        return $comment->restore();
+        try {
+            DB::transaction(function() use ($comment) {
+                return $comment->restore();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 }

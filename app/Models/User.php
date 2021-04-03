@@ -200,17 +200,38 @@ class User extends Authenticatable
 
     public static function destroyUser($user)
     {
-        return $user->delete();
+        try {
+            DB::transaction(function() use ($user) {
+                return $user->delete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function restoreUser($user)
     {
-        return $user->restore();
+        try {
+            DB::transaction(function() use ($user) {
+                return $user->restore();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function forceDeleteUser($user)
     {
-        return $user->forceDelete();
+        try {
+            DB::transaction(function() use ($user) {
+                return $user->forceDelete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     //user role

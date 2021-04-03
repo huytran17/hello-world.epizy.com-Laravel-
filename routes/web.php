@@ -204,29 +204,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		]);
 	});
 
-	Route::group(['prefix' => 'quote'], function() {
-		Route::get('', [
-			'as' => 'admin.quote.index',
-			'uses' => 'QuoteController@index',
-			'middleware' => 'can:quote.viewAny'
-		]);
-
-		Route::get('edit', [
-			'as' => 'admin.quote.edit',
-			'uses' => 'QuoteController@edit',
-		]);
-
-		Route::get('create', [
-			'as' => 'admin.quote.create',
-			'uses' => 'QuoteController@create',
-		]);
-
-		Route::post('perform', [
-			'as' => 'admin.quote.perform',
-			'uses' => 'QuoteController@perform'
-		]);
-	});
-
 	Route::group(['prefix' => 'comment'], function() {
 		Route::post('destroy', [
 			'as' => 'admin.comment.destroy',

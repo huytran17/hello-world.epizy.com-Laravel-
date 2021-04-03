@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Traits\TimestampFormat;
 use App\Traits\IsAlready;
+use DB;
 
 class Category extends Model
 {
@@ -82,19 +83,40 @@ class Category extends Model
         return $this->getCategoryById($id);
     }
 
-    public function destroyCategory($uid)
+    public function destroyCategory($id)
     {
-        return $this->getById($uid)->delete();
+        try {
+            DB::transaction(function() use ($id) {
+                return $this->getById($id)->delete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
-    public function restoreCategory($uid)
+    public function restoreCategory($id)
     {
-        return $this->getById($uid)->restore();
+        try {
+            DB::transaction(function() use ($id) {
+                return $this->getById($id)->restore();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
-    public function forceDeleteCategory($uid)
+    public function forceDeleteCategory($id)
     {
-        return $this->getById($uid)->forceDelete();
+        try {
+            DB::transaction(function() use ($id) {
+                return $this->getById($id)->forceDelete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     public function getParentWith($withFields)
