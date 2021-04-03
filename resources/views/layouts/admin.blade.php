@@ -52,9 +52,7 @@
                     <li class="item">
                         <a href="{{ route('admin.post.index') }}" class="nav-link">Bài viết</a>
                     </li>
-                    <li class="item">
-                        <a href="{{ route('admin.quote.index') }}" class="nav-link">Châm ngôn</a>
-                    </li>
+                    
                     <li class="item">
                         <a href="#" class="nav-link" aria-haspopup="true" aria-expanded="false">
                             <i class="metismenu-icon pe-7s-rocket"></i>Trò chuyện
