@@ -1,6 +1,12 @@
 class Category {
-	async destroy() {
 
+	constructor() {
+		this.checkboxes = [];
+	}
+
+	async destroy() {
+		this.checkboxes = app.getCheckboxChecked();
+		console.log(this.checkboxes)
 	}
 	async restore() {
 
@@ -12,8 +18,8 @@ class Category {
 
 var category = new Category;
 
-$('#ex_opera').click(function() {
-	let type = $('#operabox').val();
+$('#ex_catebox').click(function() {
+	let type = parseInt($('#catebox').val());
 	
 	switch (type) {
 		case 1:

@@ -3,13 +3,13 @@
         <h4 class="w-100 text-center">{{ __('Danh mục') }}</h4>
         <div class="opera-box mr-auto w-100 row p-0 m-0">
         	{!! Form::open(['method' => 'post', 'route' => ['admin.cate.perform']]) !!}
-        		{!! Form::selectRequired('operabox', [
+        		{!! Form::selectRequired('catebox', [
         			0 => '---Chọn một---',
         			1 => 'Khóa',
         			2 => 'Khôi phục',
         			3 => 'Xóa vĩnh viễn'
-        		], 0, ['class' => 'form-control', 'id' => 'operabox'], [0]) !!}
-        		{!! Form::button('Thực hiện', ['id' => 'ex_opera']) !!}
+        		], 0, ['class' => 'form-control', 'id' => 'catebox'], [0]) !!}
+        		{!! Form::button('Thực hiện', ['id' => 'ex_catebox']) !!}
         	{!! Form::close() !!}
             @can('category.create')
                 {{ Html::link(route('admin.cate.create'), 'Thêm', ['class' => 'btn btn-primary']) }}

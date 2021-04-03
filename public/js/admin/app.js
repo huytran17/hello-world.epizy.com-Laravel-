@@ -10,7 +10,7 @@ class App {
     getCheckboxChecked() {
         var checkboxs = [];
 
-        $("input:checkbox[name=type]:checked").each(function() {
+        $("input[type=checkbox]:checked").each(function() {
             checkboxs.push($(this).val());
         });
 
