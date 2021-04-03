@@ -39,7 +39,7 @@
                     @foreach($users as $u)
                     <tr>
                     	<td>
-                    		<input type="checkbox" name="checkbox" id="{{ $u->id }}">
+                    		<input type="checkbox" name="checkbox" value="{{ $u->id }}">
                     	</td>
                         <td>{{ $u->id }}</td>
                         <td>
