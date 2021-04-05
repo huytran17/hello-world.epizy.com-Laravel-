@@ -4,7 +4,7 @@
             <h4>Chỉnh sửa bài viết</h4>
         </div>
         <div class="form-body">
-            {!!Form::open(['method'=>'post','route'=>['admin.post.update',['id'=>$post->encryted_id]],'files'=>true])!!}
+            {!!Form::open(['method'=>'post','route'=>['admin.post.update',['id'=>$post->encrypted_id]],'files'=>true])!!}
             <div class="form-row">
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('title','Tiêu đề bài viết') !!}

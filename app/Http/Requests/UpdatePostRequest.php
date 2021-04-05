@@ -39,7 +39,7 @@ class UpdatePostRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'Vui lòng không bỏ trống',
+            'required' => 'Vui chỉnh sửa thông tin mới ấn sửa',
             'string' => 'Định dạng không hợp lệ',
             'max' => 'Tối đa 255 kí tự',
             'file' => 'File không hợp lệ',
