@@ -158,19 +158,19 @@ class UserController extends Controller
       
         switch ($type) {
             case 1:
-                $this->destroy($rq);
+                return $this->destroy($rq);
                 break;
             case 2:
-                $this->upgrade($rq);
+                return $this->upgrade($rq);
                 break;
             case 3:
-                $this->downgrade($rq);
+                return $this->downgrade($rq);
                 break;
             case 4:
-                $this->restore($rq);
+                return $this->restore($rq);
                 break;
             case 5:
-                $this->forceDelete($rq);
+                return $this->forceDelete($rq);
                 break;
             default:
                 break;
