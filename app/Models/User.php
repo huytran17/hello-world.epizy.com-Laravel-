@@ -203,7 +203,7 @@ class User extends Authenticatable
     {
         try {
             DB::transaction(function() use ($id_arr) {
-              $this->whereIn('id', $id_arr)->delete();
+                $this->whereIn('id', $id_arr)->delete();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
