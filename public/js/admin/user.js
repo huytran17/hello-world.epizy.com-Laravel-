@@ -36,7 +36,7 @@ class User{
 		});
 
 		if (res.data.error==false) location.reload();
-		else this.appendPos.append(res.data.toast_notice);
+		else {this.appendPos.append(res.data.toast_notice); $('#toast').toast('show');}
 	}
 }
 
