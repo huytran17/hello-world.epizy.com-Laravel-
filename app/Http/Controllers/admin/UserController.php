@@ -139,7 +139,7 @@ class UserController extends Controller
 
         // $this->authorize('user.forceDelete', $user);
 
-        $this->_user->forceDelete($rq->id_arr);
+        $this->_user->forceDeleteUser($rq->id_arr);
 
         return response()->axios([
             'error' => false,

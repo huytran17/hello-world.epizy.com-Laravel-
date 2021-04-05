@@ -181,7 +181,7 @@ class User extends Authenticatable
 
     public function scopeGetUserById($query, $id)
     {
-        return $query->where('id', $id);
+        return $query->where('id', $id)->withTrashed();
     }
 
     public function getByRole($role)
@@ -246,19 +246,20 @@ class User extends Authenticatable
     public function downgrade($id_arr)
     {
         foreach ($id_arr as $uid) {
-            $this->updateRole($uid, 1);       
+            $this->updateRole($uid, 0);       
         }
     }
 
-    public function updateRole($id_arr, $action)
+    public function updateRole($uid, $action)
     {
-        $user = $this->getById($id_arr)->firstOrFail();
+        $user = $this->getById($uid)->firstOrFail();
         
         $role = UserRoleService::getRole($user, $action);
 
-        $user->updateUser([
+        $this->getUserById($uid)->update([
             'role' => $role
         ]);
+        
     }
 
     public function updateUser($data)
