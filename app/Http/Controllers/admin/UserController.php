@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
+    const UPDATE_AVATAR = 0, UPDATE_EMAIL = 1, UPDATE_PWD = 2;
+
     protected $_user;
 
     public function __construct(User $user)
@@ -95,6 +97,26 @@ class UserController extends Controller
         return response()->axios([
             'error' => false
         ]);
+
+        switch ($rq->type) {
+            case self::UPDATE_AVATAR:
+                return $this->updateAvatar($rq);
+                break;
+            case self::UPDATE_EMAIL:
+                return $this->updateEmail($rq);
+                break;
+            case self::UPDATE_PWD:
+                return $this->updatePassword($rq);
+                break;
+            default:
+                return;
+                break;
+        }
+    }
+
+    public function updateAvatar(Request $rq)
+    {
+        
     }
 
     /**

@@ -29,6 +29,7 @@ class User{
 
 	async update() {
 		var res = await axios.post(this.route, {
+			type: this.type,
 			name: $('#name').val(),
 			email: $('#email').val(),
 			password: $('#password').val(),
@@ -49,4 +50,8 @@ $('#ex_userbox').click(function(){
 
 $('.form-footer button[type=button]').click(function(event) {
 	user.update();
+});
+
+$('#BtnUpdateAvatar').click(function(event) {
+	user.selectType = 0;
 });
