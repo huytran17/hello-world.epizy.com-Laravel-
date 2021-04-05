@@ -36,7 +36,7 @@ class User{
 		});
 
 		if (res.data.error==false) location.reload();
-		else console.log('error')
+		else this.appendPos.append(res.data.toast_notice);
 	}
 }
 
