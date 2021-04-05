@@ -4,13 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use Illuminate\Contracts\Validation\Validator;
-
-use Illuminate\Http\Exceptions\HttpResponseException;
-
-use Illuminate\Support\Facades\View;
-
-class UpdateQuoteRequest extends FormRequest
+class UpdateAvatarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,16 +24,20 @@ class UpdateQuoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required',
-            'author' => 'required',
+            'name' => 'required|string|max:255|unique:users',
+            'profile_photo_path' => 'file|mimes:jpeg,jpg,png,webp,gif|max:1024'
         ];
     }
 
     public function messages()
     {
         return [
-            'required.content' =>  'Vui lòng nhập châm ngôn',
-            'required.author' =>  'Vui lòng nhập tác giả'
+            'required' =>  'Vui lòng không bỏ trống',
+            'string' => 'Định dạng không đúng',
+            'max.name' => 'Tối đa 255 ký tự',
+            'file' => 'Định dạng không đúng',
+            'mimes' => 'Cho phép ảnh jpeg,jpg,png,webp,gif',
+            'max.profile_photo_path' => 'Kích thước tối đa 1MB'
         ];
     }
 
