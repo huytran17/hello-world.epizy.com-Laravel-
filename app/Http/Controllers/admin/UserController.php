@@ -87,9 +87,6 @@ class UserController extends Controller
     {
         $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
-
-        // $this->authorize('user.update', $user);
-
         return $user->updateUser($rq->all());
     }
 
@@ -101,14 +98,6 @@ class UserController extends Controller
      */
     public function destroy(Request $rq)
     {
-        // $uid = base64_decode($rq->uid);
-
-        // $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
-
-        // dd($this->_user);
-
-        // $this->authorize('user.delete', $user);
-
         $this->_user->destroyUser($rq->id_arr);
 
         return response()->axios([
@@ -118,12 +107,6 @@ class UserController extends Controller
 
     public function restore(Request $rq)
     {
-        // $uid = base64_decode($rq->uid);
-
-        // $user = $this->_user->getById($uid)->firstOrFail();
-
-        // $this->authorize('user.restore', $user);
-
         $this->_user->restoreUser($rq->id_arr);
 
         return response()->axios([
@@ -133,12 +116,6 @@ class UserController extends Controller
 
     public function forceDelete(Request $rq)
     {
-        // $uid = base64_decode($rq->uid);
-
-        // $user = $this->_user->getById($uid)->firstOrFail();
-
-        // $this->authorize('user.forceDelete', $user);
-
         $this->_user->forceDeleteUser($rq->id_arr);
 
         return response()->axios([
