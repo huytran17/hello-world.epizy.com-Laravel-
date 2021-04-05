@@ -102,7 +102,7 @@ class CategoryController extends Controller
     {
         $this->_category->destroyCategory($rq->id_arr);
 
-        return response()->json([
+        return response()->axios([
             'error' => false,
         ]);
     }

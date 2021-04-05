@@ -23,7 +23,7 @@ class Category {
 		});
 
 		if (res.data.error==false) location.reload();
-		else console.log('error')
+		else console.log('error');
 	}
 }
 
