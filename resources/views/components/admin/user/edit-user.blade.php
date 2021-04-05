@@ -18,17 +18,18 @@
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('password','Mật khẩu') !!}
-						{!! Form::text('password',null,['class'=>'form-control']) !!}
+						{!! Form::password('password',null,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('repass','Nhập lại mật khẩu') !!}
-						{!! Form::text('repass',null,['class'=>'form-control']) !!}
+						{!! Form::password('repass',null,['class'=>'form-control']) !!}
 					</div>
 				</div>
 			{!!Form::close()!!}
 		</div>
 		<div class="form-footer">
 			{!! Form::button('Sửa',['class'=> 'btn btn-primary']) !!}
+			<button class="btn btn-secondary" onclick="window.history.back();">Hủy</button>
 		</div>
 	</div>
 </div>
