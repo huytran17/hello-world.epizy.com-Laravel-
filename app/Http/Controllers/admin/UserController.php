@@ -87,6 +87,7 @@ class UserController extends Controller
     {
         $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
+
         // $this->authorize('user.update', $user);
 
         return $user->updateUser($rq->all());
@@ -104,11 +105,15 @@ class UserController extends Controller
 
         // $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
-
+        // dd($this->_user);
 
         // $this->authorize('user.delete', $user);
 
-        return $this->_user->destroyUser($rq->id);
+        $this->_user->destroyUser($rq->id_arr);
+
+        return response()->json([
+            'error' => false,
+        ]);
     }
 
     public function restore($uid)
@@ -149,23 +154,23 @@ class UserController extends Controller
 
     public function perform(Request $rq)
     {
-        $val = $rq->operabox;
-        $id = base64_decode($rq->id);
-        switch ($val) {
+        $type = $rq->type;
+      
+        switch ($type) {
             case 1:
-                $this->destroy($id);
+                $this->destroy($rq);
                 break;
             case 2:
-                $this->upgrade($id);
+                $this->upgrade($rq);
                 break;
             case 3:
-                $this->downgrade($id);
+                $this->downgrade($rq);
                 break;
             case 4:
-                $this->restore($id);
+                $this->restore($rq);
                 break;
             case 5:
-                $this->forceDelete($id);
+                $this->forceDelete($rq);
                 break;
             default:
                 break;
