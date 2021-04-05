@@ -90,7 +90,7 @@ class PostController extends Controller
     {
         $post = $this->_post->getById(base64_decode($rq->id))->firstOrFail();
 
-        $this->authorize('post.update', $post);
+        
 
         return $post->updatePost($rq->all());
     }

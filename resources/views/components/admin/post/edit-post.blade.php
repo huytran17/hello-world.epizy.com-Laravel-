@@ -4,7 +4,7 @@
             <h4>Chỉnh sửa bài viết</h4>
         </div>
         <div class="form-body">
-            {!!Form::open(['method'=>'post','route'=>'admin.user.store','files'=>true])!!}
+            {!!Form::open(['method'=>'post','route'=>['admin.post.update',['id'=>$post->encryted_id]],'files'=>true])!!}
             <div class="form-row">
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('title','Tiêu đề bài viết') !!}
@@ -16,10 +16,13 @@
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('thumbnail_photo_path','Thumbnail') !!}
-                    <div class="current_img">
+                    <div class="current_img col-6">
                         <div class="thumbnail">
                             <img src="{{$post->thumbnail_photo_path}}" alt="{{$post->slug}}">
                         </div>
+                    </div>
+                    <div id="thumbnail_photo_path col-6">
+                        {!! Form::file('thumbnail_photo_path', null, ['class' => 'form-control-file']) !!}
                     </div>
                 </div>
                 <div class="form-group col-12 col-md-6">

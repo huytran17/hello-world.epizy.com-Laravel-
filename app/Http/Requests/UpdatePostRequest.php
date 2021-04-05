@@ -7,6 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\View;
 
+
 class UpdatePostRequest extends FormRequest
 {
     /**
@@ -34,7 +35,7 @@ class UpdatePostRequest extends FormRequest
             'meta_data' =>'required'
         ];
     }
-    \
+    
     public function messages()
     {
         return [

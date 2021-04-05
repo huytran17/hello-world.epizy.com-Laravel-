@@ -133,6 +133,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'uses' => 'PostController@perform',
 			'middleware' => 'can:post.isAdministrator'
 		]);
+
+		Route::post('update', [
+			'as' => 'admin.post.update',
+			'uses' => 'PostController@update',
+			'middleware' => 'can:post.isAdministrator'
+		]);
 	});
 
 	Route::group(['prefix' => 'user'], function() {
