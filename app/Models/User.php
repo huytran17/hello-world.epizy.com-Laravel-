@@ -211,11 +211,11 @@ class User extends Authenticatable
         }
     }
 
-    public function restoreUser($user)
+    public function restoreUser($id_arr)
     {
         try {
-            DB::transaction(function() use ($user) {
-                return $user->restore();
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->restore();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
@@ -223,11 +223,11 @@ class User extends Authenticatable
         }
     }
 
-    public function forceDeleteUser($user)
+    public function forceDeleteUser($id_arr)
     {
         try {
-            DB::transaction(function() use ($user) {
-                return $user->forceDelete();
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->forceDelete();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
@@ -236,19 +236,23 @@ class User extends Authenticatable
     }
 
     //user role
-    public function upgrade($uid)
+    public function upgrade($id_arr)
     {
-        $this->updateRole($uid, 1);
+        foreach ($id_arr as $uid) {
+            $this->updateRole($uid, 1);       
+        }
     }
 
-    public function downgrade($uid)
+    public function downgrade($id_arr)
     {
-        $this->updateRole($uid, 0);
+        foreach ($id_arr as $uid) {
+            $this->updateRole($uid, 1);       
+        }
     }
 
-    public function updateRole($uid, $action)
+    public function updateRole($id_arr, $action)
     {
-        $user = $this->getById($uid)->firstOrFail();
+        $user = $this->getById($id_arr)->firstOrFail();
         
         $role = UserRoleService::getRole($user, $action);
 

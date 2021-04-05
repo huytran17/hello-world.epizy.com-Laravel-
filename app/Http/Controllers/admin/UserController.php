@@ -111,45 +111,62 @@ class UserController extends Controller
 
         $this->_user->destroyUser($rq->id_arr);
 
-        return response()->json([
+        return response()->axios([
             'error' => false,
         ]);
     }
 
-    public function restore($uid)
+    public function restore(Request $rq)
     {
         // $uid = base64_decode($rq->uid);
 
-        $user = $this->_user->getById($uid)->firstOrFail();
+        // $user = $this->_user->getById($uid)->firstOrFail();
 
         // $this->authorize('user.restore', $user);
 
-        return $this->_user->restoreUser($user);
+        $this->_user->restoreUser($rq->id_arr);
+
+        return response()->axios([
+            'error' => false,
+        ]);
     }
 
-    public function forceDelete($uid)
+    public function forceDelete(Request $rq)
     {
         // $uid = base64_decode($rq->uid);
 
-        $user = $this->_user->getById($uid)->firstOrFail();
+        // $user = $this->_user->getById($uid)->firstOrFail();
 
         // $this->authorize('user.forceDelete', $user);
 
-        return $this->_user->forceDeleteUser($user);
+        $this->_user->forceDelete($rq->id_arr);
+
+        return response()->axios([
+            'error' => false,
+        ]);
     }
 
-    public function upgrade($uid)
+    public function upgrade(Request $rq)
     {
         // $uid = base64_decode($rq->uid);
 
-        return $this->_user->upgrade($uid);
+        $this->_user->upgrade($rq->id_arr);
+
+        return response()->axios([
+            'error' => false,
+        ]);
     }
 
-    public function downgrade($uid)
+    public function downgrade(Request $rq)
     {
         // $uid = base64_decode($rq->uid);
 
-        return $this->_user->downgrade($uid);
+        $this->_user->downgrade($rq->id_arr);
+
+        return response()->axios([
+            'error' => false,
+        ]);
+
     }
 
     public function perform(Request $rq)
