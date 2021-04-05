@@ -18,11 +18,11 @@
                     {!! Form::label('thumbnail_photo_path','Thumbnail') !!}
                     <div class="current_img col-6">
                         <div class="thumbnail">
-                            <img src="{{$post->thumbnail_photo_path}}" alt="{{$post->slug}}">
+                            <img src="{{$post->thumbnail_photo_path}}" alt="{{$post->slug}}" width="80" height="80">
                         </div>
                     </div>
                     <div id="thumbnail_photo_path col-6">
-                        {!! Form::file('thumbnail_photo_path', null, ['class' => 'form-control-file']) !!}
+                        <input type="file" name="thumbnail_photo_path" id="thumbnail_photo_path" accept="image/*" class="form-control-file">
                     </div>
                 </div>
                 <div class="form-group col-12 col-md-6">
@@ -49,16 +49,18 @@
                     </select>
                 </div>
                 <div class="form-group col-12 col-md-6 d-none">
-                    <select name="parent_cate" id="parent_cate">
+                    <select name="child_cate" id="child_cate">
                         <option value="" disabled="disabled" selected="selected">{{ __('---Tùy chọn---') }}</option>
                         
                     </select>
                 </div>
             </div>
+            <div class="form-group col-12 col-md-6">
+                <div class="form-group col-12 col-md-6">
+                    {!! Form::submit('Sửa',['class'=> 'btn btn-primary']) !!}
+                </div>
+            </div>
             {!!Form::close()!!}
-        </div>
-        <div class="form-footer">
-            {!! Form::submit('Sửa',['class'=> 'btn btn-primary']) !!}
         </div>
     </div>
 </div>
