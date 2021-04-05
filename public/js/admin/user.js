@@ -15,6 +15,14 @@ class User{
 		return this.type;
 	}
 
+	set routeUrl(url) {
+		this.route = url;
+	}
+
+	get routeUrl() {
+		return this.route;
+	}
+
 	async perform() {
 		this.checkboxes = app.getCheckboxChecked();
 
@@ -27,13 +35,14 @@ class User{
 		else console.log('error');
 	}
 
-	async update() {
+	async updateAvatar() {
+		let file_data = $('#profile_photo_path').prop('files')[0];
+        let form_data = new FormData();
+        form_data.append('profile_photo_path', file_data);
+
 		var res = await axios.post(this.route, {
-			type: this.type,
 			name: $('#name').val(),
-			email: $('#email').val(),
-			password: $('#password').val(),
-			repass: $('#repass').val(),
+			image: form_data
 		});
 
 		if (res.data.error==false) location.reload();
@@ -53,5 +62,6 @@ $('.form-footer button[type=button]').click(function(event) {
 });
 
 $('#BtnUpdateAvatar').click(function(event) {
-	user.selectType = 0;
+	// user.routeUrl = $(event).closest('form').attr('action');
+	// user.BtnUpdateAvatar();
 });

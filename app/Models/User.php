@@ -119,14 +119,14 @@ class User extends Authenticatable
 
     public function getProfilePhotoPathAttribute($value)
     {
-        if (empty($this->profile_photo_path)) {
+        if (empty($this->attributes['profile_photo_path'])) {
             return Avatar::create($this->name)
             ->setDimension(80, 80)
             ->setFontSize(40)
             ->setShape('circle')
             ->toBase64();
         }
-        return $this->profile_photo_path;
+        return $this->attributes['profile_photo_path'];
     }
 
     public function getDmyCreatedAtAttribute()
@@ -262,10 +262,10 @@ class User extends Authenticatable
         
     }
 
-    public function updateUser($data)
+    public function updateUser($uid, $data)
     {
         try {
-            $this->update($data);
+            $this->getUserById($uid)->update($data);
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());

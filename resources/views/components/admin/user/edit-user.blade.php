@@ -4,28 +4,31 @@
 			<h4>Chỉnh sửa thông tin tài khoản</h4>
 		</div>
 		<div class="form-body">
-			{!!Form::open(['method'=>'post','route'=>['admin.user.update', ['id' => $user->encrypted_id]]])!!}
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updateAvatar', ['id' => $user->encrypted_id]], 'files' => true])!!}
 				<div class="form-row">
                     <div class="current_img col-12">
                         <div class="thumbnail">
-                            <img src="{{$user->profile_photo_path}}" alt="{{$user->slug}}" width="80" height="80">
+                            <img src="{{$user->profile_photo_path}}" alt="{{$user->slug}}" class="rounded-circle" width="80" height="80">
                         </div>
                     </div>
                     <div id="profile_photo_path" class="form-group col-12">
                     	{!! Form::label('profile_photo_path','Ảnh đại diện') !!}
-                        {!! Form::file('profile_photo_path', null, ['class' => 'form-control-file']) !!}
+                        <input type="file" name="profile_photo_path" id="profile_photo_path" accept="image/*" class="form-control-file">
                     </div>
-                    <div class="form-group col-12">
-						{!! Form::label('name','Tên tài khoản') !!}
-						{!! Form::text('name',$user->name,['class'=>'form-control']) !!}
-					</div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            {!! Form::button('Lưu',['class'=> 'btn btn-primary', 'id' => 'BtnUpdateAvatar']) !!}
+                            {!! Form::submit('Lưu',['class'=> 'btn btn-primary', 'id' => 'BtnUpdateAvatar']) !!}
                         </div>
                     </div>
 				</div>
+			{!!Form::close()!!}
+
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updateEmail', ['id' => $user->encrypted_id]]])!!}
 				<div class="form-row">
+					<div class="form-group col-12">
+						{!! Form::label('name','Tên tài khoản') !!}
+						{!! Form::text('name',$user->name,['class'=>'form-control']) !!}
+					</div>
 					<div class="form-group col-12">
 						{!! Form::label('email','Email') !!}
 						{!! Form::text('email',$user->email,['class'=>'form-control']) !!}
@@ -36,6 +39,9 @@
                         </div>
                     </div>
 				</div>
+			{!!Form::close()!!}
+
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updatePwd', ['id' => $user->encrypted_id]]])!!}
 				<div class="form-row">
 					<div class="form-group col-12">
 						{!! Form::label('password','Mật khẩu') !!}

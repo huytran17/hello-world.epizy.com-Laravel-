@@ -19,9 +19,9 @@ class CreateWebsiteTable extends Migration
             $table->string('description');
             $table->string('keywords');
             $table->string('author');
-            $table->string('logo_photo_path')->nullable();
-            $table->string('shortcut_photo_path')->nullable();
-            $table->string('favicon_photo_path')->nullable();
+            $table->longText('logo_photo_path')->nullable();
+            $table->longText('shortcut_photo_path')->nullable();
+            $table->longText('favicon_photo_path')->nullable();
             $table->timestamps();
         });
     }

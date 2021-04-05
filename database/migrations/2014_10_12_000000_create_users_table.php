@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('email_subscribed_at')->nullable();
             $table->string('password');
-            $table->string('profile_photo_path')->nullable();
+            $table->longText('profile_photo_path')->nullable();
             $table->tinyInteger('role')->default(2)->comment('0-super admin, 1-admin, 2-normal');
             $table->rememberToken();
             $table->timestamps();
