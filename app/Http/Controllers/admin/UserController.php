@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -71,7 +72,7 @@ class UserController extends Controller
     {
         $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
-        // $this->authorize('user.update', $user);
+        $this->authorize('user.update', $user);
 
         return view('admin.user.edit',['user'=>$user]);
     }
@@ -83,11 +84,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $rq)
+    public function update(UpdateUserRequest $rq)
     {
         $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
-        return $user->updateUser($rq->all());
+        $this->authorize('user.update', $user);
+
+        $user->updateUser($rq->except(['repass', '_token']));
+
+        return response()->axios([
+            'error' => false
+        ]);
     }
 
     /**

@@ -90,6 +90,7 @@
         <main id="main" class="col-md-9 border border-danger">
             @yield('content')
         </main>
+        <div id="AppendPosition"></div>
     </div>
     <!-- axios-->
     <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>

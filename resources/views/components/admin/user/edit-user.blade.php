@@ -4,7 +4,7 @@
 			<h4>Chỉnh sửa thông tin tài khoản</h4>
 		</div>
 		<div class="form-body">
-			{!!Form::open(['method'=>'post','route'=>'admin.user.store'])!!}
+			{!!Form::open(['method'=>'post','route'=>['admin.user.update', ['id' => $user->encrypted_id]]])!!}
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('name','Tên') !!}
