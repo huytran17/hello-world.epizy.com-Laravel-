@@ -101,46 +101,50 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $rq)
     {
-        $post = $this->_post->getById(base64_decode($id))->firstOrFail();
+        // $post = $this->_post->getById(base64_decode($id))->firstOrFail();
 
-        $this->authorize('post.delete', $post);
+        // $this->authorize('post.delete', $post);
 
-        return $this->_post->destroyPost();
+        $this->_post->destroyPost($rq->id_arr);
+
+        return response()->axios([
+            'error' => false,
+        ]);
     }
     
-    public function restore($id)
+    public function restore(Request $rq)
     {
-        $post = $this->_post->getById(base64_decode($id))->firstOrFail();
+        $this->_post->restorePost($rq->id_arr);
 
-        $this->authorize('post.restore', $post);
-
-        return $this->_post->restorePost();
+        return response()->axios([
+            'error' => false,
+        ]);
     }
 
-    public function forceDelete($id)
+    public function forceDelete(Request $rq)
     {
-        $post = $this->_post->getById(base64_decode($id))->firstOrFail();
+        $this->_post->forceDeletePost($rq->id_arr);
 
-        $this->authorize('post.forceDelete', $post);
-
-        return $this->_post->forceDeletePost();
+        return response()->axios([
+            'error' => false,
+        ]);
     }
 
     public function perform(Request $rq)
     {
-        $val =$rq->operabox;
-        $id = base64_decode($rq->id);
-      switch ($val) {
+        $type =$rq->type;
+        
+      switch ($type) {
             case 1:
-                $this->destroy($id);
+                return $this->destroy($rq);
                 break;
             case 2:
-                $this->restore($id);
+                return $this->restore($rq);
                 break;
             case 3:
-                $this->forceDelete($id);
+                return $this->forceDelete($rq);
                 break;
             default:
                 // code...

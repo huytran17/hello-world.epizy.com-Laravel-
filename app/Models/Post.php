@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Traits\TimestampFormat;
 use App\Traits\IsAlready;
-
+use DB;
 class Post extends Model
 {
     use HasFactory, SoftDeletes, TimestampFormat, IsAlready;
@@ -92,11 +92,24 @@ class Post extends Model
         return $this->getPostById($id);
     }
 
-    public function destroyPost($post)
+    public function destroyPost($id_arr)
     {
         try {
-            DB::transaction(function() use ($post) {
-                return $post->delete();
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->delete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+        // dd($id_arr);
+    }
+
+    public function restorePost($id_arr)
+    {
+        try {
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->restore();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
@@ -104,23 +117,11 @@ class Post extends Model
         }
     }
 
-    public function restorePost($post)
+    public function forceDeletePost($id_arr)
     {
         try {
-            DB::transaction(function() use ($post) {
-                return $post->restore();
-            });
-        }
-        catch (\Illuminate\Database\QueryException $ex) {
-            dd($ex->getMessage());
-        }
-    }
-
-    public function forceDeletePost($post)
-    {
-        try {
-            DB::transaction(function() use ($post) {
-                return $post->forceDelete();
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->forceDelete();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {

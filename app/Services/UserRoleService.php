@@ -4,9 +4,11 @@ namespace App\Services;
 
 class UserRoleService {
 
+    const UP = 1, DOWN = 0;
+
     public static function getRole($user, $action)
     {
-        return $action === 1 ? self::getRoleUpgrade($user) : self::getRoleDowngrade($user);
+        return $action === self::UP ? self::getRoleUpgrade($user) : self::getRoleDowngrade($user);
     }
 
     public static function getRoleUpgrade($user)

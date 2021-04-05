@@ -52,6 +52,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('user.superAdmin', [UserPolicy::class, 'superAdmin']);
         //post
         Gate::resource('post', PostPolicy::class);
+        //
+        Gate::define('post.isAdministrator', [PostPolicy::class, 'isAdministrator']);
         //category
         Gate::resource('category', CategoryPolicy::class);
         Gate::define('category.superAdmin', [CategoryPolicy::class, 'superAdmin']);
@@ -65,5 +67,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('website', WebsitePolicy::class);
         //feedback
         Gate::resource('feedback', FeedbackPolicy::class);
+        //
     }
 }
