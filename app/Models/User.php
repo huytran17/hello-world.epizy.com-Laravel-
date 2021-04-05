@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Traits\TimestampFormat;
 use App\Traits\IsAlready;
 use App\Services\UserRoleService;
+use DB;
 use Avatar;
 
 class User extends Authenticatable
@@ -198,14 +199,11 @@ class User extends Authenticatable
         return $this->getUserById($uid);
     }
 
-    public static function destroyUser($id_arr)
+    public function destroyUser($id_arr)
     {
         try {
             DB::transaction(function() use ($id_arr) {
-              $this->whereIn($id_arr)->get()->delete();
-              return respone()->axios([
-                    'error' => false
-                ]);
+              $this->whereIn('id', $id_arr)->delete();
             });
         }
         catch (\Illuminate\Database\QueryException $ex) {
