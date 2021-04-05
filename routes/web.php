@@ -158,9 +158,19 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'uses' => 'UserController@create',
 		]);
 
-		Route::post('update', [
-			'as' => 'admin.user.update',
-			'uses' => 'UserController@update',
+		Route::post('updateAvatar', [
+			'as' => 'admin.user.updateAvatar',
+			'uses' => 'UserController@updateAvatar',
+		]);
+
+		Route::post('updateEmail', [
+			'as' => 'admin.user.updateEmail',
+			'uses' => 'UserController@updateEmail',
+		]);
+
+		Route::post('updatePwd', [
+			'as' => 'admin.user.updatePwd',
+			'uses' => 'UserController@updatePassword',
 		]);
 
 		Route::post('store', [

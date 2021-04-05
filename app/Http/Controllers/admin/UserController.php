@@ -6,17 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdateAvatarRequest;
+use App\Services\UploadFileService;
 
 class UserController extends Controller
 {
     const UPDATE_AVATAR = 0, UPDATE_EMAIL = 1, UPDATE_PWD = 2;
 
-    protected $_user;
+    protected $_user, $_uploadFileService;
 
-    public function __construct(User $user)
+    public function __construct(User $user, UploadFileService $uploadFileService)
     {
         $this->_user = $user;
+
+        $this->_uploadFileService = $uploadFileService;
     }
     /**
      * Display a listing of the resource.
@@ -86,35 +89,30 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $rq)
+
+    public function updateAvatar(UpdateAvatarRequest $rq)
     {
         $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
 
         $this->authorize('user.update', $user);
 
-        $user->updateUser($rq->except(['repass', '_token']));
+        if ($rq->hasFile('profile_photo_path')) {
+            $b64_img = $this->_uploadFileService->getBase64Image($rq->file('profile_photo_path'));
 
-        return response()->axios([
-            'error' => false
-        ]);
-
-        switch ($rq->type) {
-            case self::UPDATE_AVATAR:
-                return $this->updateAvatar($rq);
-                break;
-            case self::UPDATE_EMAIL:
-                return $this->updateEmail($rq);
-                break;
-            case self::UPDATE_PWD:
-                return $this->updatePassword($rq);
-                break;
-            default:
-                return;
-                break;
+            $this->_user->updateUser(base64_decode($rq->id), [
+                'profile_photo_path' => $b64_img,
+            ]);
         }
+
+        return redirect()->back();
     }
 
-    public function updateAvatar(Request $rq)
+    public function updateEmail(Request $rq)
+    {
+        
+    }
+
+    public function updatePassword(Request $rq)
     {
         
     }
