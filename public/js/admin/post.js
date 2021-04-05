@@ -4,6 +4,7 @@ class Post{
 		this.checkboxes = [];
 		this.route = $('.form-wrapper form').attr('action');
 		this.type = 0;
+		this.appendPos = $('#AppendPosition');
 	}
 
 	set selectType(type){
@@ -30,13 +31,13 @@ class Post{
 		var res = await axios.post(this.route ,{
 			title: $('#title').val(),
 			description: $('#description').val(),
-			title: $('#thumbnail_photo_path').val(),
-			title: $('#content').val(),
-			title: $('#keywords').val(),
-			title: $('#source').val(),
+			// thumbnail_photo_path: $('#thumbnail_photo_path').val(),
+			content: $('#content').val(),
+			keywords: $('#keywords').val(),
+			source: $('#source').val(),
 		});
 		if (res.data) location.reload();
-		else console.log("error");
+		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
 }
 
@@ -46,6 +47,6 @@ $('#ex_post').click(function() {
 	post.selectType = parseInt($('#post_box').val());
 	post.perform();
 });
-$('form-footer button[type=button]').click(function(event){
-	post.update();
-});
+// $('form-footer button[type=button]').click(function(event){
+// 	post.update();
+// });

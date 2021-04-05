@@ -129,10 +129,10 @@ class Post extends Model
         }
     }
 
-    public function updatePost($post)
+    public function updatePost($pid,$data)
     {
         try {
-            $this->update($data);
+            $this->getPostById($pid)->update($data);
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());

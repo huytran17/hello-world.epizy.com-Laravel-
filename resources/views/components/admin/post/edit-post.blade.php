@@ -58,7 +58,7 @@
             {!!Form::close()!!}
         </div>
         <div class="form-footer">
-            {!! Form::button('Sửa',['class'=> 'btn btn-primary']) !!}
+            {!! Form::submit('Sửa',['class'=> 'btn btn-primary']) !!}
         </div>
     </div>
 </div>
