@@ -2,7 +2,7 @@ class Category {
 
 	constructor() {
 		this.checkboxes = [];
-		this.route = $('.opera-box form').attr('action');
+		this.route = $('.form-wrapper form').attr('action');
 		this.type = 0;
 	}
 

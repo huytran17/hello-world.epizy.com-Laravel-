@@ -1,7 +1,7 @@
 <div class="container-fluid p-0 mt-5">
     <section class="row p-0">
         <h4 class="w-100 text-center">{{ __('Danh mục') }}</h4>
-        <div class="opera-box mr-auto w-100 row p-0 m-0">
+        <div class="form-wrapper mr-auto w-100 row p-0 m-0">
         	{!! Form::open(['method' => 'post', 'route' => ['admin.cate.perform']]) !!}
         		{!! Form::selectRequired('catebox', [
         			0 => '---Chọn một---',

@@ -2,7 +2,7 @@ class User{
 
 	constructor(){
 		this.checkboxes = [];
-		this.route = $('.opera-box form').attr('action');
+		this.route = $('.form-wrapper form').attr('action');
 		this.type = 0;
 		this.appendPos = $('#AppendPosition');
 	}
@@ -48,5 +48,5 @@ $('#ex_userbox').click(function(){
 });
 
 $('.form-footer button[type=button]').click(function(event) {
-	
+	user.update();
 });

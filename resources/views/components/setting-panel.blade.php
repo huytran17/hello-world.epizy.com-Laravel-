@@ -1,5 +1,5 @@
 <div id="sa_setting">
-	<div id="sa_st_form">
+	<div id="sa_st_form" class="form-wrapper">
 		{!! Form::open(['method' => 'post', 'route' => ['admin.site.update'], 'file' => true]) !!}
 		<div class="form-row">
 			<div class="form-group col-12 col-md-6">
