@@ -14,6 +14,8 @@
 						{!! Form::label('email','Email') !!}
 						{!! Form::text('email',$user->email,['class'=>'form-control','disabled'=>'disabled']) !!}
 					</div>
+				</div>
+				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('password','Mật khẩu') !!}
 						{!! Form::text('password',null,['class'=>'form-control']) !!}
