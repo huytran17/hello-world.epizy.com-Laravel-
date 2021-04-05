@@ -3,13 +3,13 @@
         <h4 class="w-100 text-center">{{ __('Bài viết') }}</h4>
         <div class="opera-box mr-auto w-100 row p-0 m-0">
         	{!! Form::open(['method' => 'post', 'route' => ['admin.post.perform']]) !!}
-        		{!! Form::selectRequired('operabox', [
+        		{!! Form::selectRequired('post_box', [
         			0 => '---Chọn một---',
         			1 => 'Khóa',
         			2 => 'Khôi phục',
         			3 => 'Xóa vĩnh viễn'
-        		], 0, ['class' => 'form-control'], [0]) !!}
-        		{!! Form::submit('Thực hiện', ['id' => 'ex_opera']) !!}
+        		], 0, ['class' => 'form-control','id'=>'post_box'], [0]) !!}
+        		{!! Form::button('Thực hiện', ['id' => 'ex_post']) !!}
         	{!! Form::close() !!}
             @can('post.create')
                 {{ Html::link(route('admin.post.create'), 'Thêm', ['class' => 'btn btn-primary']) }}
@@ -39,7 +39,7 @@
                     @foreach($posts as $p)
                     <tr>
                     	<td>
-                    		<input type="checkbox" name="checkbox" id="{{ $p->id }}">
+                    		<input type="checkbox" name="checkbox" value ="{{ $p->id }}">
                     	</td>
                         <td>{{ $p->id }}</td>
                         <td>

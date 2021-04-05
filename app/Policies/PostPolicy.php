@@ -91,4 +91,9 @@ class PostPolicy
     {
         return $user->isSuperAdmin() or $user->id === $post->user->id;
     }
+
+    public function isAdministrator(User $user)
+    {
+        return $user->isAdministrator();
+    }
 }

@@ -130,7 +130,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 
 		Route::post('perform', [
 			'as' => 'admin.post.perform',
-			'uses' => 'PostController@perform'
+			'uses' => 'PostController@perform',
+			'middleware' => 'can:post.isAdministrator'
 		]);
 	});
 
