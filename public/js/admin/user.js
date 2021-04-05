@@ -4,6 +4,7 @@ class User{
 		this.checkboxes = [];
 		this.route = $('.opera-box form').attr('action');
 		this.type = 0;
+		this.appendPos = $('#AppendPosition');
 	}
 	
 	set selectType(type){
@@ -25,6 +26,18 @@ class User{
 		if (res.data.error==false) location.reload();
 		else console.log('error');
 	}
+
+	async update() {
+		var res = await axios.post(this.route, {
+			name: $('#name').val(),
+			email: $('#email').val(),
+			password: $('#password').val(),
+			repass: $('#repass').val(),
+		});
+
+		if (res.data.error==false) location.reload();
+		else console.log('error')
+	}
 }
 
 var user = new User;
@@ -32,4 +45,8 @@ var user = new User;
 $('#ex_userbox').click(function(){
 	user.selectType = parseInt($('#user_box').val());
 	user.perform();
+});
+
+$('.form-footer button[type=button]').click(function(event) {
+	
 });
