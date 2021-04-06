@@ -42,6 +42,23 @@ class Post{
 		if (res.data.error==false) location.reload();
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
+
+	async addition() {
+		this.route  = $('#FormCreatePost').attr('action');
+
+		var res = await axios.post(this.route, {
+			title:$('#title').val(),
+			description:$('#description').val(),
+			content:$('#content').val(),
+			meta_data:{
+				keywords: $('#keywords').val(),
+				source: $('#source').val()
+			}
+		});
+
+		if (res.data.error == false) location.reload();
+		else {this.appendPos.append(res.data.toast_notice)}; $('$toast').toast('show');
+	}
 }
 
 var post = new Post;
@@ -53,4 +70,8 @@ $('#ex_post').click(function() {
 
 $('#BtnUpdatePost').click(function(event){
 	post.update();
+});
+
+$('#BtnCreatePost').click(function() {
+	post.addition();
 });
