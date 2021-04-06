@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div>
-		<a href="{{ route('auth.changeEmail', $token) }}">Change</a>
+		<a href="{{ route('auth.changeEmail', ['_token' => $token]) }}">Change</a>
 	</div>
 </body>
 </html>

@@ -37,18 +37,23 @@ class EmailChange extends Model
         return $this->getRecordByToken($token);
     }
 
-    public function store($data)
+    public function destroyByEmail($email)
     {
         try {
-            $this->updateOrCreate([
-                'email' => $data['email']
-            ], [
-                'token' => $data['token'],
-                'email_new' => $data['email_new']
-            ]);
+            $this->getByEmail($email)->delete();
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());
         }
+    }
+
+    public function store($data)
+    {
+        return $this->updateOrCreate([
+            'email' => $data['email']
+        ], [
+            'token' => $data['token'],
+            'email_new' => $data['email_new']
+        ]);
     }
 }
