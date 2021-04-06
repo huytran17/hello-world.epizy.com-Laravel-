@@ -13,8 +13,13 @@
                     </div>
                     <div id="profile_photo_path" class="form-group col-12">
                     	{!! Form::label('profile_photo_path','Ảnh đại diện') !!}
-                        <input type="file" name="profile_photo_path" id="profile_photo_path" accept="image/*" class="form-control-file">
+                        <input type="file" name="profile_photo_path" id="profile_photo_path" accept="image/*" class="form-control-file @error('profile_photo_path') is-invalid @enderror">
                     </div>
+                    @error('profile_photo_path')
+                    <span class="invalid-feedback d-inline" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                     <div class="form-group row">
                         <div class="col-md-6">
                             {!! Form::submit('Lưu',['class'=> 'btn btn-primary', 'id' => 'BtnUpdateAvatar']) !!}

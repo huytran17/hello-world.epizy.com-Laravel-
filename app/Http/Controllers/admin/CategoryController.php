@@ -54,7 +54,7 @@ class CategoryController extends Controller
      */
     public function show(Request $rq)
     {
-        $cate = $this->_category->getById(base64_decode($rq->id))->with(['children', 'posts'])->firstOrFail();
+        $cate = $this->_category->getById($rq->id)->with(['children', 'posts'])->firstOrFail();
 
         return view('admin.category.show', ['cate' => $cate]);
     }
@@ -67,7 +67,7 @@ class CategoryController extends Controller
      */
     public function edit(Request $rq)
     {
-        $cate = $this->_category->getById(base64_decode($rq->id))->firstOrFail();
+        $cate = $this->_category->getById($rq->id)->firstOrFail();
 
         $this->authorize('category.update', $cate);
 
@@ -85,7 +85,7 @@ class CategoryController extends Controller
      */
     public function update(Request $rq)
     {
-        $cate = $this->_category->getById(base64_decode($rq->id))->firstOrFail();
+        $cate = $this->_category->getById($rq->id)->firstOrFail();
 
         $this->authorize('category.update', $cate);
 

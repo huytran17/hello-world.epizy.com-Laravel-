@@ -44,7 +44,7 @@
                         <td>{{ $u->id }}</td>
                         <td>
                             @can('user.view', $u)
-                            <a href="{{ route('admin.user.edit', ['id' => $u->encrypted_id]) }}">{{ $u->name }}</a>
+                            <a href="{{ route('admin.user.edit', ['id' => $u->id]) }}">{{ $u->name }}</a>
                             @else
                             {{ $u->name }}
                             @endcan

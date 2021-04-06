@@ -41,7 +41,7 @@
                         <td>{{ $c->id }}</td>
                         <td>
                             @can('category.view', $c)
-                            <a href="{{ route('admin.cate.edit', ['id' => $c->encrypted_id]) }}">{{ $c->title }}</a>
+                            <a href="{{ route('admin.cate.edit', ['id' => $c->id]) }}">{{ $c->title }}</a>
                             @else
                             {{ $c->title }}
                             @endcan
@@ -50,9 +50,9 @@
                         <td>
                             @if (empty($c->parent))
                                 <x-badge class="light">
-                                    <a href="{{ route('admin.cate.show', ['id' => $c->encrypted_id]) }}">{{ __('Mục cha') }}</a>
+                                    <a href="{{ route('admin.cate.show', ['id' => $c->id]) }}">{{ __('Mục cha') }}</a>
                                 </x-badge>
-                            @else <a href="{{ route('admin.cate.show', ['id' => $c->encrypted_id]) }}">{{ $c->parent->title }}</a>
+                            @else <a href="{{ route('admin.cate.show', ['id' => $c->id]) }}">{{ $c->parent->title }}</a>
                             @endif
                         </td>
                         <td>{{ $c->user->name }}</td>

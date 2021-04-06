@@ -86,7 +86,7 @@ class CommentController extends Controller
      */
     public function destroy(Request $rq)
     {
-        $comment = $this->_comment->getById(base64_decode($rq->id));
+        $comment = $this->_comment->getById($rq->id);
 
         $this->authorize('comment.delete', $comment);
 
@@ -95,7 +95,7 @@ class CommentController extends Controller
 
     public function forceDelete(Request $rq)
     {
-        $comment = $this->_comment->getById(base64_decode($rq->id));
+        $comment = $this->_comment->getById($rq->id);
 
         $this->authorize('comment.forceDelete', $comment);
 
@@ -104,7 +104,7 @@ class CommentController extends Controller
 
     public function restore(Request $rq)
     {
-        $comment = $this->_comment->getById(base64_decode($rq->id));
+        $comment = $this->_comment->getById($rq->id);
 
         $this->authorize('comment.restore', $comment);
 

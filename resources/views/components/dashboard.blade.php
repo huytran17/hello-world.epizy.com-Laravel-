@@ -78,13 +78,13 @@
                             <td>{{ $p->id }}</td>
                             <td>
                                 @can('post.update', $p)
-                                    <a href="{{ route('admin.post.edit', ['id' => $p->encrypted_id]) }}">{{ $p->title }}</a>
+                                    <a href="{{ route('admin.post.edit', ['id' => $p->id]) }}">{{ $p->title }}</a>
                                 @else
                                     {{ $p->title }}
                                 @endcan
                             </td>
-                            <td><a href="{{ route('admin.user.edit', ['id' => $p->user->encrypted_id]) }}">{{ $p->user->name }}</a></td>
-                            <td><a href="{{ route('admin.cate.show', ['id' => $p->category->encrypted_id]) }}">{{ $p->category->title }}</a></td>
+                            <td><a href="{{ route('admin.user.edit', ['id' => $p->user->id]) }}">{{ $p->user->name }}</a></td>
+                            <td><a href="{{ route('admin.cate.show', ['id' => $p->category->id]) }}">{{ $p->category->title }}</a></td>
                             <td>{{ $p->meta_data->keywords }}</td>
                             <td>{{ $p->meta_data->source }}</td>
                             <td>{{ $p->dmy_created_at }}</td>

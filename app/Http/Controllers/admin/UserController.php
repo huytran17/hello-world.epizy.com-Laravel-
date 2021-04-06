@@ -75,7 +75,7 @@ class UserController extends Controller
      */
     public function edit(Request $rq)
     {
-        $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
+        $user = $this->_user->getById($rq->id)->firstOrFail();
 
         $this->authorize('user.update', $user);
 
@@ -92,14 +92,14 @@ class UserController extends Controller
 
     public function updateAvatar(UpdateAvatarRequest $rq)
     {
-        $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
+        $user = $this->_user->getById($rq->id)->firstOrFail();
 
         $this->authorize('user.update', $user);
 
         if ($rq->hasFile('profile_photo_path')) {
             $b64_img = $this->_uploadFileService->getBase64Image($rq->file('profile_photo_path'));
 
-            $this->_user->updateUser(base64_decode($rq->id), [
+            $this->_user->updateUser($rq->id, [
                 'profile_photo_path' => $b64_img,
             ]);
         }

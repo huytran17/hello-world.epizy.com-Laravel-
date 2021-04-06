@@ -44,7 +44,7 @@
                         <td>{{ $p->id }}</td>
                         <td>
                             @can('post.update', $p)
-                            <a href="{{ route('admin.post.edit', ['id' => $p->encrypted_id]) }}">{{ $p->title }}</a>
+                            <a href="{{ route('admin.post.edit', ['id' => $p->id]) }}">{{ $p->title }}</a>
                             @else
                             {{ $p->title }}
                             @endcan
@@ -52,21 +52,20 @@
                         <td>{{ $p->description }}</td>
                         <td>
                             @can('category.view', $p->category)
-                            <a href="{{ route('admin.cate.show', ['id' => $p->category->encrypted_id]) }}">{{ $p->category->title }}</a>
+                            <a href="{{ route('admin.cate.show', ['id' => $p->category->id]) }}">{{ $p->category->title }}</a>
                             @else
                             {{ $p->category->title }}
                             @endcan
                         </td>
                         <td>
                             @can('user.view', $p->user)
-                            <a href="{{ route('admin.user.edit', ['id' => $p->user->encrypted_id]) }}">{{ $p->user->name }}</a>
+                            <a href="{{ route('admin.user.edit', ['id' => $p->user->id]) }}">{{ $p->user->name }}</a>
                             @else
                             {{ $p->user->name }}
                             @endcan
                         </td>
                         <td>{{ $p->meta_data->keywords }}</td>
                         <td>{{ $p->meta_data->source }}</td>
-                        <td>{{ $p->meta_data->view }}</td>
                         <td>{{ $p->dmy_created_at }}</td>
                         <td>{{ $p->dmy_updated_at }}</td>
                         <td class="text-center">

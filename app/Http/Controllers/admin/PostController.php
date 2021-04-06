@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\UpdateThumbnailPostRequest;
 use App\Services\UploadFileService;
 
 class PostController extends Controller
@@ -70,7 +71,7 @@ class PostController extends Controller
      */
     public function edit(Request $rq)
     {
-        $post = $this->_post->getById(base64_decode($rq->id))->firstOrFail();
+        $post = $this->_post->getById($rq->id)->firstOrFail();
 
         $this->authorize('post.update',$post);
 
@@ -91,36 +92,30 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $rq)
     {
-        $post = $this->_post->getById(base64_decode($rq->id))->firstOrFail();
+        //$post = $this->_post->getById(base64_decode($rq->id))->firstOrFail();
 
-        $this->authorize('post.update', $post);
+        //$this->authorize('post.update', $post);
 
-        $b64_img = $post->thumbnail_photo_path;
+        $this->_post->updatePost($rq->id, $rq->all());
 
-        if ($rq->hasFile('thumbnail_photo_path')) {
-            $b64_img = $this->_uploadFileService->getBase64Image($rq->file('thumbnail_photo_path'));
-        }
-        
-        $this->_post->updatePost(base64_decode($rq->id), [
-            'title' => $rq->title,
-            'description' => $rq->description,
-            'content' => $rq->content,
+        return response()->axios([
+            'error' => false
+        ]);
+    }
+
+    public function updateThumbnail(UpdateThumbnailPostRequest $rq)
+    {
+        //$post = $this->_post->getById(base64_decode($rq->id))->firstOrFail();
+
+        //$this->authorize('post.update', $post);
+
+        $b64_img = $this->_uploadFileService->getBase64Image($rq->file('thumbnail_photo_path'));
+
+        $this->_post->updatePost($rq->id, [
             'thumbnail_photo_path' => $b64_img,
-            'meta_data' => [
-                'keywords' => $rq->keywords,
-                'source' => $rq->source,
-                'view' => $post->meta_data->view
-            ],
-            'category_id' => 2,
-            'user_id' => $post->user->id
         ]);
 
         return redirect()->back();
-    }
-
-    public function updateThumbnail(Request $rq)
-    {
-        
     }
 
     /**

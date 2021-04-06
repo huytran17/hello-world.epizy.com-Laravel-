@@ -28,15 +28,18 @@ class Post{
 	}
 
 	async update() {
+		this.route = $('#FormUpdatePost').attr('action');
+
 		var res = await axios.post(this.route ,{
 			title: $('#title').val(),
 			description: $('#description').val(),
-			// thumbnail_photo_path: $('#thumbnail_photo_path').val(),
 			content: $('#content').val(),
-			keywords: $('#keywords').val(),
-			source: $('#source').val(),
+			meta_data: {
+				keywords: $('#keywords').val(),
+				source: $('#source').val(),
+			}
 		});
-		if (res.data) location.reload();
+		if (res.data.error==false) location.reload();
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
 }
@@ -47,6 +50,7 @@ $('#ex_post').click(function() {
 	post.selectType = parseInt($('#post_box').val());
 	post.perform();
 });
-// $('form-footer button[type=button]').click(function(event){
-// 	post.update();
-// });
+
+$('#BtnUpdatePost').click(function(event){
+	post.update();
+});

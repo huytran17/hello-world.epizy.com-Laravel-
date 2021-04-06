@@ -87,7 +87,7 @@ class MessageController extends Controller
      */
     public function destroy(Request $rq)
     {
-        $message = $this->_message->getById(base64_decode($rq->id))->firstOrFail();
+        $message = $this->_message->getById($rq->id)->firstOrFail();
 
         $this->authorize('message.delete', $message);
 
