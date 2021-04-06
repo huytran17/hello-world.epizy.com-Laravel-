@@ -18,6 +18,8 @@ class Post extends Model
     	'slug',
     	'content',
     	'meta_data',
+        'user_id',
+        'category_id',
     ];
 
     protected $appends = [

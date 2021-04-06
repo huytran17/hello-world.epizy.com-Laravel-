@@ -52,7 +52,11 @@ class PostController extends Controller
 
     public function store(CreatePostRequest $rq)
     {
-        return $this->_post->store($rq->all());
+        $this->_post->store($rq->all());
+
+        return response()->axios([
+            'error' => false
+        ]);
     }
 
     /**
