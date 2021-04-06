@@ -28,6 +28,20 @@
 				</div>
 			{!!Form::close()!!}
 
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updateName', ['id' => $user->id]]])!!}
+				<div class="form-row">
+					<div class="form-group col-12">
+						{!! Form::label('name','Tên tài khoản') !!}
+						{!! Form::text('name',$user->name,['class'=>'form-control']) !!}
+					</div>
+					<div class="form-group row">
+                        <div class="col-md-6">
+                            {!! Form::button('Lưu',['class'=> 'btn btn-primary', 'id' => 'BtnUpdateName']) !!}
+                        </div>
+                    </div>
+				</div>
+			{!!Form::close()!!}
+
 			{!!Form::open(['method'=>'post','route'=>['admin.user.updateEmail', ['id' => $user->id]]])!!}
 				<div class="form-row">
 					<div class="form-group col-12">
