@@ -4,7 +4,7 @@
 			<h4>Chỉnh sửa thông tin tài khoản</h4>
 		</div>
 		<div class="form-body">
-			{!!Form::open(['method'=>'post','route'=>['admin.user.updateAvatar', ['id' => $user->encrypted_id]], 'files' => true])!!}
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updateAvatar', ['id' => $user->id]], 'files' => true])!!}
 				<div class="form-row">
                     <div class="current_img col-12">
                         <div class="thumbnail">
