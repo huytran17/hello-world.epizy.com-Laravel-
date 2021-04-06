@@ -5,6 +5,7 @@
 		</div>
 		<div class="form-body">
 			{!!Form::open(['method'=>'post','route'=>'admin.post.store','files'=>true,'id'=>'FormCreatePost'])!!}
+				
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('title','Tiêu đề bài viết') !!}
@@ -14,6 +15,9 @@
 						{!! Form::label('description','Mô tả') !!}
 						{!! Form::text('description',null,['class'=>'form-control']) !!}
 					</div>
+				</div>
+
+				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('content','Nội dung') !!}
 						{!! Form::text('content',null,['class'=>'form-control']) !!}
@@ -22,9 +26,15 @@
 						{!! Form::label('keywords','') !!}
 						{!! Form::text('keywords',null,['class'=>'form-control']) !!}
 					</div>
+				</div>
+
+				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('source','') !!}
 						{!! Form::text('source',null,['class'=>'form-control']) !!}
+					</div>
+					<div class="form-group col-12 col-md-6">
+						{!! Form::hidden('user_id',auth()->id(),['class'=>'form-control']) !!}
 					</div>
 				</div>
 			{!!Form::close()!!}
