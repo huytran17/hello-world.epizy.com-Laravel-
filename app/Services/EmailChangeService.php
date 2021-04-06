@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\EmailChange;
 use Illuminate\Support\Str;
 use App\Mail\UserChangeEmail;
+use Mail;
 
 class EmailChangeService {
 
@@ -16,19 +17,19 @@ class EmailChangeService {
     {
         $this->_emailChange = $emailChange;
 
-        $this->_token = Str::random(10);
+        $this->_token = Str::random(25);
     }
 
     public function verify($email_new)
     {
         $this->storeEmailChange($email_new);
 
-        $this->sendVerifyMail();
+        $this->sendVerifyMail($email_new);
     } 
 
-    public function sendVerifyMail()
+    public function sendVerifyMail($email_new)
     {
-        Mail::to(auth()->user()->email, $this->_token)->send(new UserChangeEmail($this->_token));
+        Mail::to($email_new, $this->_token)->send(new UserChangeEmail($this->_token));
     }
 
     public function storeEmailChange($email_new)
@@ -40,18 +41,23 @@ class EmailChangeService {
         ]);
     }
 
+    public function destroyChangedEmail($email)
+    {
+        return $this->_emailChange->destroyByEmail($email);
+    }
+
     public function getEmailToChange($token)
     {
-        return $this->_emailChange->getByToken($token)->firstOrFail()->email_new;
+        return $this->_emailChange->getByToken($token)->firstOrFail();
     }
 
     public function checkPast($minute)
     {
-        return Carbon::parse($this->_emailChange->getByEmail(auth()->user()->created_at))->addMinutes($minute)->isPast();
+        return Carbon::parse($this->_emailChange->getByEmail(auth()->user()->email)->firstOrFail()->created_at)->addMinutes($minute)->isPast();
     }
 
     public function isCurrentEmail($email_new)
     {
-        return auth()->user()->email==$email_new ? true : false;
+        return auth()->user()->email==$email_new;
     }
 }

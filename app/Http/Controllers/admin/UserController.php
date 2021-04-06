@@ -116,8 +116,10 @@ class UserController extends Controller
 
         $this->authorize('user.update', $user);
 
-        $this->_emailChangeService->verify($rq->email);
-
+        if (!$this->_emailChangeService->isCurrentEmail($rq->email)) {
+            $this->_emailChangeService->verify($rq->email);
+        }
+        
         return response()->axios([
             'error' => false
         ]);
@@ -125,12 +127,15 @@ class UserController extends Controller
 
     public function changeEmail(Request $rq)
     {
-        $email_new = $this->__emailChangeService->getEmailToChange($rq->token);
+        $email = $this->_emailChangeService->getEmailToChange($rq->_token)->email_new;
+
         if ($this->_emailChangeService->checkPast(720)) return 'Yêu cầu đã hết hạn';
-        elseif ($this->_emailChangeService->isCurrentEmail($email_new)) return;
-        return $this->_user->updateUser(auth()->id(), [
-            'email' => $email_new
-        ]);
+
+        $this->_user->updateUser(auth()->id(), ['email' => $email]);
+
+        $this->_emailChangeService->destroyChangedEmail($this->_emailChangeService->getEmailToChange($rq->_token)->email);
+
+        return redirect()->route('admin.view.dashboard');
     }
 
     public function updatePassword(Request $rq)
