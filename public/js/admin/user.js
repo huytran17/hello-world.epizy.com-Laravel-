@@ -49,9 +49,9 @@ $('#ex_userbox').click(function(){
 	user.perform();
 });
 
-$('.form-footer button[type=button]').click(function(event) {
-	user.update();
-});
+// $('.form-footer button[type=button]').click(function(event) {
+// 	user.update();
+// });
 
 $('#BtnUpdateName').click(function(event) {
 	user.updateName($(event).closest('form').attr('action'));

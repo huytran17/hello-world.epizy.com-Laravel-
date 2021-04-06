@@ -50,7 +50,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
+    public function store(CreatePostRequest $rq)
+    {
+        return $this->_post->store($rq->all());
+    }
 
     /**
      * Display the specified resource.

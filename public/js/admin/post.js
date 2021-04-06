@@ -57,7 +57,7 @@ class Post{
 		});
 
 		if (res.data.error == false) location.reload();
-		else {this.appendPos.append(res.data.toast_notice)}; $('$toast').toast('show');
+		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
 }
 

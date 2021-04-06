@@ -4,7 +4,7 @@
 			<h4>Thêm bài viết</h4>
 		</div>
 		<div class="form-body">
-			{!!Form::open(['method'=>'post','route'=>'admin.post.create','files'=>true,'id'=>'FormCreatePost'])!!}
+			{!!Form::open(['method'=>'post','route'=>'admin.post.store','files'=>true,'id'=>'FormCreatePost'])!!}
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('title','Tiêu đề bài viết') !!}
