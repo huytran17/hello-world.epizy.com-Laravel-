@@ -118,6 +118,11 @@ class PostController extends Controller
         return redirect()->back();
     }
 
+    public function updateThumbnail(Request $rq)
+    {
+        
+    }
+
     /**
      * Remove the specified resource from storage.
      *

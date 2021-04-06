@@ -4,16 +4,8 @@
             <h4>Chỉnh sửa bài viết</h4>
         </div>
         <div class="form-body">
-            {!!Form::open(['method'=>'post','route'=>['admin.post.update',['id'=>$post->encrypted_id]],'files'=>true])!!}
+            {!!Form::open(['method'=>'post','route'=>['admin.post.updateThumbnail',['id'=>$post->encrypted_id]],'files'=>true])!!}
             <div class="form-row">
-                <div class="form-group col-12 col-md-6">
-                    {!! Form::label('title','Tiêu đề bài viết') !!}
-                    {!! Form::text('title',$post->title,['class'=>'form-control']) !!}
-                </div>
-                <div class="form-group col-12 col-md-6">
-                    {!! Form::label('description','Mô tả') !!}
-                    {!! Form::textarea('description',$post->description,['class'=>'form-control']) !!}
-                </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('thumbnail_photo_path','Thumbnail') !!}
                     <div class="current_img col-6">
@@ -25,6 +17,26 @@
                         <input type="file" name="thumbnail_photo_path" id="thumbnail_photo_path" accept="image/*" class="form-control-file">
                     </div>
                 </div>
+            </div>
+           <div class="form-row col-12 col-md-6">
+                <div class="form-group col-12 col-md-6">
+                    {!! Form::submit('Sửa',['class'=> 'btn btn-primary']) !!}
+                </div>
+            </div>
+            {!!Form::close()!!}}
+            {!!Form::open(['method'=>'post','route'=>['admin.post.update',['id'=>$post->encrypted_id]],'files'=>true])!!}
+                <div class="form-group col-12 col-md-6">
+                    {!! Form::label('title','Tiêu đề bài viết') !!}
+                    {!! Form::text('title',$post->title,['class'=>'form-control']) !!}
+                </div>
+                <div class="form-group col-12 col-md-6">
+                    {!! Form::label('description','Mô tả') !!}
+                    {!! Form::textarea('description',$post->description,['class'=>'form-control']) !!}
+                </div>
+                
+                
+            </div>
+            <div class="form-row">
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('content','Nội dung') !!}
                     {!! Form::textarea('content',$post->content,['class'=>'form-control']) !!}
@@ -38,7 +50,7 @@
                     {!! Form::text('source',$post->meta_data->source,['class'=>'form-control']) !!}
                 </div>
             </div>
-            <div class="form-group col-12 col-md-6">
+            <div class="form-row col-12 col-md-6">
                 <div class="form-group col-12 col-md-6">
                 	{!! Form::label('parent_cate','Chuyên mục') !!}
                     <select name="parent_cate" id="parent_cate">
@@ -55,7 +67,7 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group col-12 col-md-6">
+            <div class="form-row col-12 col-md-6">
                 <div class="form-group col-12 col-md-6">
                     {!! Form::submit('Sửa',['class'=> 'btn btn-primary']) !!}
                 </div>

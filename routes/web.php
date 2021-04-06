@@ -139,6 +139,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'uses' => 'PostController@update',
 			'middleware' => 'can:post.isAdministrator'
 		]);
+
+		Route::post('updateThumbnail', [
+			'as' => 'admin.post.updateThumbnail',
+			'uses' => 'PostController@updateThumbnail',
+			'middleware' => 'can:post.isAdministrator'
+		]);
 	});
 
 	Route::group(['prefix' => 'user'], function() {
