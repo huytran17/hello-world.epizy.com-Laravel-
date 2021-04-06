@@ -28,7 +28,7 @@
 				</div>
 			{!!Form::close()!!}
 
-			{!!Form::open(['method'=>'post','route'=>['admin.user.updateEmail', ['id' => $user->encrypted_id]]])!!}
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updateEmail', ['id' => $user->id]]])!!}
 				<div class="form-row">
 					<div class="form-group col-12">
 						{!! Form::label('name','Tên tài khoản') !!}
@@ -46,7 +46,7 @@
 				</div>
 			{!!Form::close()!!}
 
-			{!!Form::open(['method'=>'post','route'=>['admin.user.updatePwd', ['id' => $user->encrypted_id]]])!!}
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updatePwd', ['id' => $user->id]]])!!}
 				<div class="form-row">
 					<div class="form-group col-12">
 						{!! Form::label('password','Mật khẩu') !!}
