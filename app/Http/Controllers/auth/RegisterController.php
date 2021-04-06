@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRegisterRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -22,7 +23,7 @@ class RegisterController extends Controller
             'name' => $rq->name,
             'email' => $rq->email,
             'slug' => $rq->name,
-            'password' => $this->_user->makeHash($rq->password),
+            'password' => Hash::make($rq->password),
         ]);
 
         auth()->login($user);

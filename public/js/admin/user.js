@@ -39,6 +39,19 @@ class User{
 		var res = await axios.post(route, {
 			name: $('#name').val()
 		});
+
+		if (res.data.error==false) location.reload();
+		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
+	}
+
+	async updateEmail(route) {
+		var res = await axios.post(route, {
+			email: $('#email').val(),
+			password: $('#password_check').val()
+		});
+
+		if (res.data.error==false) location.reload();
+		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
 }
 
@@ -54,5 +67,9 @@ $('#ex_userbox').click(function(){
 // });
 
 $('#BtnUpdateName').click(function(event) {
-	user.updateName($(event).closest('form').attr('action'));
+	user.updateName($('#FormUpdateName').attr('action'));
+});
+
+$('#BtnUpdateEmail').click(function(event) {
+	user.updateEmail($('#FormUpdateEmail').attr('action'));
 });

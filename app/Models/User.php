@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Hash;
 use App\Traits\TimestampFormat;
 use App\Traits\IsAlready;
 use App\Services\UserRoleService;
@@ -162,11 +161,6 @@ class User extends Authenticatable
     public function getRoleTypeAttribute()
     {
         return $this->role === 0 ? 'Super Admin' : ($this->role === 1 ? 'Vice Admin' : 'Client');
-    }
-
-    public function makeHash($value)
-    {
-        return Hash::make($value);
     }
 
     public function scopeGetNewInMonth($query, $month, $year)

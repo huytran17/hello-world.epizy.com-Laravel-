@@ -90,6 +90,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		'uses' => 'HomeController@dashboard'
 	]);
 
+	Route::get('change-email', [
+		'as' => 'auth.changeEmail',
+		'uses' => 'UserController@changeEmail'
+	]);
+
 	Route::group(['prefix' => 'site'], function() {
 
 		Route::get('edit', [

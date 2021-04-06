@@ -28,12 +28,17 @@
 				</div>
 			{!!Form::close()!!}
 
-			{!!Form::open(['method'=>'post','route'=>['admin.user.updateName', ['id' => $user->id]]])!!}
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updateName', ['id' => $user->id]], 'id' => 'FormUpdateName'])!!}
 				<div class="form-row">
 					<div class="form-group col-12">
 						{!! Form::label('name','Tên tài khoản') !!}
-						{!! Form::text('name',$user->name,['class'=>'form-control']) !!}
+						<input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ $user->name }}">
 					</div>
+					@error('name')
+                    <span class="invalid-feedback d-inline" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
 					<div class="form-group row">
                         <div class="col-md-6">
                             {!! Form::button('Lưu',['class'=> 'btn btn-primary', 'id' => 'BtnUpdateName']) !!}
@@ -42,15 +47,15 @@
 				</div>
 			{!!Form::close()!!}
 
-			{!!Form::open(['method'=>'post','route'=>['admin.user.updateEmail', ['id' => $user->id]]])!!}
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updateEmail', ['id' => $user->id]], 'id' => 'FormUpdateEmail'])!!}
 				<div class="form-row">
-					<div class="form-group col-12">
-						{!! Form::label('name','Tên tài khoản') !!}
-						{!! Form::text('name',$user->name,['class'=>'form-control']) !!}
-					</div>
-					<div class="form-group col-12">
+					<div class="form-group col-12 col-md-6">
 						{!! Form::label('email','Email') !!}
-						{!! Form::text('email',$user->email,['class'=>'form-control']) !!}
+						{!! Form::email('email',$user->email,['class'=>'form-control']) !!}
+					</div>
+					<div class="form-group col-12 col-md-6">
+						{!! Form::label('password_check','Mật khẩu') !!}
+						{!! Form::password('password_check',null,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group row">
                         <div class="col-md-6">

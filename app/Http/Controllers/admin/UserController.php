@@ -7,19 +7,24 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateAvatarRequest;
+use App\Http\Requests\UpdateUsernameRequest;
+use App\Http\Requests\UpdateEmailRequest;
 use App\Services\UploadFileService;
+use App\Services\EmailChangeService;
 
 class UserController extends Controller
 {
     const UPDATE_AVATAR = 0, UPDATE_EMAIL = 1, UPDATE_PWD = 2;
 
-    protected $_user, $_uploadFileService;
+    protected $_user, $_uploadFileService, $_emailChange;
 
-    public function __construct(User $user, UploadFileService $uploadFileService)
+    public function __construct(User $user, EmailChangeService $emailChangeService, UploadFileService $uploadFileService)
     {
         $this->_user = $user;
 
         $this->_uploadFileService = $uploadFileService;
+
+        $this->_emailChangeService = $emailChangeService;
     }
     /**
      * Display a listing of the resource.
@@ -105,9 +110,27 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function updateEmail(Request $rq)
+    public function updateEmail(UpdateEmailRequest $rq)
     {
-        
+        $user = $this->_user->getById($rq->id)->firstOrFail();
+
+        $this->authorize('user.update', $user);
+
+        $this->_emailChangeService->verify($rq->email);
+
+        return response()->axios([
+            'error' => false
+        ]);
+    }
+
+    public function changeEmail(Request $rq)
+    {
+        $email_new = $this->__emailChangeService->getEmailToChange($rq->token);
+        if ($this->_emailChangeService->checkPast(720)) return 'Yêu cầu đã hết hạn';
+        elseif ($this->_emailChangeService->isCurrentEmail($email_new)) return;
+        return $this->_user->updateUser(auth()->id(), [
+            'email' => $email_new
+        ]);
     }
 
     public function updatePassword(Request $rq)
@@ -121,7 +144,7 @@ class UserController extends Controller
 
         $this->authorize('user.update', $user);
 
-        $this->_user->updateUser($rq->id, $rq->only('name'));
+        $this->_user->updateUser($rq->id, $rq->all());
 
         return response()->axios([
             'error' => false

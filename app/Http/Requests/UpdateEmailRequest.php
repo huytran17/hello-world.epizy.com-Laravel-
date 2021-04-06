@@ -7,9 +7,9 @@ use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\View;
+use App\Rules\CheckPassword;
 
-
-class UpdateUsernameRequest extends FormRequest
+class UpdateEmailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,12 +29,13 @@ class UpdateUsernameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 
+            'email' => ['required', 'email', 'max:255', 
                 Rule::unique('users')->where(function($query) {
                     $query->where([
                         ['id', '!=', $this->id],
                     ]);
                 })],
+            'password' => ['required', new CheckPassword],
         ];
     }
 
@@ -42,9 +43,12 @@ class UpdateUsernameRequest extends FormRequest
     {
         return [
             'required' => 'Vui lòng không bỏ trống',
+            'email' => 'Định dạng không hợp lệ',
+            'email.max' => 'Tối đa 255 ký tự',
+            'unique' => 'Email đã tồn tại',
             'string' => 'Định dạng không hợp lệ',
-            'max' => 'Tối đa 255 ký tự',
-            'unique' => 'Tài khoản đã tồn tại'
+            'password.min' => 'Mật khẩu tối thiểu 8 ký tự',
+            'password.max' => 'Mật khẩu tối đa 32 ký tự',
         ];
     }
 
