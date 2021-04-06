@@ -32,7 +32,7 @@ class CreatePostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
-            'thumbnail_photo_path' => 'file|mimes:jpeg,png,webp,jpg|max:1024',
+            // 'thumbnail_photo_path' => 'file|mimes:jpeg,png,webp,jpg|max:1024',
             'content' =>'required|string',
             'keywords' =>'required',
             'source' =>'required',
@@ -45,9 +45,9 @@ class CreatePostRequest extends FormRequest
             'required' => 'Vui lòng không bỏ trống',
             'string' => 'Định dạng không hợp lệ',
             'max' => 'Tối đa 255 kí tự',
-            'file' => 'File không hợp lệ',
-            'mimes' => 'Cho phép định dạng jpeg,png,webp,jpg',
-            'max.thumbnail_photo_path' => 'Kích thước tối đa 1MB'
+            // 'file' => 'File không hợp lệ',
+            // 'mimes' => 'Cho phép định dạng jpeg,png,webp,jpg',
+            // 'max.thumbnail_photo_path' => 'Kích thước tối đa 1MB'
         ];
     }
 
