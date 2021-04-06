@@ -9,16 +9,18 @@ $(document).on('hidden.bs.toast', e => {
     e.target.remove();
 });
 
-function convertToSlug(Text)
-{
-    return Text
-        .toLowerCase()
-        .replace(/ /g,'-')
-        .replace(/[^\w-]+/g,'')
-        ;
-}
+
 
 class App {
+
+    convertToSlug(Text)
+    {
+        return Text
+            .toLowerCase()
+            .replace(/ /g,'-')
+            .replace(/[^\w-]+/g,'')
+            ;
+    }
 
     getCheckboxChecked() {
         var checkboxes = [];

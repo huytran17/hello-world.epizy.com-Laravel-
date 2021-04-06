@@ -5,6 +5,7 @@ class Post{
 		this.route = $('.form-wrapper form').attr('action');
 		this.type = 0;
 		this.appendPos = $('#AppendPosition');
+		this.slug = null;
 	}
 
 	set selectType(type){
@@ -46,14 +47,23 @@ class Post{
 	async addition() {
 		this.route  = $('#FormCreatePost').attr('action');
 
+		this.slug = app.convertToSlug($('#title').val());
+
+		// let user_id =  $('input[name=user_id]').val();
+		// console.log(user_id);
+
 		var res = await axios.post(this.route, {
 			title:$('#title').val(),
+			slug: this.slug,
 			description:$('#description').val(),
 			content:$('#content').val(),
 			meta_data:{
 				keywords: $('#keywords').val(),
 				source: $('#source').val()
-			}
+			},
+			user_id: $('input[name=user_id]').val(),
+			category_id: 1
+
 		});
 
 		if (res.data.error == false) location.reload();
