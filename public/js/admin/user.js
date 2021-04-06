@@ -35,18 +35,10 @@ class User{
 		else console.log('error');
 	}
 
-	async updateAvatar() {
-		let file_data = $('#profile_photo_path').prop('files')[0];
-        let form_data = new FormData();
-        form_data.append('profile_photo_path', file_data);
-
-		var res = await axios.post(this.route, {
-			name: $('#name').val(),
-			image: form_data
+	async updateName(route) {
+		var res = await axios.post(route, {
+			name: $('#name').val()
 		});
-
-		if (res.data.error==false) location.reload();
-		else {this.appendPos.append(res.data.toast_notice); $('#toast').toast('show');}
 	}
 }
 
@@ -61,7 +53,6 @@ $('.form-footer button[type=button]').click(function(event) {
 	user.update();
 });
 
-$('#BtnUpdateAvatar').click(function(event) {
-	// user.routeUrl = $(event).closest('form').attr('action');
-	// user.BtnUpdateAvatar();
+$('#BtnUpdateName').click(function(event) {
+	user.updateName($(event).closest('form').attr('action'));
 });

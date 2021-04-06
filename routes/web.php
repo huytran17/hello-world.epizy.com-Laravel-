@@ -174,6 +174,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'uses' => 'UserController@updateEmail',
 		]);
 
+		Route::post('updateName', [
+			'as' => 'admin.user.updateName',
+			'uses' => 'UserController@updateName',
+		]);
+
 		Route::post('updatePwd', [
 			'as' => 'admin.user.updatePwd',
 			'uses' => 'UserController@updatePassword',

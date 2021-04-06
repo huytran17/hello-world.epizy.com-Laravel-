@@ -96,13 +96,11 @@ class UserController extends Controller
 
         $this->authorize('user.update', $user);
 
-        if ($rq->hasFile('profile_photo_path')) {
-            $b64_img = $this->_uploadFileService->getBase64Image($rq->file('profile_photo_path'));
+        $b64_img = $this->_uploadFileService->getBase64Image($rq->file('profile_photo_path'));
 
-            $this->_user->updateUser($rq->id, [
-                'profile_photo_path' => $b64_img,
-            ]);
-        }
+        $this->_user->updateUser($rq->id, [
+            'profile_photo_path' => $b64_img,
+        ]);
 
         return redirect()->back();
     }
@@ -115,6 +113,19 @@ class UserController extends Controller
     public function updatePassword(Request $rq)
     {
         
+    }
+
+    public function updateName(UpdateUsernameRequest $rq)
+    {
+        $user = $this->_user->getById($rq->id)->firstOrFail();
+
+        $this->authorize('user.update', $user);
+
+        $this->_user->updateUser($rq->id, $rq->only('name'));
+
+        return response()->axios([
+            'error' => false
+        ]);
     }
 
     /**
