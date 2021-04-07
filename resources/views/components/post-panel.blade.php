@@ -29,7 +29,6 @@
                         <th>Người tạo</th>
                         <th>Từ khóa</th>
                         <th>Nguồn</th>
-                        <th>Lượt xem</th>
                         <th>Ngày tạo</th>
                         <th>Cập nhật</th>
                         <th>Trạng thái</th>
