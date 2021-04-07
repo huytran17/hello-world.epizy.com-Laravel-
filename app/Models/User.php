@@ -13,6 +13,7 @@ use App\Traits\IsAlready;
 use App\Services\UserRoleService;
 use DB;
 use Avatar;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -161,6 +162,11 @@ class User extends Authenticatable
     public function getRoleTypeAttribute()
     {
         return $this->role === 0 ? 'Super Admin' : ($this->role === 1 ? 'Vice Admin' : 'Client');
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
     }
 
     public function scopeGetNewInMonth($query, $month, $year)

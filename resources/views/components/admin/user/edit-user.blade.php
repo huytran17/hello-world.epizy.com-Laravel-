@@ -65,14 +65,18 @@
 				</div>
 			{!!Form::close()!!}
 
-			{!!Form::open(['method'=>'post','route'=>['admin.user.updatePwd', ['id' => $user->id]]])!!}
+			{!!Form::open(['method'=>'post','route'=>['admin.user.updatePwd', ['id' => $user->id]], 'id' => 'FormUpdatePwd'])!!}
 				<div class="form-row">
 					<div class="form-group col-12">
-						{!! Form::label('password','Mật khẩu') !!}
+						{!! Form::label('old_password','Mật khẩu cũ') !!}
+						{!! Form::password('old_password',null,['class'=>'form-control']) !!}
+					</div>
+					<div class="form-group col-12">
+						{!! Form::label('password','Mật khẩu mới') !!}
 						{!! Form::password('password',null,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12">
-						{!! Form::label('repass','Nhập lại mật khẩu') !!}
+						{!! Form::label('repass','Xác nhận mật khẩu') !!}
 						{!! Form::password('repass',null,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group row">

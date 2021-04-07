@@ -173,6 +173,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		Route::get('create', [
 			'as' => 'admin.user.create',
 			'uses' => 'UserController@create',
+			'middleware' => 'can:user.create'
 		]);
 
 		Route::post('updateAvatar', [

@@ -53,6 +53,30 @@ class User{
 		if (res.data.error==false) location.reload();
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
+
+	async updatePwd(route) {
+		var res = await axios.post(route, {
+			old_password: $('#old_password').val(),
+			password: $('#password').val(),
+			repass: $('#repass').val(),
+		});
+
+		if (res.data.error==false) location.reload();
+		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
+	}
+
+	async create(route) {
+		var res = await axios.post(route, {
+			name: $('#name').val(),
+			slug: $('#name').val(),
+			email: $('#email').val(),
+			password: $('#password').val(),
+			repass: $('#repass').val(),
+		});
+
+		if (res.data.error==false) location.reload();
+		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
+	}
 }
 
 var user = new User;
@@ -72,4 +96,12 @@ $('#BtnUpdateName').click(function(event) {
 
 $('#BtnUpdateEmail').click(function(event) {
 	user.updateEmail($('#FormUpdateEmail').attr('action'));
+});
+
+$('#BtnUpdatePwd').click(function(event) {
+	user.updatePwd($('#FormUpdatePwd').attr('action'));
+});
+
+$('#BtnCreateUser').click(function(event) {
+	user.create($('#FormCreateUser').attr('action'));
 });

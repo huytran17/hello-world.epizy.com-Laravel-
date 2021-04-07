@@ -5,7 +5,6 @@ class Post{
 		this.route = $('.form-wrapper form').attr('action');
 		this.type = 0;
 		this.appendPos = $('#AppendPosition');
-		this.slug = null;
 	}
 
 	set selectType(type){
@@ -33,6 +32,7 @@ class Post{
 
 		var res = await axios.post(this.route ,{
 			title: $('#title').val(),
+			slug: app.convertToSlug($('#title').val()),
 			description: $('#description').val(),
 			content: $('#content').val(),
 			meta_data: {
@@ -44,17 +44,15 @@ class Post{
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
 
-	async addition() {
+	async create() {
 		this.route  = $('#FormCreatePost').attr('action');
-
-		this.slug = app.convertToSlug($('#title').val());
 
 		// let user_id =  $('input[name=user_id]').val();
 		// console.log(user_id);
 
 		var res = await axios.post(this.route, {
 			title:$('#title').val(),
-			slug: this.slug,
+			slug: $('#title').val(),
 			description:$('#description').val(),
 			content:$('#content').val(),
 			meta_data:{
@@ -83,5 +81,5 @@ $('#BtnUpdatePost').click(function(event){
 });
 
 $('#BtnCreatePost').click(function() {
-	post.addition();
+	post.create();
 });

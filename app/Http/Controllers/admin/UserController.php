@@ -9,8 +9,10 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateAvatarRequest;
 use App\Http\Requests\UpdateUsernameRequest;
 use App\Http\Requests\UpdateEmailRequest;
+use App\Http\Requests\UpdatePwdRequest;
 use App\Services\UploadFileService;
 use App\Services\EmailChangeService;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -54,7 +56,11 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $rq)
     {
-        return $this->_user->store($rq->all());
+        $this->_user->store($rq->except('repass'));
+
+        return response()->axios([
+            'error' => false
+        ]);
     }
 
     /**
@@ -127,6 +133,10 @@ class UserController extends Controller
 
     public function changeEmail(Request $rq)
     {
+        $user = $this->_user->getById($rq->id)->firstOrFail();
+
+        $this->authorize('user.update', $user);
+
         $email = $this->_emailChangeService->getEmailToChange($rq->_token)->email_new;
 
         if ($this->_emailChangeService->checkPast(720)) return 'Yêu cầu đã hết hạn';
@@ -138,9 +148,19 @@ class UserController extends Controller
         return redirect()->route('admin.view.dashboard');
     }
 
-    public function updatePassword(Request $rq)
+    public function updatePassword(UpdatePwdRequest $rq)
     {
-        
+        $user = $this->_user->getById($rq->id)->firstOrFail();
+
+        $this->authorize('user.update', $user);
+
+        $user->password = $rq->password;
+
+        $user->save();
+
+        return response()->axios([
+            'error' => false
+        ]);
     }
 
     public function updateName(UpdateUsernameRequest $rq)
@@ -149,7 +169,11 @@ class UserController extends Controller
 
         $this->authorize('user.update', $user);
 
-        $this->_user->updateUser($rq->id, $rq->all());
+        $user->name = $rq->name;
+
+        $user->slug = $rq->name;
+
+        $user->save();
 
         return response()->axios([
             'error' => false
