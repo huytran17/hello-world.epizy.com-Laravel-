@@ -28,7 +28,10 @@ class Post{
 	}
 
 	async update() {
+		console.log('msg')
 		this.route = $('#FormUpdatePost').attr('action');
+
+		let cate_id = $('child_cate').val()=="undefined" ? $('#parent_cate').val() : $('child_cate').val();
 
 		var res = await axios.post(this.route ,{
 			title: $('#title').val(),
@@ -38,7 +41,8 @@ class Post{
 			meta_data: {
 				keywords: $('#keywords').val(),
 				source: $('#source').val(),
-			}
+			},
+			category_id: cate_id
 		});
 		if (res.data.error==false) location.reload();
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
@@ -67,6 +71,22 @@ class Post{
 		if (res.data.error == false) location.reload();
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
+
+	async getChildCate(parent_id, route) {
+		var res = await axios.post(route, {
+			pid: parent_id,
+		});
+		
+		if (res.data.error==false) {
+
+			$('#child_cate').empty();
+
+			res.data.cates.forEach( function(item, index) {
+				$('#child_cate').append(`<option value=${item.id}>${item.title}</option>`);
+			});
+		}
+		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
+	}
 }
 
 var post = new Post;
@@ -82,4 +102,8 @@ $('#BtnUpdatePost').click(function(event){
 
 $('#BtnCreatePost').click(function() {
 	post.create();
+});
+
+$('select[id=parent_cate]').change(function(event) {
+	post.getChildCate(event.target.value, $(event.target).data('route'));
 });

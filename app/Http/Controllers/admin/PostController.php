@@ -78,15 +78,18 @@ class PostController extends Controller
      */
     public function edit(Request $rq)
     {
-        $post = $this->_post->getById($rq->id)->firstOrFail();
+        $post = $this->_post->getById($rq->id)->with(['category'])->firstOrFail();
 
         $this->authorize('post.update',$post);
 
-        $parent_cates = $this->_cate->getParentWith(['id', 'title'])->get();
+        $parent_cates = $post->category->isChild() ? $this->_cate->getParentWith(['id', 'title'])->get() : $post->category;
+
+        $child_cates = $post->category->isChild() ? $this->_cate->getChildWith(['id', 'title'], $post->category->parent->id)->get() : null;
 
         return view('admin.post.edit',[
             'post'=>$post, 
             'parent_cates' => $parent_cates,
+            'child_cates' => $child_cates
         ]);
     }
 

@@ -83,9 +83,24 @@ class Category extends Model
         return $query->select($withFields)->where('parent_id', null);
     }
 
+    public function scopeGetCateChildWith($query, $withFields, $parent_id)
+    {
+        return $query->select($withFields)->where('parent_id', $parent_id);
+    }
+
     public function getById($id)
     {
         return $this->getCategoryById($id);
+    }
+
+    public function isParent()
+    {
+        return $this->attributes['parent_id'] === null;
+    }
+
+    public function isChild()
+    {
+        return $this->attributes['parent_id'] !== null;
     }
 
     public function destroyCategory($id_arr)
@@ -129,10 +144,15 @@ class Category extends Model
         return $this->getCateParentWith($withFields);
     }
 
-    public function updateCategory($data)
+    public function getChildWith($withFields, $parent_id)
+    {
+        return $this->getCateChildWith($withFields, $parent_id);
+    }
+
+    public function updateCategory($id, $data)
     {
         try {
-            $this->update($data);
+            $this->getById($id)->update($data);
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());

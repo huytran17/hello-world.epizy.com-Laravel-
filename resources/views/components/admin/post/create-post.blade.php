@@ -34,6 +34,19 @@
 						{!! Form::text('source',null,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
+						<div class="form-group col-12 col-md-6">
+		                    {!! Form::label('parent_cate','Chuyên mục') !!}
+		                    <select name="parent_cate" id="parent_cate">
+		                        <option value="" disabled="disabled" selected="selected">{{ __('---Tùy chọn---') }}</option>
+		                        @foreach($parentCates as $c)
+		                        <option value="{{ $c->id }}">{{ $c->title }}</option>
+		                        @endforeach
+		                    </select>
+		                </div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-12 col-md-6">
 						{!! Form::hidden('user_id',auth()->id(),['class'=>'form-control']) !!}
 					</div>
 				</div>

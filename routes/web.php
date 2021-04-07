@@ -239,6 +239,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'middleware' => 'can:category.store'
 		]);
 
+		Route::post('update-thumbnail', [
+			'as' => 'admin.cate.updateThumbnail',
+			'uses' => 'CategoryController@updateThumbnail',
+		]);
+
+		Route::post('get-child', [
+			'as' => 'admin.cate.getChildCate',
+			'uses' => 'CategoryController@getChildCate',
+		]);
+
 		Route::post('update', [
 			'as' => 'admin.cate.update',
 			'uses' => 'CategoryController@update',

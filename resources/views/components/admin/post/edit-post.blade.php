@@ -54,17 +54,24 @@
             </div>
             <div class="form-row col-12 col-md-6">
                 <div class="form-group col-12 col-md-6">
-                    {!! Form::label('parent_cate','Chuyên mục') !!}
-                    <select name="parent_cate" id="parent_cate">
+                    {!! Form::label('parent_cate','Chuyên mục cha') !!}
+                    <select name="parent_cate" id="parent_cate" data-route="{{ route('admin.cate.getChildCate') }}">
                         <option value="" disabled="disabled" selected="selected">{{ __('---Tùy chọn---') }}</option>
-                        @foreach($parentCates as $c)
-                        <option value="{{ $c->id }}">{{ $c->title }}</option>
-                        @endforeach
+                        @isset ($parentCates)
+                            @foreach($parentCates as $c)
+                            <option value="{{ $c->id }}" {{ $post->category->parent->id===$c->id ? 'selected=selected' : '' }}>{{ $c->title }}</option>
+                            @endforeach
+                        @endisset
                     </select>
                 </div>
-                <div class="form-group col-12 col-md-6 d-none">
+                <div class="form-group col-12 col-md-6">
+                    {!! Form::label('child_cate','Chuyên mục con') !!}
                     <select name="child_cate" id="child_cate">
-                        <option value="" disabled="disabled" selected="selected">{{ __('---Tùy chọn---') }}</option>
+                        @isset ($childCates)
+                            @foreach($childCates as $c)
+                                <option value="{{ $c->id }}" {{ $post->category->id===$c->id ? 'selected=selected' : '' }}>{{ $c->title }}</option>
+                            @endforeach
+                        @endisset
                     </select>
                 </div>
             </div>
