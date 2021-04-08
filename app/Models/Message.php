@@ -73,4 +73,17 @@ class Message extends Model
             dd($ex->getMessage());
         }
     }
+
+    public function createMessage($data)
+    {
+        $message = $this;
+        try {
+            $message = $this->create($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+
+        return $message;
+    }
 }

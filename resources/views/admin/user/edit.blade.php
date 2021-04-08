@@ -1,6 +1,6 @@
 <x-home>
 	<x-slot name="title">
-		Thông tin tài khoản
+		Chỉnh sửa thông tin tài khoản
 	</x-slot>
 	<x-slot name="content">
 		<x-admin.user.edit-user :user="$user"></x-admin>

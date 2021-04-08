@@ -1,16 +1,16 @@
 
+pusher.unsubscribeCurrentChannel();
 
 pusher.channelName = 'lower-admin.'+uid;
 
 pusher.subscribe();
 
-pusher.bindEvent('App\\Event\\LowerAdminNewMessageEvent',newMessage);
-
-function newMessage(data){
-	console.log(data.message);
-}
+pusher.bindEvent('App\\Events\\LowerAdminNewMessageEvent', function(data) {
+	$('#conversation .wrapper').append(data.message);
+});
 
 $('#viceAdInput').keydown(function(event) {
-	console.log("obj");
-}
-)
+	if (event.keyCode==13) {
+		message.create($(event.target).data('route'), $(event.target).val());
+	}
+});

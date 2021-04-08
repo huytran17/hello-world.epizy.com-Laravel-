@@ -34,7 +34,7 @@
                 </div>
                 <div class="scroll-area-lg">
                     <div class="scrollbar-container ps ps--active-y">
-                        <div class="p-2">
+                        <div class="wrapper">
                             {{ $slot }}
                         </div>
                         <div class="ps__rail-x" style="left: 0px; bottom: 0px;">

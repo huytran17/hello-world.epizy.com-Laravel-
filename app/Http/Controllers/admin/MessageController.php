@@ -5,6 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Message;
+use Illuminate\Support\Facades\View;
+use App\Events\SuperAdminNewMessageEvent;
+use App\Events\lowerAdminNewMessageEvent;
 
 class MessageController extends Controller
 {
@@ -31,7 +34,7 @@ class MessageController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -40,9 +43,9 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $rq)
     {
-        //
+        return $this->dispatchNewMessage(trim($rq->content));
     }
 
     /**
@@ -87,10 +90,31 @@ class MessageController extends Controller
      */
     public function destroy(Request $rq)
     {
-        $message = $this->_message->getById($rq->id)->firstOrFail();
+        
+    }
 
-        $this->authorize('message.delete', $message);
+    public function dispatchNewMessage($content)
+    {
+        if (!empty($content)) {
+            $message = $this->_message->createMessage([
+                'content' => $content,
+                'user_id' => auth()->id(),
+            ]);
+                
+            $message = $this->_message->getById($message->id)->with(['user'])->firstOrFail();
 
-        return $this->_message->destroyMessage($message);
+            $message_item = View::make('admin.message.message-item', [
+                'msg' => $message,
+            ])->render();
+
+            auth()->user()->isSuperAdmin() ? event(new SuperAdminNewMessageEvent($message_item)) : event(new LowerAdminNewMessageEvent($message_item));
+                
+            return response()->axios([
+                'error' => false
+            ]);
+        }
+        else return response()->axios([
+            'error' => true
+        ]);
     }
 }

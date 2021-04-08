@@ -69,14 +69,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show(Request $rq)
-    // {
-    //     $user = $this->_user->getById(base64_decode($rq->id))->firstOrFail();
+    public function show(Request $rq)
+    {
+        $user = $this->_user->getById($rq->id)->firstOrFail();
 
-    //     $this->authorize('user.view', $user);
-
-    //     return view('admin.user.show',['user'=>$user]);
-    // }
+        return view('admin.user.show-user',['user'=>$user]);
+    }
 
     /**
      * Show the form for editing the specified resource.

@@ -106,9 +106,10 @@
     <script src="{{ asset('js/admin/post.js') }}" charset="utf-8" defer></script>
     @if (Request::routeIs('admin.chat.index'))
         <script src="{{ asset('js/admin/pusher.js') }}" charset="utf-8" defer></script>
+        <script src="{{ asset('js/admin/message.js') }}" charset="utf-8" defer></script>
         @if (auth()->user()->isSuperAdmin())
             <script src="{{ asset('js/admin/superadminchat.js') }}" charset="utf-8" defer></script>
-            <script src="{{ asset('js/admin/ViceAdminChannel.js') }}" charset="utf-8" defer></script>
+            {{-- <script src="{{ asset('js/admin/ViceAdminChannel.js') }}" charset="utf-8" defer></script> --}}
         @else
             <script src="{{ asset('js/admin/ViceAdminChannel.js') }}" charset="utf-8" defer></script>
         @endif

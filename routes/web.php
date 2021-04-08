@@ -114,6 +114,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'uses' => 'MessageController@index',
 			'middleware' => 'can:message.viewAny'
 		]);
+
+		Route::post('store', [
+			'as' => 'admin.chat.store',
+			'uses' => 'MessageController@store',
+			'middleware' => 'can:message.viewAny'
+		]);
 	});
 
 	Route::group(['prefix' => 'post'], function() {
@@ -174,6 +180,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'as' => 'admin.user.create',
 			'uses' => 'UserController@create',
 			'middleware' => 'can:user.create'
+		]);
+
+		Route::get('show', [
+			'as' => 'admin.user.show',
+			'uses' => 'UserController@show',
+			'middleware' => 'can:user.view'
 		]);
 
 		Route::post('updateAvatar', [

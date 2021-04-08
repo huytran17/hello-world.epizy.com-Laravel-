@@ -33,6 +33,7 @@
                         <th>Ngày tạo</th>
                         <th>Cập nhật</th>
                         <th>Trạng thái</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,6 +72,9 @@
                             <x-badge class="{{ $u->isDeleted ? 'success' : 'danger' }}">
                                 {{ $u->isDeleted ? __('Hoạt động') : __('Khóa') }}
                             </x-badge>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ route('admin.user.show', ['id' => $u->id]) }}">Xem</a>
                         </td>
                     </tr>
                     @endforeach
