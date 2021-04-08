@@ -1,16 +1,4 @@
-/**
- * window.pusherConfig = {
-    pusher: null,
-    channel: null,
-    channelName: null,
-}
 
-window.pusherConfig.pusher = new Pusher('2d9b74f07a6ead7c49b9', {
-    cluster: 'ap1',
-    encrypted: true
-});
- */
-//Pusher.logToConsole = true;
 const urlParams = new URLSearchParams(window.location.search);
 const uid = urlParams.get('uid');
 

@@ -94,6 +94,8 @@
     </div>
     <!-- axios-->
     <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
+    <!-- pusher -->
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <script src="{{ asset('js/nprogress.js') }}" charset="utf-8" defer></script>
     <script src="{{ asset('js/inputEmoji.js') }}" charset="utf-8" defer></script>
     <script type="text/javascript" src="{{ asset('js/admin/Chart.js') }}"></script>
