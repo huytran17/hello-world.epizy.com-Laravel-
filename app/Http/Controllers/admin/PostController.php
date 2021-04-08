@@ -40,7 +40,14 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("admin.post.create");
+        $parentCates = $this->_cate->getParentHasChildWith(['id', 'title'])->get();
+
+        $childCates = $this->_cate->getChildWith(['id', 'title'], $parentCates->first()->id)->get();
+
+        return view("admin.post.create")->with([
+            'parent_cates' => $parentCates,
+            'child_cates' => $childCates
+        ]);
     }
 
     /**
@@ -82,9 +89,9 @@ class PostController extends Controller
 
         $this->authorize('post.update',$post);
 
-        $parent_cates = $post->category->isChild() ? $this->_cate->getParentWith(['id', 'title'])->get() : $post->category;
+        $parent_cates = $this->_cate->getParentHasChildWith(['id', 'title'])->get();
 
-        $child_cates = $post->category->isChild() ? $this->_cate->getChildWith(['id', 'title'], $post->category->parent->id)->get() : null;
+        $child_cates = $this->_cate->getChildWith(['id', 'title'], $post->category->parent->id)->get();
 
         return view('admin.post.edit',[
             'post'=>$post, 
