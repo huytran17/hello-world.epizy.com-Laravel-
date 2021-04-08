@@ -2,6 +2,9 @@
 	<x-slot name="header">
 		{{ __('Vice Admin Channel') }}
 	</x-slot>
+	<x-slot name="input">
+		<input placeholder="Write here and hit enter to send..." type="text" class="form-control-sm form-control" id="viceAdInput">
+	</x-slot>
 	@foreach ($lower_messages as $m)
 		<div class="chat-wrapper p-1">
 			<div class="chat-box-wrapper">

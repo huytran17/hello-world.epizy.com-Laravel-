@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <input placeholder="Write here and hit enter to send..." type="text" class="form-control-sm form-control">
+                    {{ $input }}
                 </div>
             </div>
         </div>

@@ -2,6 +2,9 @@
 	<x-slot name="header">
 		{{ __('Super Admin Channel') }}
 	</x-slot>
+	<x-slot name="input">
+		<input placeholder="Write here and hit enter to send..." type="text" class="form-control-sm form-control" id="superAdInput">
+	</x-slot>
 	@foreach ($super_messages as $m)
 		<div class="chat-wrapper p-1">
 			<div class="chat-box-wrapper">
