@@ -38,6 +38,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function create()
     {
         $parentCates = $this->_cate->getParentHasChildWith(['id', 'title'])->get();
