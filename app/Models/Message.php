@@ -73,3 +73,4 @@ class Message extends Model
             dd($ex->getMessage());
         }
     }
+}
