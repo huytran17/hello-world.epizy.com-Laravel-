@@ -60,11 +60,11 @@
                         <ul class="" style="">
                             @isSuperAdmin
                                 <li class="">
-                                    <a href="{{ route('admin.chat.index') }}" class="nav-link nav-sub-channel">Super Admin Channel</a>
+                                    <a href="{{ route('admin.chat.index', ['uid' => auth()->id()]) }}" class="nav-link nav-sub-channel">Super Admin Channel</a>
                                 </li>
                             @else
                                 <li class="">
-                                    <a href="{{ route('admin.chat.index') }}" class="nav-link nav-sub-channel">Vice Admin Channel</a>
+                                    <a href="{{ route('admin.chat.index', ['uid' => auth()->id()]) }}" class="nav-link nav-sub-channel">Vice Admin Channel</a>
                                 </li>
                             @endisSuperAdmin
 
@@ -102,6 +102,15 @@
     <script src="{{ asset('js/admin/category.js') }}" charset="utf-8" defer></script>
     <script src="{{ asset('js/admin/user.js') }}" charset="utf-8" defer></script>
     <script src="{{ asset('js/admin/post.js') }}" charset="utf-8" defer></script>
+    @if (Request::routeIs('admin.chat.index'))
+        <script src="{{ asset('js/admin/pusher.js') }}" charset="utf-8" defer></script>
+        @if (auth()->user()->isSuperAdmin())
+            <script src="{{ asset('js/admin/superadminchat.js') }}" charset="utf-8" defer></script>
+            <script src="{{ asset('js/admin/ViceAdminChannel.js') }}" charset="utf-8" defer></script>
+        @else
+            <script src="{{ asset('js/admin/ViceAdminChannel.js') }}" charset="utf-8" defer></script>
+        @endif
+    @endif
     @yield('script')
 </body>
 </html>

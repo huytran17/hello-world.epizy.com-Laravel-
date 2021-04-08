@@ -17,6 +17,10 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('super-admin', function ($user) {
+Broadcast::channel('super-admin.{user_id}', function ($user) {
 	return $user->isSuperAdmin();
+});
+
+roadcast::channel('lower-admin.{user_id}', function ($user) {
+	return $user->isLowerAdmin();
 });
