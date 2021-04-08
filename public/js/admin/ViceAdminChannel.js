@@ -8,6 +8,7 @@ function newMessage(data){
 	console.log(data.message);
 }
 
-$('#viceAdInput').key(function(event)){
+$('#viceAdInput').keyup(function(event) {
 	console.log("obj");
 }
+)
