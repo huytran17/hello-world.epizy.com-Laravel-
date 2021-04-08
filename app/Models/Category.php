@@ -19,7 +19,6 @@ class Category extends Model
     	'slug',
     	'description',
     	'parent_id',
-        'user_id'
     ];
 
     protected $appends = [
@@ -104,31 +103,6 @@ class Category extends Model
         return $this->attributes['parent_id'] !== null;
     }
 
-    public function getParentWith($withFields)
-    {
-        return $this->getCateParentWith($withFields);
-    }
-
-    public function getParentHasChildWith($withFields)
-    {
-        return $this->has('children')->getCateParentWith($withFields);
-    }
-
-    public function getChildWith($withFields, $parent_id)
-    {
-        return $this->getCateChildWith($withFields, $parent_id);
-    }
-
-    public function updateCategory($id, $data)
-    {
-        try {
-            $this->getById($id)->update($data);
-        }
-        catch (\Illuminate\Database\QueryException $ex) {
-            dd($ex->getMessage());
-        }
-    }
-
     public function destroyCategory($id_arr)
     {
         try {
@@ -165,23 +139,23 @@ class Category extends Model
         }
     }
 
-    public function store($data)
+    public function getParentWith($withFields)
     {
-        return $this->createCate($data);
+        return $this->getCateParentWith($withFields);
     }
-    
-    public function createCate($data)
+
+    public function getChildWith($withFields, $parent_id)
     {
-        $data['user_id'] = auth()->id();
-        
-        $cate = $this;
+        return $this->getCateChildWith($withFields, $parent_id);
+    }
+
+    public function updateCategory($id, $data)
+    {
         try {
-            $cate = $this->create($data);
+            $this->getById($id)->update($data);
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());
         }
-
-        return $cate;
     }
 }

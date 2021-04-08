@@ -6,17 +6,14 @@ use Illuminate\View\Component;
 
 class CreatePost extends Component
 {
-    public $parentCates, $childCates;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($parentCates, $childCates)
+    public function __construct()
     {
-        $this->parentCates = $parentCates;
-
-        $this->childCates = $childCates;
+        //
     }
 
     /**

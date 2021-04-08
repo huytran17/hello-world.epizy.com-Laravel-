@@ -15,7 +15,7 @@ class UserPanel extends Component
      */
     public function __construct(User $user)
     {
-        $this->users = $user->withTrashed()->latest()->paginate(15);
+        $this->users = $user->withTrashed()->paginate(15);
     }
 
     /**

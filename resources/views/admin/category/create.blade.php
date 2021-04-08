@@ -3,6 +3,6 @@
 		Thêm chuyên mục
 	</x-slot>
 	<x-slot name="content">
-		<x-admin.category.create-category :parentCates="$parent_cates" />
+		<x-admin.category.create-category />
 	</x-slot>
 </x-home>

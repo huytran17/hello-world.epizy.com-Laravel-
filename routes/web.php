@@ -236,7 +236,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		Route::post('store', [
 			'as' => 'admin.cate.store',
 			'uses' => 'CategoryController@store',
-			'middleware' => 'can:category.create'
+			'middleware' => 'can:category.store'
 		]);
 
 		Route::post('update-thumbnail', [

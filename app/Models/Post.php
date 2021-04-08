@@ -20,7 +20,6 @@ class Post extends Model
     	'meta_data',
         'user_id',
         'category_id',
-        'description'
     ];
 
     protected $appends = [

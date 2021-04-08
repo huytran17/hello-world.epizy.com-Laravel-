@@ -13,14 +13,14 @@
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('description','Mô tả') !!}
-						{!! Form::textarea('description',null,['class'=>'form-control']) !!}
+						{!! Form::text('description',null,['class'=>'form-control']) !!}
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('content','Nội dung') !!}
-						{!! Form::textarea('content',null,['class'=>'form-control']) !!}
+						{!! Form::text('content',null,['class'=>'form-control']) !!}
 					</div>
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('keywords','') !!}
@@ -36,7 +36,8 @@
 					<div class="form-group col-12 col-md-6">
 						<div class="form-group col-12 col-md-6">
 		                    {!! Form::label('parent_cate','Chuyên mục') !!}
-		                    <select name="parent_cate" id="parent_cate" data-route="{{ route('admin.cate.getChildCate') }}">
+		                    <select name="parent_cate" id="parent_cate">
+		                        <option value="" disabled="disabled" selected="selected">{{ __('---Tùy chọn---') }}</option>
 		                        @foreach($parentCates as $c)
 		                        <option value="{{ $c->id }}">{{ $c->title }}</option>
 		                        @endforeach
@@ -44,14 +45,6 @@
 		                </div>
 					</div>
 				</div>
-				<div class="form-group col-12 col-md-6">
-                    {!! Form::label('child_cate','Chuyên mục con') !!}
-                    <select name="child_cate" id="child_cate">
-                        @foreach($childCates as $c)
-                            <option value="{{ $c->id }}">{{ $c->title }}</option>
-                        @endforeach
-                    </select>
-                </div>
 				<div class="form-row">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::hidden('user_id',auth()->id(),['class'=>'form-control']) !!}

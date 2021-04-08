@@ -6,15 +6,14 @@ use Illuminate\View\Component;
 
 class CreateCategory extends Component
 {
-    public $parentCates;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($parentCates)
+    public function __construct()
     {
-        $this->parentCates = $parentCates;
+        //
     }
 
     /**

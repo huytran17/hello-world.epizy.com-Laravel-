@@ -28,7 +28,10 @@ class Post{
 	}
 
 	async update() {
+		console.log('msg')
 		this.route = $('#FormUpdatePost').attr('action');
+
+		let cate_id = $('child_cate').val()=="undefined" ? $('#parent_cate').val() : $('child_cate').val();
 
 		var res = await axios.post(this.route ,{
 			title: $('#title').val(),
@@ -39,7 +42,7 @@ class Post{
 				keywords: $('#keywords').val(),
 				source: $('#source').val(),
 			},
-			category_id: $('#child_cate').val()
+			category_id: cate_id
 		});
 		if (res.data.error==false) location.reload();
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
@@ -47,6 +50,9 @@ class Post{
 
 	async create() {
 		this.route  = $('#FormCreatePost').attr('action');
+
+		// let user_id =  $('input[name=user_id]').val();
+		// console.log(user_id);
 
 		var res = await axios.post(this.route, {
 			title:$('#title').val(),
@@ -58,7 +64,8 @@ class Post{
 				source: $('#source').val()
 			},
 			user_id: $('input[name=user_id]').val(),
-			category_id: $('#child_cate').val()
+			category_id: 1
+
 		});
 
 		if (res.data.error == false) location.reload();

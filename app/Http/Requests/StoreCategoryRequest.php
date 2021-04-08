@@ -27,18 +27,21 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'bail|required|string|max:255',
-            'description' => 'bail|required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'thumbnail_photo_path' => 'file|mimes:jpeg,png,webp,jpg|max:1024'
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required' => 'Vui lòng không bỏ trống tiêu đề',
-            'description.required' => 'Vui lòng không bỏ trống mô tả',
+            'required' => 'Vui lòng không bỏ trống',
             'string' => 'Định dạng không hợp lệ',
             'max' => 'Tối đa 255 kí tự',
+            'file' => 'File không hợp lệ',
+            'mimes' => 'Cho phép định dạng jpeg,png,webp,jpg',
+            'max.thumbnail_photo_path' => 'Kích thước tối đa 1MB'
         ];
     }
 
@@ -46,7 +49,7 @@ class StoreCategoryRequest extends FormRequest
     {
         throw new HttpResponseException(response()->axios([
                 'error' => true,
-                'toast_notice' => View::make('client.toast', ['content' => $validator->errors()->first()])->render(),
+                'toast_notice' => View::make('admin.toast', ['content' => $validator->errors()->first()])->render(),
             ])
         );
     }

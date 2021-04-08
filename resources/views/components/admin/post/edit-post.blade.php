@@ -56,6 +56,7 @@
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('parent_cate','Chuyên mục cha') !!}
                     <select name="parent_cate" id="parent_cate" data-route="{{ route('admin.cate.getChildCate') }}">
+                        <option value="" disabled="disabled" selected="selected">{{ __('---Tùy chọn---') }}</option>
                         @isset ($parentCates)
                             @foreach($parentCates as $c)
                             <option value="{{ $c->id }}" {{ $post->category->parent->id===$c->id ? 'selected=selected' : '' }}>{{ $c->title }}</option>
