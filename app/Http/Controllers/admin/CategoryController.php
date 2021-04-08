@@ -6,14 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCateThumb;
+use App\Services\UploadFileService;
 
 class CategoryController extends Controller
 {
     protected $_category;
 
-    public function __construct(Category $category)
+    public function __construct(Category $category, UploadFileService $uploadFileService)
     {
         $this->_category = $category;
+
+        $this->_uploadFileService = $uploadFileService;
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +36,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        $parentCates = $this->_category->getParentWith(['id', 'title'])->get();
+
+        return view('admin.category.create')->with([
+            'parent_cates' => $parentCates
+        ]);
     }
 
     /**
@@ -43,7 +51,11 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $rq)
     {
-        return $this->_category->store($rq->all());
+        $this->_category->store($rq->all());
+
+        return response()->axios([
+            'error' => false
+        ]);
     }
 
     /**
@@ -89,7 +101,38 @@ class CategoryController extends Controller
 
         $this->authorize('category.update', $cate);
 
-        return $cate->updateCategory($rq->all());
+        $this->_category->updateCategory($rq->id, $rq->all());
+
+        return response()->axios([
+            'error' => false,
+        ]);
+    }
+
+    public function updateThumbnail(UpdateCateThumb $rq)
+    {
+        $cate = $this->_category->getById($rq->id)->firstOrFail();
+
+        $this->authorize('category.update', $cate);
+
+        $b64_img = $this->_uploadFileService->getBase64Image($rq->file('thumbnail_photo_path'));
+
+        $cate->thumbnail_photo_path = $b64_img;
+
+        $cate->save();
+
+        return redirect()->back();
+    }
+
+    public function getChildCate(Request $rq)
+    {
+        $pid = $rq->pid;
+
+        $parents = $this->_category->getChildWith(['id', 'title', 'created_at', 'updated_at', 'deleted_at'], $pid)->get();
+
+        return response()->axios([
+            'error' => false,
+            'cates' => $parents
+        ]);
     }
 
     /**

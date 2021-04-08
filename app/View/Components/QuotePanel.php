@@ -16,7 +16,7 @@ class QuotePanel extends Component
      */
     public function __construct(Quote $quote)
     {
-        $this->quotes = $quote->with(['user'])->paginate(15);
+        $this->quotes = $quote->with(['user'])->withTrashed()->latest()->paginate(15);
     }
 
     /**

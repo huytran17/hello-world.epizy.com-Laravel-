@@ -40,13 +40,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        // return view("admin.post.create");
 
-        $parent_cates = $this->_cate->getParentWith(['id', 'title'])->get();
-
-        return view('admin.post.create',[
-            // 'post'=>$post, 
-            'parent_cates' => $parent_cates,
         ]);
     }
 
@@ -85,15 +79,18 @@ class PostController extends Controller
      */
     public function edit(Request $rq)
     {
-        $post = $this->_post->getById($rq->id)->firstOrFail();
+        $post = $this->_post->getById($rq->id)->with(['category'])->firstOrFail();
 
         $this->authorize('post.update',$post);
 
-        $parent_cates = $this->_cate->getParentWith(['id', 'title'])->get();
+        $parent_cates = $this->_cate->getParentHasChildWith(['id', 'title'])->get();
+
+        $child_cates = $this->_cate->getChildWith(['id', 'title'], $post->category->parent->id)->get();
 
         return view('admin.post.edit',[
             'post'=>$post, 
             'parent_cates' => $parent_cates,
+            'child_cates' => $child_cates
         ]);
     }
 

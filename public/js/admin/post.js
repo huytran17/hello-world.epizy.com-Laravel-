@@ -38,7 +38,8 @@ class Post{
 			meta_data: {
 				keywords: $('#keywords').val(),
 				source: $('#source').val(),
-			}
+			},
+			category_id: $('#child_cate').val()
 		});
 		if (res.data.error==false) location.reload();
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
@@ -46,9 +47,6 @@ class Post{
 
 	async create() {
 		this.route  = $('#FormCreatePost').attr('action');
-
-		// let user_id =  $('input[name=user_id]').val();
-		// console.log(user_id);
 
 		var res = await axios.post(this.route, {
 			title:$('#title').val(),
@@ -60,11 +58,26 @@ class Post{
 				source: $('#source').val()
 			},
 			user_id: $('input[name=user_id]').val(),
-			category_id: 1
-
+			category_id: $('#child_cate').val()
 		});
 
 		if (res.data.error == false) location.reload();
+		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
+	}
+
+	async getChildCate(parent_id, route) {
+		var res = await axios.post(route, {
+			pid: parent_id,
+		});
+		
+		if (res.data.error==false) {
+
+			$('#child_cate').empty();
+
+			res.data.cates.forEach( function(item, index) {
+				$('#child_cate').append(`<option value=${item.id}>${item.title}</option>`);
+			});
+		}
 		else {this.appendPos.append(res.data.toast_notice)}; $('#toast').toast('show');
 	}
 }
@@ -82,4 +95,8 @@ $('#BtnUpdatePost').click(function(event){
 
 $('#BtnCreatePost').click(function() {
 	post.create();
+});
+
+$('select[id=parent_cate]').change(function(event) {
+	post.getChildCate(event.target.value, $(event.target).data('route'));
 });
