@@ -36,7 +36,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        $parentCates = $this->_category->getParentWith(['id', 'title'])->get();
+
+        return view('admin.category.create')->with([
+            'parent_cates' => $parentCates
+        ]);
     }
 
     /**
@@ -47,7 +51,11 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $rq)
     {
-        return $this->_category->store($rq->all());
+        $this->_category->store($rq->all());
+
+        return response()->axios([
+            'error' => false
+        ]);
     }
 
     /**

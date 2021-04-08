@@ -15,7 +15,7 @@ class CategoryPanel extends Component
      */
     public function __construct(Category $category)
     {
-        $this->categories = $category->with(['user', 'parent'])->withTrashed()->paginate(15);
+        $this->categories = $category->with(['user', 'parent'])->withTrashed()->latest()->paginate(15);
     }
 
     /**
