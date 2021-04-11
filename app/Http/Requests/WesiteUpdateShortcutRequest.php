@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCateThumb extends FormRequest
+class WesiteUpdateShortcutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class UpdateCateThumb extends FormRequest
     public function rules()
     {
         return [
-            'thumbnail_photo_path' => ['required', 'mimes:jpeg,jpg,png,webp,gif', 'max:1024']
+            'shortcut' => ['bail', 'required', 'mimes:jpeg,jpg,png,webp,gif', 'max:1024']
         ];
     }
 

@@ -51,7 +51,7 @@ class CategoryPolicy
      * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function update(User $user, Category $category)
+    public function update(User $user)
     {
         return $user->isSuperAdmin();
     }

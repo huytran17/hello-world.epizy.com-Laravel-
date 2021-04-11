@@ -1,11 +1,12 @@
 pusher.unsubscribeCurrentChannel();
 
-pusher.channelName = 'super-admin.'+uid;
+pusher.channelName = 'super-admin';
 
 pusher.subscribe();
 
 pusher.bindEvent('App\\Events\\SuperAdminNewMessageEvent', function(data) {
 	$('#conversation .wrapper').append(data.message);
+	console.log(data.message)
 });
 
 $('#superAdInput').keydown(function(event) {

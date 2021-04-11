@@ -99,6 +99,7 @@ class MessageController extends Controller
             $message = $this->_message->createMessage([
                 'content' => $content,
                 'user_id' => auth()->id(),
+                'role' => auth()->user()->role
             ]);
                 
             $message = $this->_message->getById($message->id)->with(['user'])->firstOrFail();

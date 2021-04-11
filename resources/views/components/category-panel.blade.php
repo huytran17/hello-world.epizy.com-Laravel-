@@ -40,7 +40,7 @@
                     	</td>
                         <td>{{ $c->id }}</td>
                         <td>
-                            @can('category.view', $c)
+                            @can('category.update')
                             <a href="{{ route('admin.cate.edit', ['id' => $c->id]) }}">{{ $c->title }}</a>
                             @else
                             {{ $c->title }}

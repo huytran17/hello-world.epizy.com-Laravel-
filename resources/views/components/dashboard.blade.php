@@ -55,7 +55,7 @@
     </div>
     <div class="container-fluid p-0 mt-5">
         <section class="row p-0">
-            <h4 class="mx-auto">{{ __('Top bài viết') }}</h4>
+            <h4 class="mx-auto">{{ __('Bài viết mới nhất') }}</h4>
             <div class="table-responsive">
                 <table class="table table-sm table-bordered">
                     <thead>
@@ -68,12 +68,11 @@
                             <th>Nguồn</th>
                             <th>Ngày tạo</th>
                             <th>Cập nhật</th>
-                            <th>Lượt xem</th>
                             <th>Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($posts->sortByDesc('meta_data.view')->take(5) as $p)
+                        @foreach($posts->sortByDesc('created_at')->take(5) as $p)
                         <tr>
                             <td>{{ $p->id }}</td>
                             <td>
@@ -83,13 +82,18 @@
                                     {{ $p->title }}
                                 @endcan
                             </td>
-                            <td><a href="{{ route('admin.user.edit', ['id' => $p->user->id]) }}">{{ $p->user->name }}</a></td>
+                            <td>
+                                @can('user.update', $p->user)
+                                    <a href="{{ route('admin.user.edit', ['id' => $p->user->id]) }}">{{ $p->user->name }}</a>
+                                @else
+                                    {{ $p->title }}
+                                @endcan
+                            </td>
                             <td><a href="{{ route('admin.cate.show', ['id' => $p->category->id]) }}">{{ $p->category->title }}</a></td>
-                            <td>{{ $p->meta_data->keywords }}</td>
-                            <td>{{ $p->meta_data->source }}</td>
+                            <td class="text-center">{{ $p->meta_data->keywords }}</td>
+                            <td class="text-center">{{ $p->meta_data->source }}</td>
                             <td>{{ $p->dmy_created_at }}</td>
                             <td>{{ $p->dmy_updated_at }}</td>
-                            <td class="text-center">{{ $p->meta_data->view }}</td>
                             <td class="text-center">
                                 <x-badge class="{{ $p->isDeleted ? 'success' : 'danger' }}">
                                     {{ $p->isDeleted ? __('Hiện') : __('Ẩn') }}

@@ -32,7 +32,7 @@ class SuperAdminNewMessageEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('super-admin.'.auth()->id());
+        return new Channel('super-admin');
     }
 
     public function __destruct()

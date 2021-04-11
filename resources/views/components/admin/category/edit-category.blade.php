@@ -38,7 +38,6 @@
 		    			<div class="form-group">
 		    				{!! Form::label('parent_id', 'Chuyên mục cha') !!}
 		    				<select name="parent_id" id="parent_id" data-route="{{ route('admin.cate.getChildCate') }}">
-		    					<option value="" disabled="disabled" selected="selected">{{ __('---Tùy chọn---') }}</option>
 		    					@foreach($parents as $p) 
 		    						@if($p->id !== $cate->id)
 		    							<option value="{{ $p->id }}" {{ $cate->parent->id===$p->id ? 'selected=selected' : '' }}>{{ $p->title }}</option>

@@ -33,7 +33,7 @@ class LowerAdminNewMessageEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('lower-admin.'.auth()->id());
+        return new Channel('lower-admin');
     }
 
     public function __destruct()

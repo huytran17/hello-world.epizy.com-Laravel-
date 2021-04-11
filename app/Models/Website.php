@@ -16,7 +16,10 @@ class Website extends Model
     	'title',
     	'description',
     	'keywords',
-    	'author'
+    	'author',
+        'logo_photo_path',
+        'shortcut_photo_path',
+        'favicon_photo_path'
     ];
 
     public function scopeGetSiteFirst($query)
@@ -32,7 +35,7 @@ class Website extends Model
     public function updateSite($data)
     {
         try {
-            $this->update($data);
+            $this->getSite()->update($data);
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());

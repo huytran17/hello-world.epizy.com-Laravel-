@@ -1,8 +1,8 @@
 <x-home>
 	<x-slot name="title">
-		Thông tin Website
+		Cài đặt
 	</x-slot>
 	<x-slot name="content">
-		<x-admin.site.edit-site :site="$site"></x-admin>
+		<x-admin.site.edit-site :site="$site"/>
 	</x-slot>
 </x-home>

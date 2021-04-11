@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\View;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -26,7 +29,6 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'title' => 'required|string:max:255',
             'description' => 'required|string|max:255',
-            'thumbnail_photo_path' => 'file|mimes:jpeg,jpg,png,webp'
         ];
     }
 
@@ -37,8 +39,6 @@ class UpdateCategoryRequest extends FormRequest
             'string' => 'Định dạng không hợp lệ',
             'max' => 'Tối đa 255 kí tự',
             'file' => 'File không hợp lệ',
-            'mimes' => 'Cho phép định dạng jpeg,png,webp,jpg',
-            'max.thumbnail_photo_path' => 'Kích thước tối đa 1MB'
         ];
     }
 

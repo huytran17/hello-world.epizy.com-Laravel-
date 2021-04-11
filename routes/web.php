@@ -103,8 +103,23 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		]);
 		
 		Route::post('update', [
-			'as' => 'admin.site.',
+			'as' => 'admin.site.update',
 			'uses' => 'WebsiteController@update',
+		]);
+
+		Route::post('update-logo', [
+			'as' => 'admin.site.updateLogo',
+			'uses' => 'WebsiteController@updateLogo',
+		]);
+
+		Route::post('update-shortcut', [
+			'as' => 'admin.site.updateShortcut',
+			'uses' => 'WebsiteController@updateShortcut',
+		]);
+
+		Route::post('update-favicon', [
+			'as' => 'admin.site.updateFavicon',
+			'uses' => 'WebsiteController@updateFavicon',
 		]);
 	});
 
@@ -237,6 +252,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		Route::get('edit', [
 			'as' => 'admin.cate.edit',
 			'uses' => 'CategoryController@edit',
+			'middleware' => 'can:category.update'
 		]);
 
 		Route::get('create', [
@@ -254,6 +270,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		Route::post('update-thumbnail', [
 			'as' => 'admin.cate.updateThumbnail',
 			'uses' => 'CategoryController@updateThumbnail',
+			'middleware' => 'can:category.update'
 		]);
 
 		Route::post('get-child', [
@@ -264,6 +281,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		Route::post('update', [
 			'as' => 'admin.cate.update',
 			'uses' => 'CategoryController@update',
+			'middleware' => 'can:category.update'
 		]);
 
 		Route::post('perform', [

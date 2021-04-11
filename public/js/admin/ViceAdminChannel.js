@@ -1,7 +1,7 @@
 
 pusher.unsubscribeCurrentChannel();
 
-pusher.channelName = 'lower-admin.'+uid;
+pusher.channelName = 'lower-admin';
 
 pusher.subscribe();
 

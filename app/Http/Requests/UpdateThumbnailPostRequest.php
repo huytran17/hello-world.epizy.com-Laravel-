@@ -3,8 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateThumbnailPostRequest extends FormRequest
 {
@@ -27,7 +25,7 @@ class UpdateThumbnailPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'thumbnail_photo_path' => ['bail', 'required', 'image', 'mimes:jpeg,jpg,png,webp,gif', 'max:1024']
+            'thumbnail_photo_path' => ['bail', 'required', 'mimes:jpeg,jpg,png,webp,gif', 'max:1024']
         ];
     }
 
@@ -35,8 +33,7 @@ class UpdateThumbnailPostRequest extends FormRequest
     {
         return [
             'required' => 'Vui lòng không bỏ trống',
-            'image' => 'Định dạng không đúng',
-            'mimes' => 'Cho phép ảnh jpeg,jpg,png,webp,gif',
+            'mimes' => 'Cho phép định dạng jpeg,jpg,png,webp,gif',
             'max' => 'Kích thước tối đa 1MB'
         ];
     }

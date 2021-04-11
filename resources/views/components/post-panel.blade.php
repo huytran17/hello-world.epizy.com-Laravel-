@@ -57,7 +57,7 @@
                             @endcan
                         </td>
                         <td>
-                            @can('user.view', $p->user)
+                            @can('user.edit', $p->user)
                             <a href="{{ route('admin.user.edit', ['id' => $p->user->id]) }}">{{ $p->user->name }}</a>
                             @else
                             {{ $p->user->name }}

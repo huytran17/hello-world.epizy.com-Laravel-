@@ -13,7 +13,7 @@ class Message extends Model
     use HasFactory, TimestampFormat;
 
     protected $fillable = [
-    	'content', 'user_id'
+    	'content', 'user_id', 'role'
     ];
 
     protected $appends = [
@@ -32,9 +32,7 @@ class Message extends Model
 
     public function scopeGetByUserRole($query, $role)
     {
-        return $this->whereHas('user', function($query) use ($role) {
-            $query->where('role', $role);
-        })->with('user');
+        return $this->where('role', $role);
     }
 
     public function scopeGetMessageById($query, $id)

@@ -9,8 +9,8 @@ $(document).on('hidden.bs.toast', e => {
     e.target.remove();
 });
 
-const urlParams = new URLSearchParams(window.location.search);
-const uid = urlParams.get('uid');
+// const urlParams = new URLSearchParams(window.location.search);
+// const id = urlParams.get('id');
 
 class App {
 

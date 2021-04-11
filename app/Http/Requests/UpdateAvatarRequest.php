@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
 
 class UpdateAvatarRequest extends FormRequest
 {
@@ -25,7 +24,7 @@ class UpdateAvatarRequest extends FormRequest
     public function rules()
     {
         return [
-            'profile_photo_path' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:1024'
+            'profile_photo_path' => 'required|mimes:jpeg,jpg,png,webp,gif|max:1024'
         ];
     }
 
@@ -33,8 +32,7 @@ class UpdateAvatarRequest extends FormRequest
     {
         return [
             'required' => 'Vui lòng không bỏ trống',
-            'image' => 'Định dạng không đúng',
-            'mimes' => 'Cho phép ảnh jpeg,jpg,png,webp,gif',
+            'mimes' => 'Cho phép định dạng jpeg,jpg,png,webp,gif',
             'max' => 'Kích thước tối đa 1MB'
         ];
     }

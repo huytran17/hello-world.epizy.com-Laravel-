@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Requests\UpdateCateThumb;
 use App\Services\UploadFileService;
 
@@ -81,8 +82,6 @@ class CategoryController extends Controller
     {
         $cate = $this->_category->getById($rq->id)->firstOrFail();
 
-        $this->authorize('category.update', $cate);
-
         $parents = $this->_category->getParentWith(['id', 'title'])->get();
 
         return view('admin.category.edit', ['cate' => $cate, 'parents' => $parents]);
@@ -95,11 +94,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $rq)
+    public function update(UpdateCategoryRequest $rq)
     {
         $cate = $this->_category->getById($rq->id)->firstOrFail();
-
-        $this->authorize('category.update', $cate);
 
         $this->_category->updateCategory($rq->id, $rq->all());
 
@@ -111,8 +108,6 @@ class CategoryController extends Controller
     public function updateThumbnail(UpdateCateThumb $rq)
     {
         $cate = $this->_category->getById($rq->id)->firstOrFail();
-
-        $this->authorize('category.update', $cate);
 
         $b64_img = $this->_uploadFileService->getBase64Image($rq->file('thumbnail_photo_path'));
 
