@@ -41,7 +41,7 @@
 <body>
     <div id="colorlib-page">
         <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-        @auth
+        @if(!\Request::is('login') && !\Request::is('register'))
         <aside id="colorlib-aside" role="complementary" class="js-fullheight img" style="background-image: url(images/sidebar-bg.jpg);">
             <h1 id="colorlib-logo" class="mb-4"><a href="{{ route('home') }}">{{ config('app.name', 'hello-world') }}</a></h1>
             <nav id="colorlib-main-menu" role="navigation">
@@ -92,7 +92,7 @@
                 @endauth
             </div>
         </aside> <!-- END COLORLIB-ASIDE -->
-        @endauth
+        @endif
         <main class="py-4 container-fluid" id="MainPanel">
             @yield('content')
         </main>

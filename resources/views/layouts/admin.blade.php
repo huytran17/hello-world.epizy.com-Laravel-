@@ -37,7 +37,7 @@
                     <p>Hello, {{ auth()->user()->name }}</p>
                 </div>
             </div>
-            @auth
+            @if(!\Request::is('login') && !\Request::is('register'))
                 <aside id="menu">
                     <ul class="d-flex flex-column" aria-orientation="vertical">
                         <li class="item"><a href="{{ route('home') }}" class="nav-link">Trang chủ</a></li>
@@ -87,7 +87,7 @@
                         </li>
                     </ul>
                 </aside>
-            @endauth
+            @endif
         </nav>
         <main id="main" class="col-md-9 border border-danger">
             @yield('content')
