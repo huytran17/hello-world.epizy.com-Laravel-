@@ -37,55 +37,57 @@
                     <p>Hello, {{ auth()->user()->name }}</p>
                 </div>
             </div>
-            <aside id="menu">
-                <ul class="d-flex flex-column" aria-orientation="vertical">
-                    <li class="item"><a href="{{ route('home') }}" class="nav-link">Trang chủ</a></li>
-                    <li class="item">
-                        <a href="{{ route('admin.view.dashboard') }}" class="nav-link">Dashboard</a>
-                    </li>
-                    <li class="item">
-                        <a href="{{ route('admin.user.index') }}" class="nav-link">Thành viên</a>
-                    </li>
-                    <li class="item">
-                        <a href="{{ route('admin.cate.index') }}" class="nav-link">Danh mục</a>
-                    </li>
-                    <li class="item">
-                        <a href="{{ route('admin.post.index') }}" class="nav-link">Bài viết</a>
-                    </li>
-                    
-                    <li class="item">
-                        <a href="#" class="nav-link" aria-haspopup="true" aria-expanded="false">
-                            <i class="metismenu-icon pe-7s-rocket"></i>Trò chuyện
-                        </a>
-                        <ul class="" style="">
-                            @isSuperAdmin
-                                <li class="">
-                                    <a href="{{ route('admin.chat.index', ['uid' => auth()->id()]) }}" class="nav-link nav-sub-channel">Super Admin Channel</a>
-                                </li>
-                            @else
-                                <li class="">
-                                    <a href="{{ route('admin.chat.index', ['uid' => auth()->id()]) }}" class="nav-link nav-sub-channel">Vice Admin Channel</a>
-                                </li>
-                            @endisSuperAdmin
-
-                        </ul>
-                    </li>
-                    @can('website.viewAny', auth()->user())
+            @auth
+                <aside id="menu">
+                    <ul class="d-flex flex-column" aria-orientation="vertical">
+                        <li class="item"><a href="{{ route('home') }}" class="nav-link">Trang chủ</a></li>
                         <li class="item">
-                            <a href="{{ route('admin.site.edit') }}" class="nav-link">Cài đặt</a>
+                            <a href="{{ route('admin.view.dashboard') }}" class="nav-link">Dashboard</a>
                         </li>
-                    @endcan
-                    <li class="item">
-                        <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                            {{ __('Đăng xuất') }}
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-            </aside>
+                        <li class="item">
+                            <a href="{{ route('admin.user.index') }}" class="nav-link">Thành viên</a>
+                        </li>
+                        <li class="item">
+                            <a href="{{ route('admin.cate.index') }}" class="nav-link">Danh mục</a>
+                        </li>
+                        <li class="item">
+                            <a href="{{ route('admin.post.index') }}" class="nav-link">Bài viết</a>
+                        </li>
+                        
+                        <li class="item">
+                            <a href="#" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                                <i class="metismenu-icon pe-7s-rocket"></i>Trò chuyện
+                            </a>
+                            <ul class="" style="">
+                                @isSuperAdmin
+                                    <li class="">
+                                        <a href="{{ route('admin.chat.index', ['uid' => auth()->id()]) }}" class="nav-link nav-sub-channel">Super Admin Channel</a>
+                                    </li>
+                                @else
+                                    <li class="">
+                                        <a href="{{ route('admin.chat.index', ['uid' => auth()->id()]) }}" class="nav-link nav-sub-channel">Vice Admin Channel</a>
+                                    </li>
+                                @endisSuperAdmin
+
+                            </ul>
+                        </li>
+                        @can('website.viewAny', auth()->user())
+                            <li class="item">
+                                <a href="{{ route('admin.site.edit') }}" class="nav-link">Cài đặt</a>
+                            </li>
+                        @endcan
+                        <li class="item">
+                            <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
+                                                             document.getElementById('logout-form').submit();">
+                                {{ __('Đăng xuất') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </aside>
+            @endauth
         </nav>
         <main id="main" class="col-md-9 border border-danger">
             @yield('content')

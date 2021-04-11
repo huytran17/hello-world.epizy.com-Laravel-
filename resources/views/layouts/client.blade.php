@@ -41,20 +41,21 @@
 <body>
     <div id="colorlib-page">
         <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+        @auth
         <aside id="colorlib-aside" role="complementary" class="js-fullheight img" style="background-image: url(images/sidebar-bg.jpg);">
-            <h1 id="colorlib-logo" class="mb-4"><a href="index.html">{{ config('app.name', 'hello-world') }}</a></h1>
+            <h1 id="colorlib-logo" class="mb-4"><a href="{{ route('home') }}">{{ config('app.name', 'hello-world') }}</a></h1>
             <nav id="colorlib-main-menu" role="navigation">
                 <ul>
-                        @auth
-                            <li>
-                            <img src="{{ auth()->user()->profile_photo_path }}" alt="{{ auth()->user()->slug }}" width="40" height="40" class="rounded-circle">
-                        </li>
-                        @endauth
-                        <li class="colorlib-active"><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="travel.html">Travel</a></li>
-                        <li><a href="lifestyle.html">Lifestyle</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                    @auth
+                    <li>
+                        <img src="{{ auth()->user()->profile_photo_path }}" alt="{{ auth()->user()->slug }}" width="40" height="40" class="rounded-circle">
+                    </li>
+                    @endauth
+                    <li class="colorlib-active"><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="travel.html">Travel</a></li>
+                    <li><a href="lifestyle.html">Lifestyle</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
             <div class="colorlib-footer">
@@ -68,29 +69,30 @@
                     </form>
                 </div>
                 @auth
-                    <p class="pfooter">
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                <p class="pfooter">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                            {{ __('Đăng xuất') }}
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </p>
+                        {{ __('Đăng xuất') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </p>
                 @else
-                        @if (Route::has('login'))
-                        <li>
-                            <a href="{{ route('login') }}">{{ __('Đăng nhập') }}</a>
-                        </li>
-                        @endif
-                        @if (Route::has('register'))
-                        <li>
-                            <a href="{{ route('register') }}">{{ __('Đăng ký') }}</a>
-                        </li>
-                        @endif
+                @if (Route::has('login'))
+                <li>
+                    <a href="{{ route('login') }}">{{ __('Đăng nhập') }}</a>
+                </li>
+                @endif
+                @if (Route::has('register'))
+                <li>
+                    <a href="{{ route('register') }}">{{ __('Đăng ký') }}</a>
+                </li>
+                @endif
                 @endauth
             </div>
         </aside> <!-- END COLORLIB-ASIDE -->
+        @endauth
         <main class="py-4 container-fluid" id="MainPanel">
             @yield('content')
         </main>
@@ -120,4 +122,5 @@
     <script src="{{ asset('js/app.js') }}" charset="utf-8" defer></script>
     <script src="{{ asset('js/inputEmoji.js') }}" charset="utf-8" defer></script>
 </body>
+
 </html>

@@ -7,14 +7,15 @@ use App\Models\User;
 use Mail;
 use Illuminate\Support\Str;
 use App\Mail\UserVerifyEmail;
+
 class UserVerifyEmailObserver
 {
     // public $token;
 
-    // public function __construct()
-    // {
-    //     $this->token = Str::random(25);
-    // }
+    public function __construct()
+    {
+        dd("dddd");
+    }
     /**
      * Handle the User "created" event.
      *
