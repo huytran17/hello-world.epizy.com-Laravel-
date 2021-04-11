@@ -146,6 +146,11 @@ class UserController extends Controller
         return redirect()->route('admin.view.dashboard');
     }
 
+    public function VerifyEmail(Request $rq)
+    {
+        
+    }
+
     public function updatePassword(UpdatePwdRequest $rq)
     {
         $user = $this->_user->getById($rq->id)->firstOrFail();

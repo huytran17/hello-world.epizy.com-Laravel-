@@ -95,6 +95,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		'uses' => 'UserController@changeEmail'
 	]);
 
+	Route::get('verify-email', [
+		'as' => 'auth.VerifyEmail',
+		'uses' => 'UserController@VerifyEmail'
+	]);
+
 	Route::group(['prefix' => 'site'], function() {
 
 		Route::get('edit', [
