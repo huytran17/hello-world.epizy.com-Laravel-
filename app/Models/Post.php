@@ -27,7 +27,8 @@ class Post extends Model
         'encrypted_id', 
         'dmy_created_at', 
         'dmy_updated_at', 
-        'is_deleted'
+        'is_deleted',
+        'time_created'
     ];
 
     public function user()
@@ -38,6 +39,11 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo('App\Models\Category')->withTrashed();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment')->withTrashed();
     }
 
     public function setMetaDataAttribute($value)
@@ -63,6 +69,11 @@ class Post extends Model
     public function getDmyUpdatedAtAttribute()
     {
         return $this->dmY_HsiUpdated();
+    }
+
+    public function getTimeCreatedAttribute()
+    {
+        return $this->Hs_Created();
     }
 
     public function getEncryptedIdAttribute()

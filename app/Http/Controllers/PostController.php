@@ -43,9 +43,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($cate_slug, $pid, $post_slug)
     {
-        //
+        
     }
 
     /**

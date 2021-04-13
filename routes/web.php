@@ -304,3 +304,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 	});
 
 });
+
+Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers'], function() {
+	Route::get('{cate_slug}/{pid}/{post_slug}.html', [
+		'as' => 'client.post.show',
+		'uses' => 'PostController@show'
+	]);
+});

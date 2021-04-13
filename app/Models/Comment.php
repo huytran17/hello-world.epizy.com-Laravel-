@@ -19,7 +19,7 @@ class Comment extends Model
 
     public function post()
     {
-        return $this->hasMany('App\Models\Post')->withTrashed();
+        return $this->belongsTo('App\Models\Post')->withTrashed();
     }
 
     public function user()
@@ -30,6 +30,11 @@ class Comment extends Model
     public function parent()
     {
         return $this->belongsTo('App\Models\Comment', 'parent_id')->withTrashed();
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\Models\Comment', 'parent_id')->withTrashed();
     }
 
     public function setMetaDataAttribute($value)
