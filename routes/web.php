@@ -310,4 +310,8 @@ Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers'], function()
 		'as' => 'client.post.show',
 		'uses' => 'PostController@show'
 	]);
+	Route::get('category', function() {
+	    return view('client.category');
+	})->name('client.category.index');
+
 });

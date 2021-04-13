@@ -52,7 +52,7 @@
                     </li>
                     @endauth
                     <li class="colorlib-active"><a href="{{ route('home') }}">Home</a></li>
-                    <li><a href="travel.html">Travel</a></li>
+                    <li><a href="{{route('client.category.index')}}">Travel</a></li>
                     <li><a href="lifestyle.html">Lifestyle</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
