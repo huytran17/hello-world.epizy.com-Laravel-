@@ -79,6 +79,11 @@ class Category extends Model
         return $query->where('id', $id)->withTrashed();
     }
 
+    public function scopeGetCategoryBySlug($query,$slug)
+    {
+        return $query->where('slug', $slug)->withTrashed();
+    }
+
     public function scopeGetCateParentWith($query, $withFields)
     {
         return $query->select($withFields)->where('parent_id', null);
@@ -92,6 +97,11 @@ class Category extends Model
     public function getById($id)
     {
         return $this->getCategoryById($id);
+    }
+
+    public function getBySlug($slug)
+    {
+        return $this->getCategoryBySlug($slug);
     }
 
     public function isParent()

@@ -6,6 +6,7 @@ use App\Http\View\Composers\AdminDashboardComposer;
 use App\Http\View\Composers\AdminSettingComposer;
 use App\Http\View\Composers\HomeClientComposer;
 use App\Http\View\Composers\CategoryClientComposer;
+use App\Http\View\Composers\ChildrenClientComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,5 +33,6 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('admin.setting-panel', AdminSettingComposer::class);
         View::composer('client.home', HomeClientComposer::class);
         View::composer('client.category', CategoryClientComposer::class);
+        // View::composer('client.children', ChildrenClientComposer::class);
     }
 }

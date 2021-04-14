@@ -12,6 +12,13 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $_category;
+    
+    public function __construct(Category $_category)
+    {
+        $this->_category = $_category;
+    }
+
     public function index()
     {
         //
@@ -49,6 +56,17 @@ class CategoryController extends Controller
         //
     }
 
+
+    public function showChildren($id,$slug){
+
+        if ($this->_category->getById($id)->exists() && $this->_category->getBySlug($slug)->exists()) {
+            
+            $category = $this->_category->getById($id)->with('children')->get();
+            return view('client.children',['category'=>$category]);
+        }
+        
+        return abort(404);
+    }
     /**
      * Show the form for editing the specified resource.
      *

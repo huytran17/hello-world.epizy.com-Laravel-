@@ -314,4 +314,9 @@ Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers'], function()
 	    return view('client.category');
 	})->name('client.category.index');
 
+	Route::get('{cid}/{cslug}', [
+		'as' => 'client.cate.showChildren',
+		'uses' => 'CategoryController@showChildren'
+	]);
+
 });
