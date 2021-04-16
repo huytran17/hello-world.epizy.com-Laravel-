@@ -27,7 +27,7 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'bail|required|string|max:255',
+            'title' => 'bail|required|string|max:255|unique:categories',
             'description' => 'bail|required|string|max:255',
         ];
     }
@@ -39,6 +39,7 @@ class StoreCategoryRequest extends FormRequest
             'description.required' => 'Vui lòng không bỏ trống mô tả',
             'string' => 'Định dạng không hợp lệ',
             'max' => 'Tối đa 255 kí tự',
+            'unique' => 'Tiêu đề đã tồn tại'
         ];
     }
 

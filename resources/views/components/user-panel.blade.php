@@ -45,7 +45,7 @@
                         <td>{{ $u->id }}</td>
                         <td>
                             @can('user.update', $u)
-                            <a href="{{ route('admin.user.edit', ['id' => $u->id]) }}">{{ $u->name }}</a>
+                            <a href="{{ route('client.user.profile', ['id' => $u->id]) }}">{{ $u->name }}</a>
                             @else
                             {{ $u->name }}
                             @endcan

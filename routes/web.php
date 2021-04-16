@@ -87,12 +87,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 
 	Route::get('dashboard', [
 		'as' => 'admin.view.dashboard',
-		'uses' => 'HomeController@dashboard'
-	]);
-
-	Route::get('change-email', [
-		'as' => 'auth.changeEmail',
-		'uses' => 'UserController@changeEmail'
+		'uses' => 'HomeController@dashboard',
+		'middleware' => 'can:user.viewAny'
 	]);
 
 	Route::get('verify-email', [
@@ -208,26 +204,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 			'middleware' => 'can:user.view'
 		]);
 
-		Route::post('updateAvatar', [
-			'as' => 'admin.user.updateAvatar',
-			'uses' => 'UserController@updateAvatar',
-		]);
-
-		Route::post('updateEmail', [
-			'as' => 'admin.user.updateEmail',
-			'uses' => 'UserController@updateEmail',
-		]);
-
-		Route::post('updateName', [
-			'as' => 'admin.user.updateName',
-			'uses' => 'UserController@updateName',
-		]);
-
-		Route::post('updatePwd', [
-			'as' => 'admin.user.updatePwd',
-			'uses' => 'UserController@updatePassword',
-		]);
-
 		Route::post('store', [
 			'as' => 'admin.user.store',
 			'uses' => 'UserController@store',
@@ -296,18 +272,114 @@ Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers\admin', 
 		]);
 	});
 
-	Route::group(['prefix' => 'comment'], function() {
-		Route::post('destroy', [
-			'as' => 'admin.comment.destroy',
-			'uses' => 'CommentController@destroy'
-		]);
-	});
-
 });
 
-Route::group(['prefix' => '', 'namespace' => 'App\Http\Controllers'], function() {
-	Route::get('{cate_slug}/{pid}/{post_slug}.html', [
+Route::group(['prefix' => '/', 'namespace' => 'App\Http\Controllers'], function() {
+	Route::get('change-email', [
+		'as' => 'auth.changeEmail',
+		'uses' => 'UserController@changeEmail'
+	]);
+
+	Route::get('newest-posts', [
+		'as' => 'client.post.newestPosts',
+		'uses' => 'PostController@newest'
+	]);
+
+	Route::get('forgot-password', [
+		'as' => 'forgot-password',
+		'uses' => 'auth\PasswordController@forgotPassword'
+	]);
+
+	Route::post('password-email', [
+		'as' => 'password.email',
+		'uses' => 'auth\PasswordController@passwordEmail'
+	]);
+
+	Route::get('password-reset-form/{token}', [
+		'as' => 'password.resetform',
+		'uses' => 'auth\PasswordController@resetPasswordForm'
+	]);
+
+	Route::post('password-reset/{token}', [
+		'as' => 'password.reset',
+		'uses' => 'auth\PasswordController@resetPassword'
+	]);
+
+	Route::post('verification-resend-mail', [
+		'as' => 'verification.resend',
+		'uses' => 'auth\PasswordController@resendResetPasswordEmail'
+	]);
+
+	Route::get('about-us', function() {
+		return view('client.about');
+	})->name('client.about');
+
+	Route::get('contact', function() {
+		return view('client.contact');
+	})->name('client.contact');
+
+	Route::get('profile', function() {
+		return view('client.user.profile');
+	})->name('client.user.profile')->middleware('auth');
+	
+	Route::get('{pid}/{cate_slug}/{post_slug}.html', [
 		'as' => 'client.post.show',
 		'uses' => 'PostController@show'
 	]);
+
+	Route::get('{slug}', [
+		'as' => 'client.cate.showChildren',
+		'uses' => 'CategoryController@showChildren'
+	]);
+
+	Route::get('categories/browse', [
+		'as' => 'client.cate.index',
+		'uses' => 'CategoryController@index'
+	]);
+
+	Route::get('{slug_parent}/{slug_child}', [
+		'as' => 'client.cate.showPost',
+		'uses' => 'CategoryController@showPost'
+	]);
+
+	Route::post('subscribe', [
+		'as' => 'client.user.subscribe',
+		'uses' => 'UserController@subscribe'
+	]);
+
+	Route::post('store', [
+		'as' => 'client.cmt.store',
+		'uses' => 'CommentController@store'
+	]);
+
+	Route::post('reply', [
+		'as' => 'client.cmt.reply',
+		'uses' => 'CommentController@reply'
+	]);
+
+	Route::post('updateAvatar', [
+		'as' => 'user.updateAvatar',
+		'uses' => 'UserController@updateAvatar',
+	]);
+	
+	Route::post('updateEmail', [
+		'as' => 'user.updateEmail',
+		'uses' => 'UserController@updateEmail',
+	]);
+
+	Route::post('updateName', [
+		'as' => 'user.updateName',
+		'uses' => 'UserController@updateName',
+	]);
+
+	Route::post('updatePwd', [
+		'as' => 'user.updatePwd',
+		'uses' => 'UserController@updatePassword',
+	]);
+
+	Route::post('password-email', [
+		'as' => 'password.email',
+		'uses' => 'auth\PasswordController@passwordEmail'
+	]);
+
 });

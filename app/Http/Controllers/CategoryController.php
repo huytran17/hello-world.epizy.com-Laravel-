@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    protected $_cate, $_post;
+
+    public function __construct(Category $cate, Post $post)
+    {
+        $this->_cate = $cate;
+
+        $this->_post = $post;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $cates = $this->_cate->getParent()->with(['user', 'children'])->withCount('children')->get();
+
+        return view('client.category.index', ['cates' => $cates]);
     }
 
     /**
@@ -44,9 +55,22 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function showPost(Request $rq)
     {
-        //
+        if ($this->_cate->isChildBelongsToParent($rq->slug_parent, $rq->slug_child)) {
+
+            $posts = $this->_cate->getBySlug($rq->slug_child)->firstOrFail()->posts;
+
+            return view('client.post.index', ['posts' => $posts]);
+        }
+        abort(404);
+    }
+
+    public function showChildren(Request $rq)
+    {
+        $cate = $this->_cate->getBySlug($rq->slug)->with(['user', 'children'])->firstOrFail();
+
+        return view('client.category.show-children', ['cate' => $cate]);
     }
 
     /**

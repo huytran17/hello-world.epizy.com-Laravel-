@@ -8,7 +8,7 @@
                 <div class="container px-0">
                     <div class="row no-gutters">
                         <div class="col-md-4 d-flex">
-                            <div class="blog-entry ftco-animate active">
+                            <div class="blog-entry ftco-animate">
                                 <div class="carousel-blog owl-carousel">
                                     <div class="item">
                                         <a href="{{ route('client.post.show', ['pid' => $posts[0]->id, 'cate_slug' => $posts[0]->category->slug, 'post_slug' => $posts[0]->slug]) }}" class="img" style="background-image: url({{ $posts[0]->thumbnail_photo_path }});"></a>
@@ -24,13 +24,12 @@
                                     <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[0]->id, 'cate_slug' => $posts[0]->category->slug, 'post_slug' => $posts[0]->slug]) }}">{{ $posts[0]->title }}</a></h3>
                                     <div class="meta-wrap">
                                         <p class="meta">
-                                            <span><i class="icon-calendar mr-2"></i>{{ $posts[0]->time_created }}</span>
-                                            <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[0]->category->title }}</a></span>
-                                            <span><i class="icon-comment2 mr-2"></i>{{ $posts[0]->comments_count }} Comment</span>
+                                            <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[0]->only_time_created }}</span>
+                                            <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[0]->category->parent->slug, 'slug_child' => $posts[0]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[0]->category->title }}</a></span>
+                                            <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[0]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[0]->description }}</p>
-                                    <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
@@ -44,13 +43,12 @@
                                             <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[1]->id, 'cate_slug' => $posts[1]->category->slug, 'post_slug' => $posts[1]->slug]) }}">{{ $posts[1]->title }}</a></h3>
                                             <div class="meta-wrap">
                                                 <p class="meta">
-                                                    <span><i class="icon-calendar mr-2"></i>{{ $posts[1]->time_created }}</span>
+                                                    <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[1]->only_time_created }}</span>
                                                     <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[1]->category->title }}</a></span>
-                                                    <span><i class="icon-comment2 mr-2"></i>{{ $posts[1]->comments_count }} Comment</span>
+                                                    <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[1]->comments_count }} bình luận</span>
                                                 </p>
                                             </div>
                                             <p class="mb-4 text-collapse">{{ $posts[1]->description }}</p>
-                                            <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -61,13 +59,12 @@
                                             <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[2]->id, 'cate_slug' => $posts[2]->category->slug, 'post_slug' => $posts[2]->slug]) }}">{{ $posts[2]->title }}</a></h3>
                                             <div class="meta-wrap">
                                                 <p class="meta">
-                                                    <span><i class="icon-calendar mr-2"></i>{{ $posts[2]->time_created }}</span>
+                                                    <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[2]->only_time_created }}</span>
                                                     <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[2]->category->title }}</a></span>
-                                                    <span><i class="icon-comment2 mr-2"></i>{{ $posts[2]->comments_count }} Comment</span>
+                                                    <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[2]->comments_count }} bình luận</span>
                                                 </p>
                                             </div>
                                             <p class="mb-4 text-collapse">{{ $posts[2]->description }}</p>
-                                            <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -80,13 +77,12 @@
                                     <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[3]->id, 'cate_slug' => $posts[3]->category->slug, 'post_slug' => $posts[3]->slug]) }}">{{ $posts[3]->title }}</a></h3>
                                     <div class="meta-wrap">
                                         <p class="meta">
-                                            <span><i class="icon-calendar mr-2"></i>{{ $posts[3]->time_created }}</span>
+                                            <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[3]->only_time_created }}</span>
                                             <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[3]->category->title }}</a></span>
-                                            <span><i class="icon-comment2 mr-2"></i>{{ $posts[3]->comments_count }} Comment</span>
+                                            <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[3]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[3]->description }}</p>
-                                    <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
@@ -97,13 +93,12 @@
                                     <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[4]->id, 'cate_slug' => $posts[4]->category->slug, 'post_slug' => $posts[4]->slug]) }}">{{ $posts[4]->title }}</a></h3>
                                     <div class="meta-wrap">
                                         <p class="meta">
-                                            <span><i class="icon-calendar mr-2"></i>{{ $posts[4]->time_created }}</span>
+                                            <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[4]->only_time_created }}</span>
                                             <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[4]->category->title }}</a></span>
-                                            <span><i class="icon-comment2 mr-2"></i>{{ $posts[4]->comments_count }} Comment</span>
+                                            <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[4]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[4]->description }}</p>
-                                    <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
@@ -114,13 +109,12 @@
                                     <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[5]->id, 'cate_slug' => $posts[5]->category->slug, 'post_slug' => $posts[5]->slug]) }}">{{ $posts[5]->title }}</a></h3>
                                     <div class="meta-wrap">
                                         <p class="meta">
-                                            <span><i class="icon-calendar mr-2"></i>{{ $posts[5]->time_created }}</span>
+                                            <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[5]->only_time_created }}</span>
                                             <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[5]->category->title }}</a></span>
-                                            <span><i class="icon-comment2 mr-2"></i>{{ $posts[5]->comments_count }} Comment</span>
+                                            <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[5]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[5]->description }}</p>
-                                    <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
@@ -133,13 +127,12 @@
                                             <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[6]->id, 'cate_slug' => $posts[6]->category->slug, 'post_slug' => $posts[6]->slug]) }}">{{ $posts[6]->title }}</a></h3>
                                             <div class="meta-wrap">
                                                 <p class="meta">
-                                                    <span><i class="icon-calendar mr-2"></i>{{ $posts[6]->time_created }}</span>
+                                                    <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[6]->only_time_created }}</span>
                                                     <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[6]->category->title }}</a></span>
-                                                    <span><i class="icon-comment2 mr-2"></i>{{ $posts[6]->comments_count }} Comment</span>
+                                                    <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[6]->comments_count }} bình luận</span>
                                                 </p>
                                             </div>
                                             <p class="mb-4 text-collapse">{{ $posts[6]->description }}</p>
-                                            <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -150,13 +143,12 @@
                                             <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[7]->id, 'cate_slug' => $posts[7]->category->slug, 'post_slug' => $posts[7]->slug]) }}">{{ $posts[7]->title }}</a></h3>
                                             <div class="meta-wrap">
                                                 <p class="meta">
-                                                    <span><i class="icon-calendar mr-2"></i>{{ $posts[7]->time_created }}</span>
+                                                    <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[7]->only_time_created }}</span>
                                                     <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[7]->category->title }}</a></span>
-                                                    <span><i class="icon-comment2 mr-2"></i>{{ $posts[7]->comments_count }} Comment</span>
+                                                    <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[7]->comments_count }} bình luận</span>
                                                 </p>
                                             </div>
                                             <p class="mb-4 text-collapse">{{ $posts[7]->description }}</p>
-                                            <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -169,13 +161,12 @@
                                     <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[8]->id, 'cate_slug' => $posts[8]->category->slug, 'post_slug' => $posts[8]->slug]) }}">{{ $posts[8]->title }}</a></h3>
                                     <div class="meta-wrap">
                                         <p class="meta">
-                                            <span><i class="icon-calendar mr-2"></i>{{ $posts[8]->time_created }}</span>
+                                            <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[8]->only_time_created }}</span>
                                             <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[8]->category->title }}</a></span>
-                                            <span><i class="icon-comment2 mr-2"></i>{{ $posts[8]->comments_count }} Comment</span>
+                                            <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[8]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[8]->description }}</p>
-                                    <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
@@ -186,13 +177,12 @@
                                     <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[9]->id, 'cate_slug' => $posts[9]->category->slug, 'post_slug' => $posts[9]->slug]) }}">{{ $posts[9]->title }}</a></h3>
                                     <div class="meta-wrap">
                                         <p class="meta">
-                                            <span><i class="icon-calendar mr-2"></i>{{ $posts[9]->time_created }}</span>
+                                            <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[9]->only_time_created }}</span>
                                             <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[9]->category->title }}</a></span>
-                                            <span><i class="icon-comment2 mr-2"></i>{{ $posts[9]->comments_count }} Comment</span>
+                                            <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[9]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[9]->description }}</p>
-                                    <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
@@ -203,13 +193,12 @@
                                     <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[10]->id, 'cate_slug' => $posts[10]->category->slug, 'post_slug' => $posts[10]->slug]) }}">{{ $posts[10]->title }}</a></h3>
                                     <div class="meta-wrap">
                                         <p class="meta">
-                                            <span><i class="icon-calendar mr-2"></i>{{ $posts[10]->time_created }}</span>
+                                            <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[10]->only_time_created }}</span>
                                             <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[10]->category->title }}</a></span>
-                                            <span><i class="icon-comment2 mr-2"></i>{{ $posts[10]->comments_count }} Comment</span>
+                                            <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[10]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[10]->description }}</p>
-                                    <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
@@ -220,13 +209,12 @@
                                     <h3 class="mb-2"><a href="{{ route('client.post.show', ['pid' => $posts[11]->id, 'cate_slug' => $posts[11]->category->slug, 'post_slug' => $posts[11]->slug]) }}">{{ $posts[11]->title }}</a></h3>
                                     <div class="meta-wrap">
                                         <p class="meta">
-                                            <span><i class="icon-calendar mr-2"></i>{{ $posts[11]->time_created }}</span>
+                                            <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[11]->only_time_created }}</span>
                                             <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[11]->category->title }}</a></span>
-                                            <span><i class="icon-comment2 mr-2"></i>{{ $posts[11]->comments_count }} Comment</span>
+                                            <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[11]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[11]->description }}</p>
-                                    <p><a href="#" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>

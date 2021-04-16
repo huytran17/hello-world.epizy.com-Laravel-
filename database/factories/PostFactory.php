@@ -30,7 +30,6 @@ class PostFactory extends Factory
             'meta_data' => [
                 'keywords' => $this->faker->word,
                 'source' => $this->faker->name,
-                'view' => $this->faker->randomDigit,
             ],
             'user_id' => $this->faker->numberBetween($min = 1, $max = 29),
             'category_id' => $this->faker->numberBetween($min = 1, $max = 29),

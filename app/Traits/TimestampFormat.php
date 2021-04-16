@@ -28,6 +28,11 @@ trait TimestampFormat {
 	    return self::Hs();
 	}
 
+	public function onlyTimeCreated()
+	{
+	    return self::onlyTime();
+	}
+
 	public function dmY_Hsi($attr)
     {
         return date('d-m-Y H:s:i', strtotime($this->attributes[$attr]));
@@ -36,6 +41,11 @@ trait TimestampFormat {
     public function Hs()
     {
         return date('H:s', strtotime($this->created_at)) .' | '. Carbon::parse($this->created_at)->diffForHumans();
+    }
+
+    public function onlyTime()
+    {
+        return Carbon::parse($this->created_at)->diffForHumans();
     }
 }
 

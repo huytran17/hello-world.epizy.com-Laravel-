@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Traits\TimestampFormat;
 use App\Traits\IsAlready;
 use DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class Category extends Model
 {
@@ -26,12 +27,14 @@ class Category extends Model
         'encrypted_id',
         'dmy_created_at', 
         'dmy_updated_at', 
-        'is_deleted'
+        'is_deleted',
+        'time_created',
+        'only_time_created'
     ];
 
     public function posts()
     {
-        return $this->hasMany('App\Models\Post')->withTrashed();
+        return $this->hasMany('App\Models\Post')->withTrashed()->withCount('comments');
     }
 
     public function user()
@@ -46,7 +49,7 @@ class Category extends Model
 
     public function children()
     {
-        return $this->hasMany('App\Models\Category', 'parent_id')->withTrashed();
+        return $this->hasMany('App\Models\Category', 'parent_id')->withCount('posts')->withTrashed();
     }
 
     public function setSlugAttribute($value)
@@ -74,6 +77,16 @@ class Category extends Model
         return $this->isDeleted();
     }
 
+    public function getTimeCreatedAttribute()
+    {
+        return $this->Hs_Created();
+    }
+
+    public function getOnlyTimeCreatedAttribute()
+    {
+        return $this->onlyTimeCreated();
+    }
+
     public function scopeGetCategoryById($query, $id)
     {
         return $query->where('id', $id)->withTrashed();
@@ -84,14 +97,56 @@ class Category extends Model
         return $query->select($withFields)->where('parent_id', null);
     }
 
-    public function scopeGetCateChildWith($query, $withFields, $parent_id)
+    public function scopeGetCateParent($query)
+    {
+        return $query->where('parent_id', null);
+    }
+
+    public function scopeGetCateChildByParentWith($query, $withFields, $parent_id)
     {
         return $query->select($withFields)->where('parent_id', $parent_id);
+    }
+
+    public function scopeGetCategoryBySlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
+    }
+
+    public function scopeIsChildBelongsToParentCate($query, $parent_slug, $child_slug)
+    {
+        return $query->where('slug', $parent_slug)->whereHas('children', function(Builder $builder) use ($child_slug) {
+            $builder->where('slug', $child_slug);
+        })->exists();
+    }
+
+    public function scopeGetLimitSuggestCates($query, $withParentFields, $orderType, $limit)
+    {
+        return $query->orderBy('created_at', $orderType)->withCount('children')->take($limit)->get();
     }
 
     public function getById($id)
     {
         return $this->getCategoryById($id);
+    }
+
+    public function getBySlug($slug)
+    {
+        return $this->getCategoryBySlug($slug);
+    }
+
+    public function getByIdAndSlug($id, $slug)
+    {
+        return $this->getCategoryById($id)->getCategoryBySlug($slug);
+    }
+
+    public function getSuggestCates($withParentFields, $orderType, $limit)
+    {
+        return $this->getParentWith($withParentFields)->getLimitSuggestCates($withParentFields, $orderType, $limit);
+    }
+
+    public function isChildBelongsToParent($parent_slug, $child_slug)
+    {
+        return $this->isChildBelongsToParentCate($parent_slug, $child_slug);
     }
 
     public function isParent()
@@ -109,6 +164,11 @@ class Category extends Model
         return $this->getCateParentWith($withFields);
     }
 
+    public function getParent()
+    {
+        return $this->getCateParent();
+    }
+
     public function getParentHasChildWith($withFields)
     {
         return $this->has('children')->getCateParentWith($withFields);
@@ -116,7 +176,7 @@ class Category extends Model
 
     public function getChildWith($withFields, $parent_id)
     {
-        return $this->getCateChildWith($withFields, $parent_id);
+        return $this->getCateChildByParentWith($withFields, $parent_id);
     }
 
     public function updateCategory($id, $data)

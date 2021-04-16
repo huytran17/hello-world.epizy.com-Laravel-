@@ -99,88 +99,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function updateAvatar(UpdateAvatarRequest $rq)
-    {
-        $user = $this->_user->getById($rq->id)->firstOrFail();
-
-        $this->authorize('user.update', $user);
-
-        $b64_img = $this->_uploadFileService->getBase64Image($rq->file('profile_photo_path'));
-
-        $this->_user->updateUser($rq->id, [
-            'profile_photo_path' => $b64_img,
-        ]);
-
-        return redirect()->back();
-    }
-
-    public function updateEmail(UpdateEmailRequest $rq)
-    {
-        $user = $this->_user->getById($rq->id)->firstOrFail();
-
-        $this->authorize('user.update', $user);
-
-        if (!$this->_emailChangeService->isCurrentEmail($rq->email)) {
-            $this->_emailChangeService->verify($rq->email);
-        }
-        
-        return response()->axios([
-            'error' => false
-        ]);
-    }
-
-    public function changeEmail(Request $rq)
-    {
-        $user = $this->_user->getById($rq->id)->firstOrFail();
-
-        $this->authorize('user.update', $user);
-
-        $email = $this->_emailChangeService->getEmailToChange($rq->_token)->email_new;
-
-        if ($this->_emailChangeService->checkPast(720)) return 'Yêu cầu đã hết hạn';
-
-        $this->_user->updateUser(auth()->id(), ['email' => $email]);
-
-        $this->_emailChangeService->destroyChangedEmail($this->_emailChangeService->getEmailToChange($rq->_token)->email);
-
-        return redirect()->route('admin.view.dashboard');
-    }
-
     public function VerifyEmail(Request $rq)
     {
         
-    }
-
-    public function updatePassword(UpdatePwdRequest $rq)
-    {
-        $user = $this->_user->getById($rq->id)->firstOrFail();
-
-        $this->authorize('user.update', $user);
-
-        $user->password = $rq->password;
-
-        $user->save();
-
-        return response()->axios([
-            'error' => false
-        ]);
-    }
-
-    public function updateName(UpdateUsernameRequest $rq)
-    {
-        $user = $this->_user->getById($rq->id)->firstOrFail();
-
-        $this->authorize('user.update', $user);
-
-        $user->name = $rq->name;
-
-        $user->slug = $rq->name;
-
-        $user->save();
-
-        return response()->axios([
-            'error' => false
-        ]);
     }
 
     /**

@@ -27,7 +27,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string:max:255',
+            'title' => 'required|string:max:255|unique:categories',
             'description' => 'required|string|max:255',
         ];
     }
@@ -39,6 +39,7 @@ class UpdateCategoryRequest extends FormRequest
             'string' => 'Định dạng không hợp lệ',
             'max' => 'Tối đa 255 kí tự',
             'file' => 'File không hợp lệ',
+            'unique' => 'Tiêu đề đã tồn tại'
         ];
     }
 
