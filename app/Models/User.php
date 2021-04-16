@@ -49,7 +49,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_subscribed_at' => 'datetime',
     ];
 
     protected $appends = [
@@ -179,9 +179,19 @@ class User extends Authenticatable
         return $query->where('role', $role);
     }
 
+    public function scopeGetUserByEmail($query, $email)
+    {
+        return $query->where('email', $email);
+    }
+
     public function scopeGetUserById($query, $id)
     {
         return $query->where('id', $id)->withTrashed();
+    }
+
+    public function scopeGetSubedUser($query)
+    {
+        return $query->where('email_subscribed_at', '!==', null);
     }
 
     public function getByRole($role)
@@ -194,9 +204,19 @@ class User extends Authenticatable
         return $this->getNewInMonth($month, $year)->withTrashed();
     }
 
+    public function subedUser()
+    {
+        return $this->getSubedUser();
+    }
+
     public function getById($uid)
     {
         return $this->getUserById($uid);
+    }
+
+    public function getByEmail($email)
+    {
+        return $this->getUserByEmail($email);
     }
 
     public function destroyUser($id_arr)
@@ -266,6 +286,18 @@ class User extends Authenticatable
     {
         try {
             $this->getUserById($uid)->update($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
+
+    public function subscribe($email)
+    {
+        try {
+            $this->getUserByEmail($email)->update([
+                'email_subscribed_at' => \Carbon\Carbon::now()
+            ]);
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());

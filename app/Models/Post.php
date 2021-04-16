@@ -28,7 +28,8 @@ class Post extends Model
         'dmy_created_at', 
         'dmy_updated_at', 
         'is_deleted',
-        'time_created'
+        'time_created',
+        'only_time_created'
     ];
 
     public function user()
@@ -38,12 +39,12 @@ class Post extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\Category')->withTrashed();
+        return $this->belongsTo('App\Models\Category')->with(['children'])->withTrashed();
     }
 
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment')->withTrashed();
+        return $this->hasMany('App\Models\Comment')->with(['user', 'children'])->latest()->withTrashed();
     }
 
     public function setMetaDataAttribute($value)
@@ -76,6 +77,11 @@ class Post extends Model
         return $this->Hs_Created();
     }
 
+    public function getOnlyTimeCreatedAttribute()
+    {
+        return $this->onlyTimeCreated();
+    }
+
     public function getEncryptedIdAttribute()
     {
         return base64_encode($this->id);
@@ -96,6 +102,16 @@ class Post extends Model
         return $query->where('id', $id)->withTrashed();
     }
 
+    public function scopeGetPostBySlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
+    }
+
+    public function scopeGetLimitPopularPosts($query, $orderType, $limit)
+    {
+        return $query->inRandomOrder()->orderBy('created_at', $orderType)->with(['user', 'category'])->withCount('comments')->take($limit)->get();
+    }
+
     public function getInMonth($month, $year)
     {
         return $this->getNewInMonth($month, $year)->withTrashed();
@@ -104,6 +120,16 @@ class Post extends Model
     public function getById($id)
     {
         return $this->getPostById($id);
+    }
+
+    public function getBySlug($slug)
+    {
+        return $this->getPostBySlug($slug);
+    }
+
+    public function getPopularPosts($orderType, $limit)
+    {
+        return $this->getLimitPopularPosts($orderType, $limit);
     }
 
     public function destroyPost($id_arr)

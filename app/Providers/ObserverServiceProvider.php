@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use App\Models\User;
-use App\Observers\UserVerifyEmailObserver;
+use App\Models\Post;
+use App\Observers\PostObserver;
 
 class ObserverServiceProvider extends ServiceProvider
 {
@@ -26,6 +26,6 @@ class ObserverServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        User::observe(UserVerifyEmailObserver::class);
+        Post::observe(PostObserver::class);
     }
 }

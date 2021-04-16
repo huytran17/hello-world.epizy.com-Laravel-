@@ -178,6 +178,7 @@ return [
         App\Providers\ResponseMacroServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
+        App\Providers\ObserverServiceProvider::class,
 
     ],
 

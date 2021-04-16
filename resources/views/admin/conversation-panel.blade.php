@@ -1,4 +1,4 @@
-<x-home>
+<x-admin.home>
 	<x-slot name="title">
 		Trò chuyện
 	</x-slot>
@@ -13,4 +13,4 @@
 			</div>
 		@endif
 	</x-slot>
-</x-home>
+</x-admin.home>
