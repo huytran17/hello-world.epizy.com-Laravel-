@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserCommentRequest;
+use App\Http\Requests\UserReplyCommentRequest;
 
 class CommentController extends Controller
 {
@@ -85,6 +86,18 @@ class CommentController extends Controller
             'content' => $rq->content,
             'user_id' => auth()->id(),
             'post_id' => $rq->pid
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function reply(UserReplyCommentRequest $rq)
+    {
+        $this->_cmt->createComment([
+            'content' => $rq->content_rep,
+            'user_id' => auth()->id(),
+            'post_id' => $rq->pid,
+            'parent_id' => $rq->id
         ]);
 
         return redirect()->back();

@@ -20,6 +20,7 @@ class AdminDashboardComposer extends AdminService
             'new_user_in_month' => $this->newUserInMonth(),
             'posts' => $this->_post->withTrashed()->with(['user', 'category'])->get(),
             'users' => $this->_user->withTrashed()->get(),
+            'inCurrentMonthCount' => $this->_post->inCurrentMonth()->count()
         ]);
     }
 }

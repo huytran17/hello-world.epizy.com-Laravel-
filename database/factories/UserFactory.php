@@ -30,8 +30,6 @@ class UserFactory extends Factory
             'profile_photo_path' => $this->faker->url,
             'role' => $this->faker->numberBetween($min = 0, $max = 2),
             'remember_token' => Str::random(10),
-            'created_at' => $this->faker->date($format = 'Y-m-d', $max = 'now') . $this->faker->time($format = 'H:i:s', $max = 'now'),
-            'updated_at' => $this->faker->date($format = 'Y-m-d', $max = 'now') . $this->faker->time($format = 'H:i:s', $max = 'now'),
         ];
     }
 

@@ -59,7 +59,7 @@ class CategoryController extends Controller
     {
         if ($this->_cate->isChildBelongsToParent($rq->slug_parent, $rq->slug_child)) {
 
-            $posts = $this->_cate->getBySlug($rq->slug_child)->firstOrFail()->posts;
+            $posts = $this->_cate->getBySlug($rq->slug_child)->firstOrFail()->postsActive;
 
             return view('client.post.index', ['posts' => $posts]);
         }
@@ -68,7 +68,7 @@ class CategoryController extends Controller
 
     public function showChildren(Request $rq)
     {
-        $cate = $this->_cate->getBySlug($rq->slug)->with(['user', 'children'])->firstOrFail();
+        $cate = $this->_cate->getBySlug($rq->slug)->firstOrFail();
 
         return view('client.category.show-children', ['cate' => $cate]);
     }

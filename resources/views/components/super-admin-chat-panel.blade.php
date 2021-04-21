@@ -3,12 +3,12 @@
 		{{ __('Super Admin Channel') }}
 	</x-slot>
 	<x-slot name="input">
-		<input placeholder="Write here and hit enter to send..." type="text" class="form-control-sm form-control" id="superAdInput" data-route="{{ route('admin.chat.store') }}">
+		<input placeholder="Nhấn Enter để gửi..." type="text" class="form-control-sm form-control" id="superAdInput" data-route="{{ route('admin.chat.store') }}">
 	</x-slot>
 	@foreach ($super_messages as $m)
-		<div class="chat-wrapper p-1">
+		<div class="chat-wrapper p-1 {{ $m->user->id===auth()->id() ? 'chat-right' : 'chat-left' }}">
 			<div class="chat-box-wrapper">
-			    <div>
+			    <div style="padding: .5rem 1rem;">
 			        <div class="chat-box">{{ $m->content }}</div>
 			        <small class="opacity-6">
 			            <i class="fa fa-calendar-alt mr-1"></i>

@@ -19,7 +19,8 @@
                                     <span><i class="fal fa-comments mr-2"></i>{{ $p->comments_count }} bình luận</span>
                                 </p>
                             </div>
-                            <p class="mb-4">{{ $p->description }}</p>
+                            <p class="mb-4 text-collapse">{{ $p->description }}</p>
+                            <p><a href="{{ route('client.post.show', ['pid' => $p->id, 'cate_slug' => $p->category->slug, 'post_slug' => $p->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,8 @@ class Comment extends Model
 {
     use HasFactory, SoftDeletes, TimestampFormat;
 
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = [
     	'content',
     	'parent_id',

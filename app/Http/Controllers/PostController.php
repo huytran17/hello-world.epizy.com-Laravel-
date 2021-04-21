@@ -112,4 +112,18 @@ class PostController extends Controller
     {
         //
     }
+
+    public function search(Request $rq)
+    {
+        $search_result = $this->_post->getByKey($rq->key)->withCount('comments')->get();
+
+        return view('client.post.newest', ['newest' => $search_result]);
+    }
+
+    public function searchTag(Request $rq)
+    {
+        $search_result = $this->_post->getByTag($rq->tag)->withCount('comments')->get();
+
+        return view('client.post.newest', ['newest' => $search_result]);
+    }
 }

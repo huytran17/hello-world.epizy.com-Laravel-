@@ -30,8 +30,6 @@ class WebsiteFactory extends Factory
             'logo_photo_path' => $this->faker->url,
             'shortcut_photo_path' => $this->faker->url,
             'favicon_photo_path' => $this->faker->url,
-            'created_at' => $this->faker->date($format = 'Y-m-d', $max = 'now') . $this->faker->time($format = 'H:i:s', $max = 'now'),
-            'updated_at' => $this->faker->date($format = 'Y-m-d', $max = 'now') . $this->faker->time($format = 'H:i:s', $max = 'now'),
         ];
     }
 }

@@ -1,19 +1,25 @@
-<div class="container-fluid p-0 mt-5">
+<div class="container-fluid p-0">
     <section class="row p-0">
-        <h4 class="w-100 text-center">{{ __('Bài viết') }}</h4>
-        <div class="form-wrapper mr-auto w-100 row p-0 m-0">
+        <h4 class="table-title">{{ __('Bài viết') }}</h4>
+        <div class="form-wrapper w-100 p-0 m-0">
         	{!! Form::open(['method' => 'post', 'route' => ['admin.post.perform']]) !!}
-        		{!! Form::selectRequired('post_box', [
-        			0 => '---Chọn một---',
-        			1 => 'Khóa',
-        			2 => 'Khôi phục',
-        			3 => 'Xóa vĩnh viễn'
-        		], 0, ['class' => 'form-control','id'=>'post_box'], [0]) !!}
-        		{!! Form::button('Thực hiện', ['id' => 'ex_post']) !!}
+                <div class="form-row d-flex ml-3">
+                    <div class="form-group m-0">
+                        {!! Form::selectRequired('post_box', [
+                            0 => '---Chọn một---',
+                            1 => 'Khóa',
+                            2 => 'Khôi phục',
+                            3 => 'Xóa vĩnh viễn'
+                        ], 0, ['class' => 'form-control','id'=>'post_box'], [0]) !!}
+                        {!! Form::button('Thực hiện', ['id' => 'ex_post']) !!}
+                    </div>
+                </div>
         	{!! Form::close() !!}
-            @can('post.create')
-                {{ Html::link(route('admin.post.create'), 'Thêm', ['class' => 'btn btn-primary']) }}
-            @endcan
+            <div class="act">
+                @can('user.create')
+                    {{ Html::link(route('admin.post.create'), 'Thêm', ['class' => 'btn btn-primary ml-3']) }}
+                @endcan
+            </div>
         </div>
         <div class="table-responsive">
             <table class="table table-sm table-bordered">
@@ -36,7 +42,7 @@
                 </thead>
                 <tbody>
                     @foreach($posts as $p)
-                    <tr>
+                    <tr class="text-center">
                     	<td>
                     		<input type="checkbox" name="checkbox" value ="{{ $p->id }}">
                     	</td>
@@ -63,11 +69,11 @@
                             {{ $p->user->name }}
                             @endcan
                         </td>
-                        <td>{{ $p->meta_data->keywords }}</td>
+                        <td>{{ implode(',', $p->meta_data->keywords) }}</td>
                         <td>{{ $p->meta_data->source }}</td>
                         <td>{{ $p->dmy_created_at }}</td>
                         <td>{{ $p->dmy_updated_at }}</td>
-                        <td class="text-center">
+                        <td>
                             <x-badge class="{{ $p->isDeleted ? 'success' : 'danger' }}">
                                 {{ $p->isDeleted ? __('Hiện') : __('Khóa') }}
                             </x-badge>

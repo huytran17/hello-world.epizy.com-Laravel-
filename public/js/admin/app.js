@@ -9,6 +9,15 @@ $(document).on('hidden.bs.toast', e => {
     e.target.remove();
 });
 
+$('.form-wrapper form button[type=button]').click(function(event) {
+    $(this).attr('disabled', 'disabled');
+});
+
+$('.form-wrapper form').submit(function(event) {
+    $(this).find('button[type=button]').attr('disabled', 'disabled');
+    $(this).find('input[type=submit]').attr('disabled', 'disabled');
+});
+
 // const urlParams = new URLSearchParams(window.location.search);
 // const id = urlParams.get('id');
 

@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container mb-4">
 	<div class="form-wrapper">
 		<div class="form-header">
-			<h4>Thêm tài khoản</h4>
+			<h4 class="panel-title">Thêm tài khoản</h4>
 		</div>
 		<div class="form-body">
 			{!!Form::open(['method'=>'post','route'=>'admin.user.store', 'id' => 'FormCreateUser'])!!}
@@ -16,7 +16,7 @@
 					</div>
 				</div>
 
-				<div class="form-row">
+				<div class="form-row mt-3">
 					<div class="form-group col-12 col-md-6">
 						{!! Form::label('password','Mật khẩu') !!}
 						{!! Form::password('password', ['class'=>'form-control']) !!}

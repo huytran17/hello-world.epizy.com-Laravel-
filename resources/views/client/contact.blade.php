@@ -1,6 +1,6 @@
 <x-client.home>
     <x-slot name="title">
-        {{ __('Liên hệ') }}
+        {{ __('Feedback') }}
     </x-slot>
     <x-slot name="content">
     	<x-client.contact />

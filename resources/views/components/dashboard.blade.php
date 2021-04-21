@@ -1,61 +1,61 @@
 <div id="dashboard" class="container-fluid tab-pane" role="tabpanel" aria-labelledby="dashboard-tab">
-    <div class="row d-flex flex-column flex-lg-row justify-content-between mb-3">
-        <section class="chart user-chart col-12 col-xl-6 border border-success row p-0">
+    <div class="row d-flex flex-column flex-lg-row justify-content-between mb-3 d-users">
+        <section class="chart user-chart col-12 col-xl-6 row p-0">
             <canvas id="userChart" height="100" width="100"></canvas>
         </section>
-        <section class="stat col-12 col-xl-6 border border-warning row p-0">
-            <div class="col-12 col-sm-6 border border-danger text-center d-flex flex-column justify-content-center">
-                <p><span class="fas fa-user"></span></p>
+        <section class="stat col-12 col-xl-6 row p-0">
+            <div class="stat-item col-12 col-sm-6 text-center d-flex flex-column justify-content-center">
+                <p><i class="fal fa-users"></i></p>
                 <p><strong>{{ $users->count() }}</strong></p>
                 <h5>{{ __('Tổng số người dùng') }}</h5>
             </div>
-            <div class="col-12 col-sm-6 border border-danger text-center d-flex flex-column justify-content-center">
-                <p><span class="fas fa-user"></span></p>
+            <div class="stat-item col-12 col-sm-6 text-center d-flex flex-column justify-content-center">
+                <p><i class="fal fa-user-lock"></i></p>
                 <p><strong>{{ $users->whereNotNull('deleted_at')->count() }}</strong></p>
                 <h5>{{ __('Người dùng bị khóa') }}</h5>
             </div>
-            <div class="col-12 col-sm-6 border border-danger text-center d-flex flex-column justify-content-center">
-                <p><span class="fas fa-user"></span></p>
+            <div class="stat-item col-12 col-sm-6 text-center d-flex flex-column justify-content-center">
+                <p><i class="fal fa-bells"></i></p>
                 <p><strong>{{ $users->whereNotNull('email_subscribed_at')->count() }}</strong></p>
                 <h5>{{ __('Đã đăng ký') }}</h5>
             </div>
-            <div class="col-12 col-sm-6 border border-danger text-center d-flex flex-column justify-content-center">
-                <p><span class="fas fa-user"></span></p>
+            <div class="stat-item col-12 col-sm-6 text-center d-flex flex-column justify-content-center">
+                <p><i class="fal fa-at"></i></p>
                 <p><strong>{{ $users->whereNotNull('email_verified_at')->count() }}</strong></p>
                 <h5>{{ __('Đã xác thực') }}</h5>
             </div>
         </section>
     </div>
-    <div class="row d-flex flex-column flex-lg-row justify-content-between">
-        <section class="chart post-chart col-12 col-xl-6 border border-success row p-0">
+    <div class="row d-flex flex-column flex-lg-row justify-content-between d-posts">
+        <section class="chart post-chart col-12 col-xl-6 row p-0">
             <canvas id="postChart" height="100" width="100"></canvas>
         </section>
-        <section class="stat col-12 col-xl-6 border border-warning row p-0">
-            <div class="col-12 col-sm-6 border border-danger text-center d-flex flex-column justify-content-center">
-                <p><span class="fas fa-user"></span></p>
+        <section class="stat col-12 col-xl-6 row p-0">
+            <div class="stat-item col-12 col-sm-6 text-center d-flex flex-column justify-content-center">
+                <p><i class="fal fa-books"></i></span></p>
                 <p><strong>{{ $posts->count() }}</strong></p>
                 <h5>{{ __('Tổng số bài viết') }}</h5>
             </div>
-            <div class="col-12 col-sm-6 border border-danger text-center d-flex flex-column justify-content-center">
-                <p><span class="fas fa-user"></span></p>
+            <div class="stat-item col-12 col-sm-6 text-center d-flex flex-column justify-content-center">
+                <p><i class="fal fa-align-slash"></i></p>
                 <p><strong>{{ $posts->whereNotNull('deleted_at')->count() }}</strong></p>
                 <h5>{{ __('Bài viết đã ẩn') }}</h5>
             </div>
-            <div class="col-12 col-sm-6 border border-danger text-center d-flex flex-column justify-content-center">
-                <p><span class="fas fa-user"></span></p>
+            <div class="stat-item col-12 col-sm-6 text-center d-flex flex-column justify-content-center">
+                <p><i class="fal fa-chart-line"></i></p>
                 <p><strong>~ {{ round($new_post_in_month->values()->avg(), 0, PHP_ROUND_HALF_EVEN) }}</strong></p>
                 <h5>{{ __('Trung bình hàng tháng') }}</h5>
             </div>
-            <div class="col-12 col-sm-6 border border-danger text-center d-flex flex-column justify-content-center">
-                <p><span class="fas fa-user"></span></p>
-                <p><strong>{{ $posts->sum('meta_data.view') }}</strong></p>
-                <h5>{{ __('Tổng số lượt xem') }}</h5>
+            <div class="stat-item col-12 col-sm-6 text-center d-flex flex-column justify-content-center">
+                <p><i class="fal fa-chart-bar"></i></p>
+                <p><strong>{{ $inCurrentMonthCount }}</strong></p>
+                <h5>{{ __('Trong tháng hiện tại') }}</h5>
             </div>
         </section>
     </div>
-    <div class="container-fluid p-0 mt-5">
+    <div class="p-0 d-top-posts">
         <section class="row p-0">
-            <h4 class="mx-auto">{{ __('Bài viết mới nhất') }}</h4>
+            <h4 class="mx-auto table-title">{{ __('Bài viết mới nhất') }}</h4>
             <div class="table-responsive">
                 <table class="table table-sm table-bordered">
                     <thead>
@@ -73,7 +73,7 @@
                     </thead>
                     <tbody>
                         @foreach($posts->sortByDesc('created_at')->take(5) as $p)
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ $p->id }}</td>
                             <td>
                                 @can('post.update', $p)
@@ -90,13 +90,13 @@
                                 @endcan
                             </td>
                             <td><a href="{{ route('admin.cate.show', ['id' => $p->category->id]) }}">{{ $p->category->title }}</a></td>
-                            <td class="text-center">{{ $p->meta_data->keywords }}</td>
-                            <td class="text-center">{{ $p->meta_data->source }}</td>
+                            <td>{{ implode(',', $p->meta_data->keywords) }}</td>
+                            <td>{{ $p->meta_data->source }}</td>
                             <td>{{ $p->dmy_created_at }}</td>
                             <td>{{ $p->dmy_updated_at }}</td>
-                            <td class="text-center">
+                            <td>
                                 <x-badge class="{{ $p->isDeleted ? 'success' : 'danger' }}">
-                                    {{ $p->isDeleted ? __('Hiện') : __('Ẩn') }}
+                                    {{ $p->isDeleted ? __('Hiện') : __('Khóa') }}
                                 </x-badge>
                             </td>
                         </tr>

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="form-wrapper">
         <div class="form-header">
-            <h4>Thêm chuyên mục</h4>
+            <h4 class="panel-title">Thêm chuyên mục</h4>
         </div>
         <div class="form-body">
             {!! Form::open(['method' => 'post', 'route' => ['admin.cate.store'], 'files' => true, 'id' => 'FormCreateCate']) !!}
@@ -17,17 +17,17 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-12 col-md-6">
-                    {!! Form::label('', 'Loại chuyên mục') !!}
-                    {!! Form::label('', 'Mục cha') !!}
+                    {!! Form::label('', 'Loại chuyên mục: ') !!}
                     {!! Form::radio('type', 1); !!}
-                    {!! Form::label('', 'Mục con') !!}
+                    {!! Form::label('', 'Mục cha') !!}
                     {!! Form::radio('type', 2, true); !!}
+                    {!! Form::label('', 'Mục con') !!}
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('parentCates','Chuyên mục cha') !!}
-                    <select name="parentCates" id="parentCates" data-route="{{ route('admin.cate.getChildCate') }}">
+                    <select name="parentCates" id="parentCates" class="form-control" data-route="{{ route('admin.cate.getChildCate') }}">
                         @foreach($parentCates as $c)
                         <option value="{{ $c->id }}">{{ $c->title }}</option>
                         @endforeach

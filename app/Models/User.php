@@ -19,6 +19,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes, TimestampFormat, IsAlready;
 
+    protected $dates = ['deleted_at'];
+    
     const SUPER_ADMIN_TYPE = 0, LOWER_ADMIN_TYPE = 1, CLIENT_TYPE = 2;
 
     /**
@@ -191,7 +193,7 @@ class User extends Authenticatable
 
     public function scopeGetSubedUser($query)
     {
-        return $query->where('email_subscribed_at', '!==', null);
+        return $query->whereNotNull('email_subscribed_at');
     }
 
     public function getByRole($role)

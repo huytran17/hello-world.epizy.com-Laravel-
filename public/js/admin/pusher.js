@@ -88,6 +88,6 @@ class PusherClient {
 }
 
 var pusher = new PusherClient;
-pusher.appKey = '7685a24490d3408026b9';
+pusher.appKey = '52931ffb328ba00caaa7';
 pusher.openConnection();
 

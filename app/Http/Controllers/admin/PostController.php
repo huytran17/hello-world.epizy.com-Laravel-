@@ -42,12 +42,16 @@ class PostController extends Controller
     {
         $parentCates = $this->_cate->getParentHasChildWith(['id', 'title'])->get();
 
-        $childCates = $this->_cate->getChildWith(['id', 'title'], $parentCates->first()->id)->get();
+        if ($parentCates->count() > 0) {
+            $childCates = $this->_cate->getChildWith(['id', 'title'], $parentCates->first()->id)->get();
 
-        return view("admin.post.create")->with([
-            'parent_cates' => $parentCates,
-            'child_cates' => $childCates
-        ]);
+            return view("admin.post.create")->with([
+                'parent_cates' => $parentCates,
+                'child_cates' => $childCates
+            ]);
+        }
+        return 'Chưa có chuyên mục nào.';
+        
     }
 
     /**

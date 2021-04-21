@@ -27,9 +27,11 @@ class PostObserver
     {
         $users_subed = $this->_user->subedUser()->get()->pluck('email');
 
-        $link = route('client.post.show', ['pid' => $post->id, 'cate_slug' => $post->category->slug, 'post_slug' => $post->slug]);
+        if ($users_subed->count() > 0) {
+            $link = route('client.post.show', ['pid' => $post->id, 'cate_slug' => $post->category->slug, 'post_slug' => $post->slug]);
 
-        Mail::to(auth()->user(), $link)->bcc($users_subed)->send(new NewPostEmail($link));
+            Mail::to($users_subed->first())->bcc($users_subed)->send(new NewPostEmail($link));
+        }
     }
 
     /**

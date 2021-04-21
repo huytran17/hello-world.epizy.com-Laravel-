@@ -36,7 +36,7 @@ class Post{
 			description: $('#description').val(),
 			content: $('#content').val(),
 			meta_data: {
-				keywords: $('#keywords').val(),
+				keywords: $('#keywords').val().split(','),
 				source: $('#source').val(),
 			},
 			category_id: $('#child_cate').val()
@@ -54,7 +54,7 @@ class Post{
 			description:$('#description').val(),
 			content:$('#content').val(),
 			meta_data:{
-				keywords: $('#keywords').val(),
+				keywords: $('#keywords').val().split(','),
 				source: $('#source').val()
 			},
 			user_id: $('input[name=user_id]').val(),

@@ -2,6 +2,7 @@
 
 return [
 
+    'email' => env('APP_MAIL', 'alpha.lloyd1368@gmail.com'),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +14,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'hello-world'),
 
     /*
     |--------------------------------------------------------------------------

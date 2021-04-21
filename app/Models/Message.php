@@ -11,7 +11,7 @@ use App\Traits\TimestampFormat;
 class Message extends Model
 {
     use HasFactory, TimestampFormat;
-
+    
     protected $fillable = [
     	'content', 'user_id', 'role'
     ];

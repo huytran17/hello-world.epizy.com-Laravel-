@@ -8,7 +8,7 @@
                             <h5 class="card-title">Thông báo</h5>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">{{ $message }}</p>
+                            <p class="card-text">{!! $message !!}</p>
                         </div>
                         <div class="card-footer">
                             <a href="" onclick="event.preventDefault(); window.history.back();">Về trang trước</a>

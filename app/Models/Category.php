@@ -15,6 +15,8 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes, TimestampFormat, IsAlready;
 
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = [
     	'title',
     	'slug',
@@ -37,6 +39,11 @@ class Category extends Model
         return $this->hasMany('App\Models\Post')->withTrashed()->withCount('comments');
     }
 
+    public function postsActive()
+    {
+        return $this->hasMany('App\Models\Post')->withCount('comments');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User')->withTrashed();
@@ -50,6 +57,11 @@ class Category extends Model
     public function children()
     {
         return $this->hasMany('App\Models\Category', 'parent_id')->withCount('posts')->withTrashed();
+    }
+
+    public function childrenActive()
+    {
+        return $this->hasMany('App\Models\Category', 'parent_id')->withCount('posts');
     }
 
     public function setSlugAttribute($value)

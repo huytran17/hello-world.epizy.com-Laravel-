@@ -170,13 +170,13 @@ class UserController extends Controller
                 return $this->destroy($rq);
                 break;
             case 2:
-                return $this->upgrade($rq);
+                return $this->restore($rq);
                 break;
             case 3:
-                return $this->downgrade($rq);
+                return $this->upgrade($rq);
                 break;
             case 4:
-                return $this->restore($rq);
+                return $this->downgrade($rq);
                 break;
             case 5:
                 return $this->forceDelete($rq);

@@ -5,6 +5,7 @@ class Message {
 		})
 		.then(res => {
 			$('#superAdInput').val('');
+			$('#viceAdInput').val('');
 		})
 		.catch(e => {
 			console.log(e);

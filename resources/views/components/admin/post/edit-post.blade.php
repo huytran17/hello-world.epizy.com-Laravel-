@@ -1,13 +1,13 @@
 <div class="container">
     <div class="form-wrapper">
         <div class="form-header">
-            <h4>Chỉnh sửa bài viết</h4>
+            <h4 class="panel-title">Chỉnh sửa bài viết</h4>
         </div>
         <div class="form-body">
-            {!!Form::open(['method'=>'post','route'=>['admin.post.updateThumbnail',['id'=>$post->id]],'files'=>true])!!}
+            {!!Form::open(['method'=>'post','route'=>['admin.post.updateThumbnail',['id'=>$post->id]],'files'=>true, 'id' => 'FormUpdPostThumb'])!!}
             <div class="form-row">
                 <div class="form-group col-12 col-md-6">
-                    <div class="current_img col-6">
+                    <div class="current_img col-6 p-0">
                         <div class="thumbnail">
                             <img src="{{$post->thumbnail_photo_path}}" alt="{{$post->slug}}" width="80" height="80">
                         </div>
@@ -23,20 +23,20 @@
                     @enderror
                 </div>
             </div>
-            <div class="form-row col-12 col-md-6">
-                <div class="form-group col-12 col-md-6">
-                    {!! Form::submit('Sửa',['class'=> 'btn btn-primary']) !!}
-                </div>
+            <div class="form-row col-12 col-md-6 p-0">
+                {!! Form::submit('Sửa',['class'=> 'btn btn-primary cbtn']) !!}
             </div>
             {!!Form::close()!!}
             {!!Form::open(['method'=>'post','route'=>['admin.post.update',['id'=>$post->id]],'files'=>true, 'id' => 'FormUpdatePost'])!!}
-            <div class="form-group col-12 col-md-6">
-                {!! Form::label('title','Tiêu đề bài viết') !!}
-                {!! Form::text('title',$post->title,['class'=>'form-control']) !!}
-            </div>
-            <div class="form-group col-12 col-md-6">
-                {!! Form::label('description','Mô tả') !!}
-                {!! Form::textarea('description',$post->description,['class'=>'form-control']) !!}
+            <div class="form-row">
+                <div class="form-group col-12 col-md-6">
+                    {!! Form::label('title','Tiêu đề bài viết') !!}
+                    {!! Form::text('title',$post->title,['class'=>'form-control']) !!}
+                </div>
+                <div class="form-group col-12 col-md-6">
+                    {!! Form::label('description','Mô tả') !!}
+                    {!! Form::textarea('description',$post->description,['class'=>'form-control']) !!}
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-12 col-md-6">
@@ -45,17 +45,17 @@
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('keywords','') !!}
-                    {!! Form::text('keywords',$post->meta_data->keywords,['class'=>'form-control']) !!}
+                    {!! Form::text('keywords',implode(',', $post->meta_data->keywords),['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('source','') !!}
                     {!! Form::text('source',$post->meta_data->source,['class'=>'form-control']) !!}
                 </div>
             </div>
-            <div class="form-row col-12 col-md-6">
+            <div class="form-row">
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('parent_cate','Chuyên mục cha') !!}
-                    <select name="parent_cate" id="parent_cate" data-route="{{ route('admin.cate.getChildCate') }}">
+                    <select name="parent_cate" id="parent_cate" class="form-control" data-route="{{ route('admin.cate.getChildCate') }}">
                         @isset ($parentCates)
                             @foreach($parentCates as $c)
                             <option value="{{ $c->id }}" {{ $post->category->parent->id===$c->id ? 'selected=selected' : '' }}>{{ $c->title }}</option>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="form-group col-12 col-md-6">
                     {!! Form::label('child_cate','Chuyên mục con') !!}
-                    <select name="child_cate" id="child_cate">
+                    <select name="child_cate" id="child_cate" class="form-control">
                         @isset ($childCates)
                             @foreach($childCates as $c)
                                 <option value="{{ $c->id }}" {{ $post->category->id===$c->id ? 'selected=selected' : '' }}>{{ $c->title }}</option>
@@ -74,9 +74,9 @@
                     </select>
                 </div>
             </div>
-            <div class="form-row col-12 col-md-6">
+            <div class="form-row">
                 <div class="form-group col-12 col-md-6">
-                    {!! Form::button('Sửa',['class'=> 'btn btn-primary', 'id' => 'BtnUpdatePost']) !!}
+                    {!! Form::button('Sửa',['class'=> 'btn btn-primary cbtn', 'id' => 'BtnUpdatePost']) !!}
                 </div>
             </div>
             {!!Form::close()!!}

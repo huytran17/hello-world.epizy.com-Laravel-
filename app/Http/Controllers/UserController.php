@@ -12,6 +12,8 @@ use App\Http\Requests\UpdateUsernameRequest;
 use App\Services\EmailChangeService;
 use App\Services\UploadFileService;
 use App\Http\Requests\UpdateEmailRequest;
+use App\Http\Requests\MessageFeedbackRequest;
+use Mail;
 
 class UserController extends Controller
 {
@@ -164,6 +166,27 @@ class UserController extends Controller
         return response()->axios([
             'error' => false
         ]);
+    }
+
+    public function feedback(MessageFeedbackRequest $rq)
+    {
+        Mail::send('email.message-feedback', [
+            'name' => $rq->name, 'email' => $rq->email, 'msg' => $rq->message
+        ],
+        function($m) use ($rq) {
+            $m->from($rq->email, $rq->name);
+
+            $m->to(config('app.email', 'alpha.lloyd1368@gmail.com'))->subject('Feedback from '.$rq->name);
+        });
+
+        return view('notice-feedback', ['name' => $rq->name]);
+    }
+
+    public function destroyAvatar(Request $rq)
+    {
+        $this->_user->updateUser(auth()->id(), ['profile_photo_path' => null]);
+
+        return redirect()->back();
     }
 
 }

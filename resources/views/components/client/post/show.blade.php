@@ -10,21 +10,20 @@
                             <img src="{{ $post->thumbnail_photo_path }}" alt="{{ $post->slug }}" class="img-fluid">
                         </p>
                         <p>{{ $post->content }}</p>
-                        
                         <div class="tag-widget post-tag-container mb-5 mt-5">
                             <div class="tagcloud">
-                                @foreach(explode(',', $post->meta_data->keywords) as $k)
+                                @foreach($post->meta_data->keywords as $k)
                                 <a href="#" class="tag-cloud-link">{{ $k }}</a>
                                 @endforeach
                             </div>
                         </div>
                         <div class="about-author d-flex p-4 bg-light">
                             <div class="bio mr-5">
-                                <img src="{{ $post->user->profile_photo_path }}" alt="{{ $post->user->slug }}" class="img-fluid mb-4">
+                                <img src="{{ $post->user->profile_photo_path }}" alt="{{ $post->user->slug }}" class="img-fluid mb-4" width="480" height="480">
                             </div>
                             <div class="desc">
                                 <h3>{{ $post->user->name }}</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
+                                <p>Tốt nhất là khi việc chia sẻ kiến ​​thức trở thành một cuộc trao đổi mẹo vặt lẫn nhau. Tôi sẽ không thể xuất sắc trong lĩnh vực của mình nếu không có những mẹo tôi học được từ những người khác.</p>
                                 <p><small><i>Nguồn: {{ $post->meta_data->source }}</i></small></p>
                             </div>
                         </div>
@@ -42,8 +41,27 @@
                                         <div class="meta">{{ $c->time_created }}</div>
                                         <p>{{ $c->content }}</p>
                                         <p><span class="reply" style="cursor: pointer;">Reply</span></p>
+                                        <div>
+                                            {!! Form::open(['method' => 'post', 'route' => ['client.cmt.reply', ['id' => $c->id, 'pid' => $post->id]], 'class' => 'd-none']) !!}
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <input type="text" name="content_rep" class="form-control @error('content_rep') is-invalid @enderror" placeholder="Nhập tin nhắn" required="required">
+                                                    @error('content_rep')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    {!! Form::submit('Gửi', ['class' => 'btn btn-primary']) !!}
+                                                </div>
+                                            </div>
+                                            {!! Form::close() !!}
+                                        </div>
                                     </div>
-                                    @if($c->has('children'))
+                                    @if(count($c->children) > 0)
                                     <ul class="children">
                                         @foreach($c->children as $ch)
                                         <li class="comment">
@@ -82,10 +100,15 @@
                                     </div> --}}
                                     <div class="form-group">
                                         <label for="content">Bình luận <span class="text-danger">*</span></label>
-                                        <textarea name="content" id="content" cols="30" rows="10" class="form-control" required="required"></textarea>
+                                        <textarea name="content" id="content" cols="30" rows="10" class="form-control @error('content') is-invalid @enderror" required="required"></textarea>
+                                        @error('content')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" value="Gửi" class="btn py-3 px-4 btn-primary">
+                                        <input type="submit" value="Gửi" class="btn py-3 px-4 btn-primary cbtn">
                                     </div>
                                 </form>
                             </div>
@@ -94,10 +117,11 @@
                 </div>
                 <div class="col-lg-4 sidebar ftco-animate bg-light pt-5">
                     <div class="sidebar-box pt-md-4">
-                        <form action="#" class="search-form">
+                        <form action="{{ route('post.search') }}" method="post" class="search-form">
+                            @csrf
                             <div class="form-group">
-                                <span class="icon icon-search"></span>
-                                <input type="text" class="form-control" placeholder="Search">
+                                <span class="icon icon-search" style="cursor: pointer;"></span>
+                                <input type="text" name="key" class="form-control" placeholder="Search">
                             </div>
                         </form>
                     </div>
@@ -128,8 +152,8 @@
                     <div class="sidebar-box ftco-animate">
                         <h3 class="sidebar-heading">Tag Cloud</h3>
                         <ul class="tagcloud">
-                            @foreach(explode(',', $post->meta_data->keywords) as $k)
-                            <a href="#" class="tag-cloud-link">{{ $k }}</a>
+                            @foreach($post->meta_data->keywords as $k)
+                            <a href="{{ route('post.search.tag', ['tag' => $k]) }}" class="tag-cloud-link">{{ $k }}</a>
                             @endforeach
                         </ul>
                     </div>
@@ -141,7 +165,7 @@
                             @csrf
                             <div class="form-group">
                                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Địa chỉ Email" required="required">
-                                <input type="submit" value="Subscribe" class="mt-2 btn btn-white submit">
+                                <input type="submit" value="Subscribe" class="mt-2 btn btn-white submit cbtn">
                             </div>
                             <div class="form-group">
                                 @error('email')
@@ -154,7 +178,7 @@
                     </div>
                     <div class="sidebar-box ftco-animate">
                         <h3 class="sidebar-heading">Châm ngôn</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+                        <p>Thật khó để chờ đợi một điều gì đó bạn biết có thể chẳng bao giờ xảy ra, nhưng còn khó hơn để từ bỏ khi đó là mọi điều mà bạn muốn.</p>
                     </div>
                 </div><!-- END COL -->
             </div>

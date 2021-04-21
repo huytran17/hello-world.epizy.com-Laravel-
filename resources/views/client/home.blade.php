@@ -7,6 +7,7 @@
             <section class="ftco-section ftco-no-pt ftco-no-pb bg-light">
                 <div class="container px-0">
                     <div class="row no-gutters">
+                        @isset ($posts[0])
                         <div class="col-md-4 d-flex">
                             <div class="blog-entry ftco-animate">
                                 <div class="carousel-blog owl-carousel">
@@ -30,10 +31,13 @@
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[0]->description }}</p>
+                                    <p><a href="{{ route('client.post.show', ['pid' => $posts[0]->id, 'cate_slug' => $posts[0]->category->slug, 'post_slug' => $posts[0]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-8 d-flex">
+                        @endisset
+                        @isset ($posts[1])
+                        <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="blog-entry ftco-animate d-md-flex align-items-center">
@@ -44,14 +48,16 @@
                                             <div class="meta-wrap">
                                                 <p class="meta">
                                                     <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[1]->only_time_created }}</span>
-                                                    <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[1]->category->title }}</a></span>
+                                                    <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[1]->category->parent->slug, 'slug_child' => $posts[1]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[1]->category->title }}</a></span>
                                                     <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[1]->comments_count }} bình luận</span>
                                                 </p>
                                             </div>
                                             <p class="mb-4 text-collapse">{{ $posts[1]->description }}</p>
+                                            <p><a href="{{ route('client.post.show', ['pid' => $posts[1]->id, 'cate_slug' => $posts[1]->category->slug, 'post_slug' => $posts[1]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                         </div>
                                     </div>
                                 </div>
+                                @isset($posts[2])
                                 <div class="col-md-12">
                                     <div class="blog-entry ftco-animate d-md-flex align-items-center">
                                         <a href="{{ route('client.post.show', ['pid' => $posts[2]->id, 'cate_slug' => $posts[2]->category->slug, 'post_slug' => $posts[2]->slug]) }}" class="img img-2 order-md-last" style="background-image: url({{ $posts[2]->thumbnail_photo_path }});"></a>
@@ -60,16 +66,20 @@
                                             <div class="meta-wrap">
                                                 <p class="meta">
                                                     <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[2]->only_time_created }}</span>
-                                                    <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[2]->category->title }}</a></span>
+                                                    <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[2]->category->parent->slug, 'slug_child' => $posts[2]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[2]->category->title }}</a></span>
                                                     <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[2]->comments_count }} bình luận</span>
                                                 </p>
                                             </div>
                                             <p class="mb-4 text-collapse">{{ $posts[2]->description }}</p>
+                                            <p><a href="{{ route('client.post.show', ['pid' => $posts[2]->id, 'cate_slug' => $posts[2]->category->slug, 'post_slug' => $posts[2]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                         </div>
                                     </div>
                                 </div>
+                                @endisset
                             </div>
                         </div>
+                        @endisset
+                        @isset ($posts[3])
                         <div class="col-md-4 d-flex">
                             <div class="blog-entry ftco-animate">
                                 <a href="{{ route('client.post.show', ['pid' => $posts[3]->id, 'cate_slug' => $posts[3]->category->slug, 'post_slug' => $posts[3]->slug]) }}" class="img" style="background-image: url({{ $posts[3]->thumbnail_photo_path }});"></a>
@@ -78,14 +88,17 @@
                                     <div class="meta-wrap">
                                         <p class="meta">
                                             <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[3]->only_time_created }}</span>
-                                            <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[3]->category->title }}</a></span>
+                                            <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[3]->category->parent->slug, 'slug_child' => $posts[3]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[3]->category->title }}</a></span>
                                             <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[3]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[3]->description }}</p>
+                                    <p><a href="{{ route('client.post.show', ['pid' => $posts[3]->id, 'cate_slug' => $posts[3]->category->slug, 'post_slug' => $posts[3]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
+                        @endisset
+                        @isset ($posts[4])
                         <div class="col-md-4 d-flex">
                             <div class="blog-entry ftco-animate">
                                 <a href="{{ route('client.post.show', ['pid' => $posts[4]->id, 'cate_slug' => $posts[4]->category->slug, 'post_slug' => $posts[4]->slug]) }}" class="img" style="background-image: url({{ $posts[4]->thumbnail_photo_path }});"></a>
@@ -94,14 +107,17 @@
                                     <div class="meta-wrap">
                                         <p class="meta">
                                             <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[4]->only_time_created }}</span>
-                                            <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[4]->category->title }}</a></span>
+                                            <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[4]->category->parent->slug, 'slug_child' => $posts[4]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[4]->category->title }}</a></span>
                                             <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[4]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[4]->description }}</p>
+                                    <p><a href="{{ route('client.post.show', ['pid' => $posts[4]->id, 'cate_slug' => $posts[4]->category->slug, 'post_slug' => $posts[4]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
+                        @endisset
+                        @isset ($posts[5])
                         <div class="col-md-4 d-flex">
                             <div class="blog-entry ftco-animate">
                                 <a href="{{ route('client.post.show', ['pid' => $posts[5]->id, 'cate_slug' => $posts[5]->category->slug, 'post_slug' => $posts[5]->slug]) }}" class="img" style="background-image: url({{ $posts[5]->thumbnail_photo_path }});"></a>
@@ -110,15 +126,18 @@
                                     <div class="meta-wrap">
                                         <p class="meta">
                                             <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[5]->only_time_created }}</span>
-                                            <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[5]->category->title }}</a></span>
+                                            <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[5]->category->parent->slug, 'slug_child' => $posts[5]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[5]->category->title }}</a></span>
                                             <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[5]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[5]->description }}</p>
+                                    <p><a href="{{ route('client.post.show', ['pid' => $posts[5]->id, 'cate_slug' => $posts[5]->category->slug, 'post_slug' => $posts[5]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-8 d-flex">
+                        @endisset
+                        @isset ($posts[6])
+                        <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="blog-entry ftco-animate d-md-flex align-items-center">
@@ -128,14 +147,16 @@
                                             <div class="meta-wrap">
                                                 <p class="meta">
                                                     <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[6]->only_time_created }}</span>
-                                                    <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[6]->category->title }}</a></span>
+                                                    <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[6]->category->parent->slug, 'slug_child' => $posts[6]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[6]->category->title }}</a></span>
                                                     <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[6]->comments_count }} bình luận</span>
                                                 </p>
                                             </div>
                                             <p class="mb-4 text-collapse">{{ $posts[6]->description }}</p>
+                                            <p><a href="{{ route('client.post.show', ['pid' => $posts[6]->id, 'cate_slug' => $posts[6]->category->slug, 'post_slug' => $posts[6]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                         </div>
                                     </div>
                                 </div>
+                                @isset ($posts[7])
                                 <div class="col-md-12">
                                     <div class="blog-entry ftco-animate d-md-flex align-items-center">
                                         <a href="{{ route('client.post.show', ['pid' => $posts[7]->id, 'cate_slug' => $posts[7]->category->slug, 'post_slug' => $posts[7]->slug]) }}" class="img img-2 order-md-last" style="background-image: url({{ $posts[7]->thumbnail_photo_path }});"></a>
@@ -144,16 +165,20 @@
                                             <div class="meta-wrap">
                                                 <p class="meta">
                                                     <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[7]->only_time_created }}</span>
-                                                    <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[7]->category->title }}</a></span>
+                                                    <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[7]->category->parent->slug, 'slug_child' => $posts[7]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[7]->category->title }}</a></span>
                                                     <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[7]->comments_count }} bình luận</span>
                                                 </p>
                                             </div>
                                             <p class="mb-4 text-collapse">{{ $posts[7]->description }}</p>
+                                            <p><a href="{{ route('client.post.show', ['pid' => $posts[7]->id, 'cate_slug' => $posts[7]->category->slug, 'post_slug' => $posts[7]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                         </div>
                                     </div>
                                 </div>
+                                @endisset
                             </div>
                         </div>
+                        @endisset
+                        @isset ($posts[8])
                         <div class="col-md-4 d-flex">
                             <div class="blog-entry ftco-animate">
                                 <a href="{{ route('client.post.show', ['pid' => $posts[8]->id, 'cate_slug' => $posts[8]->category->slug, 'post_slug' => $posts[8]->slug]) }}" class="img" style="background-image: url({{ $posts[8]->thumbnail_photo_path }});"></a>
@@ -162,14 +187,17 @@
                                     <div class="meta-wrap">
                                         <p class="meta">
                                             <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[8]->only_time_created }}</span>
-                                            <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[8]->category->title }}</a></span>
+                                            <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[8]->category->parent->slug, 'slug_child' => $posts[8]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[8]->category->title }}</a></span>
                                             <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[8]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[8]->description }}</p>
+                                    <p><a href="{{ route('client.post.show', ['pid' => $posts[8]->id, 'cate_slug' => $posts[8]->category->slug, 'post_slug' => $posts[8]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
+                        @endisset
+                        @isset ($posts[9])
                         <div class="col-md-4 d-flex">
                             <div class="blog-entry ftco-animate">
                                 <a href="{{ route('client.post.show', ['pid' => $posts[9]->id, 'cate_slug' => $posts[9]->category->slug, 'post_slug' => $posts[9]->slug]) }}" class="img" style="background-image: url({{ $posts[9]->thumbnail_photo_path }});"></a>
@@ -178,14 +206,17 @@
                                     <div class="meta-wrap">
                                         <p class="meta">
                                             <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[9]->only_time_created }}</span>
-                                            <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[9]->category->title }}</a></span>
+                                            <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[9]->category->parent->slug, 'slug_child' => $posts[9]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[9]->category->title }}</a></span>
                                             <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[9]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[9]->description }}</p>
+                                    <p><a href="{{ route('client.post.show', ['pid' => $posts[9]->id, 'cate_slug' => $posts[9]->category->slug, 'post_slug' => $posts[9]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
+                        @endisset
+                        @isset ($posts[10])
                         <div class="col-md-4 d-flex">
                             <div class="blog-entry ftco-animate d-flex flex-column-reverse">
                                 <a href="{{ route('client.post.show', ['pid' => $posts[10]->id, 'cate_slug' => $posts[10]->category->slug, 'post_slug' => $posts[10]->slug]) }}" class="img" style="background-image: url({{ $posts[10]->thumbnail_photo_path }});"></a>
@@ -194,14 +225,17 @@
                                     <div class="meta-wrap">
                                         <p class="meta">
                                             <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[10]->only_time_created }}</span>
-                                            <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[10]->category->title }}</a></span>
+                                            <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[10]->category->parent->slug, 'slug_child' => $posts[10]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[10]->category->title }}</a></span>
                                             <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[10]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[10]->description }}</p>
+                                    <p><a href="{{ route('client.post.show', ['pid' => $posts[10]->id, 'cate_slug' => $posts[10]->category->slug, 'post_slug' => $posts[10]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
+                        @endisset
+                        @isset ($posts[11])
                         <div class="col-md-4 d-flex">
                             <div class="blog-entry ftco-animate">
                                 <a href="{{ route('client.post.show', ['pid' => $posts[11]->id, 'cate_slug' => $posts[11]->category->slug, 'post_slug' => $posts[11]->slug]) }}" class="img" style="background-image: url({{ $posts[11]->thumbnail_photo_path }});"></a>
@@ -210,14 +244,16 @@
                                     <div class="meta-wrap">
                                         <p class="meta">
                                             <span><i class="fal fa-calendar-alt mr-2"></i>{{ $posts[11]->only_time_created }}</span>
-                                            <span><a href="single.html"><i class="icon-folder-o mr-2"></i>{{ $posts[11]->category->title }}</a></span>
+                                            <span><a href="{{ route('client.cate.showPost', ['slug_parent' => $posts[11]->category->parent->slug, 'slug_child' => $posts[11]->category->slug]) }}"><i class="icon-folder-o mr-2"></i>{{ $posts[11]->category->title }}</a></span>
                                             <span><i class="fal fa-folder-tree mr-2"></i>{{ $posts[11]->comments_count }} bình luận</span>
                                         </p>
                                     </div>
                                     <p class="mb-4 text-collapse">{{ $posts[11]->description }}</p>
+                                    <p><a href="{{ route('client.post.show', ['pid' => $posts[11]->id, 'cate_slug' => $posts[1]->category->slug, 'post_slug' => $posts[11]->slug]) }}" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
                                 </div>
                             </div>
                         </div>
+                        @endisset
                     </div>
                 </div>
             </section>

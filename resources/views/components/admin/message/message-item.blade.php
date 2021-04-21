@@ -1,6 +1,6 @@
-<div class="chat-wrapper p-1">
+<div class="chat-wrapper p-1 chat-right">
     <div class="chat-box-wrapper">
-        <div>
+        <div style="padding: .5rem 1rem;">
             <div class="chat-box" title="{{ $msg->user->name }}">{{ $msg->content }}</div>
             <small class="opacity-6">
                 <i class="fa fa-calendar-alt mr-1"></i>

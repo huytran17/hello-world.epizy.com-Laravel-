@@ -2,7 +2,7 @@
     <section class="ftco-section ftco-no-pt ftco-no-pb">
         <div class="container px-0">
             <div class="row no-gutters">
-                @foreach($cate->children as $c)
+                @foreach($cate->childrenActive as $c)
                 <div class="col-md-12 blog-wrap">
                     <div class="row no-gutters align-items-center">
                         <div class="col-md-6 img js-fullheight" style="background-image: url({{ $c->thumbnail_photo_path }});">

@@ -13,6 +13,8 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes, TimestampFormat, IsAlready;
 
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = [
     	'title',
     	'slug',
@@ -110,6 +112,36 @@ class Post extends Model
     public function scopeGetLimitPopularPosts($query, $orderType, $limit)
     {
         return $query->inRandomOrder()->orderBy('created_at', $orderType)->with(['user', 'category'])->withCount('comments')->take($limit)->get();
+    }
+
+    public function scopeGetPostByKey($query, $key)
+    {
+        return $query->where('title', 'LIKE', "%{$key}%");
+    }
+
+    public function scopeGetPostByTag($query, $tag)
+    {
+        return $query->whereJsonContains('meta_data->keywords', $tag);
+    }
+
+    public function scopeGetInCurrentMonth($query)
+    {
+        return $query->whereMonth('created_at', \Carbon\Carbon::now()->month);
+    }
+
+    public function inCurrentMonth()
+    {
+        return $this->getInCurrentMonth();
+    }
+
+    public function getByKey($key)
+    {
+        return $this->getPostByKey($key);
+    }
+
+    public function getByTag($tag)
+    {
+        return $this->getPostByTag($tag);
     }
 
     public function getInMonth($month, $year)

@@ -290,6 +290,11 @@ Route::group(['prefix' => '/', 'namespace' => 'App\Http\Controllers'], function(
 		'uses' => 'auth\PasswordController@forgotPassword'
 	]);
 
+	Route::get('search-tag', [
+		'as' => 'post.search.tag',
+		'uses' => 'PostController@searchTag'
+	]);
+
 	Route::post('password-email', [
 		'as' => 'password.email',
 		'uses' => 'auth\PasswordController@passwordEmail'
@@ -299,6 +304,11 @@ Route::group(['prefix' => '/', 'namespace' => 'App\Http\Controllers'], function(
 		'as' => 'password.resetform',
 		'uses' => 'auth\PasswordController@resetPasswordForm'
 	]);
+
+	Route::get('destroy-avatar', [
+	    'as' => 'client.user.delavt',
+	   	'uses' => 'UserController@destroyAvatar'
+    ]);
 
 	Route::post('password-reset/{token}', [
 		'as' => 'password.reset',
@@ -382,4 +392,18 @@ Route::group(['prefix' => '/', 'namespace' => 'App\Http\Controllers'], function(
 		'uses' => 'auth\PasswordController@passwordEmail'
 	]);
 
+	Route::post('message-feedback', [
+		'as' => 'message.feedback',
+		'uses' => 'UserController@feedback'
+	]);
+
+	Route::post('search-post', [
+		'as' => 'post.search',
+		'uses' => 'PostController@search'
+	]);
+
+	Route::post('comment-reply', [
+		'as' => 'client.cmt.reply',
+		'uses' => 'CommentController@reply'
+	]);
 });
