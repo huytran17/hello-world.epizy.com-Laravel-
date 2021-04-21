@@ -174,6 +174,7 @@ class Category extends Model
     public function getParentWith($withFields)
     {
         return $this->getCateParentWith($withFields);
+
     }
 
     public function getParent()
@@ -249,11 +250,13 @@ class Category extends Model
         $cate = $this;
         try {
             $cate = $this->create($data);
+
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());
         }
 
         return $cate;
+
     }
 }

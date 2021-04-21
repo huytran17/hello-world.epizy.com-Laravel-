@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Requests\UpdateCateThumb;
 use App\Services\UploadFileService;
 
+
 class CategoryController extends Controller
 {
     protected $_category;
@@ -42,6 +43,7 @@ class CategoryController extends Controller
         return view('admin.category.create')->with([
             'parent_cates' => $parentCates
         ]);
+
     }
 
     /**
@@ -57,6 +59,7 @@ class CategoryController extends Controller
         return response()->axios([
             'error' => false
         ]);
+
     }
 
     /**
@@ -143,6 +146,7 @@ class CategoryController extends Controller
         return response()->axios([
             'error' => false,
         ]);
+
     }
 
     public function restore(Request $rq)
@@ -152,6 +156,7 @@ class CategoryController extends Controller
         return response()->json([
             'error' => false,
         ]);
+
     }
 
     public function forceDelete(Request $rq)
@@ -161,6 +166,7 @@ class CategoryController extends Controller
         return response()->json([
             'error' => false,
         ]);
+
     }
 
     public function perform(Request $rq)

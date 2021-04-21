@@ -29,7 +29,7 @@ class StoreCategoryRequest extends FormRequest
         return [
             'title' => 'bail|required|string|max:255|unique:categories',
             'description' => 'bail|required|string|max:255',
-        ];
+
     }
 
     public function messages()
@@ -40,6 +40,7 @@ class StoreCategoryRequest extends FormRequest
             'string' => 'Định dạng không hợp lệ',
             'max' => 'Tối đa 255 kí tự',
             'unique' => 'Tiêu đề đã tồn tại'
+
         ];
     }
 
@@ -48,6 +49,7 @@ class StoreCategoryRequest extends FormRequest
         throw new HttpResponseException(response()->axios([
                 'error' => true,
                 'toast_notice' => View::make('client.toast', ['content' => $validator->errors()->first()])->render(),
+
             ])
         );
     }
