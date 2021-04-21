@@ -5,14 +5,28 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateAvatarRequest;
+use App\Http\Requests\UpdateUsernameRequest;
+use App\Http\Requests\UpdateEmailRequest;
+use App\Http\Requests\UpdatePwdRequest;
+use App\Services\UploadFileService;
+use App\Services\EmailChangeService;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    protected $_user;
+    const UPDATE_AVATAR = 0, UPDATE_EMAIL = 1, UPDATE_PWD = 2;
 
-    public function __construct(User $user)
+    protected $_user, $_uploadFileService, $_emailChange;
+
+    public function __construct(User $user, EmailChangeService $emailChangeService, UploadFileService $uploadFileService)
     {
         $this->_user = $user;
+
+        $this->_uploadFileService = $uploadFileService;
+
+        $this->_emailChangeService = $emailChangeService;
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +45,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -40,9 +54,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $rq)
     {
-        //
+        $this->_user->store($rq->except('repass'));
+
+        return response()->axios([
+            'error' => false
+        ]);
     }
 
     /**
@@ -53,7 +71,9 @@ class UserController extends Controller
      */
     public function show(Request $rq)
     {
-        $this->authorize('user.view', auth()->user());
+        $user = $this->_user->getById($rq->id)->firstOrFail();
+
+        return view('admin.user.show-user',['user'=>$user]);
     }
 
     /**
@@ -64,7 +84,11 @@ class UserController extends Controller
      */
     public function edit(Request $rq)
     {
-        //
+        $user = $this->_user->getById($rq->id)->firstOrFail();
+
+        $this->authorize('user.update', $user);
+
+        return view('admin.user.edit',['user'=>$user]);
     }
 
     /**
@@ -74,9 +98,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+    public function VerifyEmail(Request $rq)
     {
-        //
+        
     }
 
     /**
@@ -87,58 +112,74 @@ class UserController extends Controller
      */
     public function destroy(Request $rq)
     {
-        $uid = base64_decode($rq->uid);
+        $this->_user->destroyUser($rq->id_arr);
 
-        return $this->_user->destroyUser();
+        return response()->axios([
+            'error' => false,
+        ]);
     }
 
     public function restore(Request $rq)
     {
-        $uid = base64_decode($rq->uid);
+        $this->_user->restoreUser($rq->id_arr);
 
-        return $this->_user->restoreUser();
+        return response()->axios([
+            'error' => false,
+        ]);
     }
 
     public function forceDelete(Request $rq)
     {
-        $uid = base64_decode($rq->uid);
 
-        return $this->_user->forceDeleteUser();
+        $this->_user->forceDeleteUser($rq->id_arr);
+
+        return response()->axios([
+            'error' => false,
+        ]);
     }
 
     public function upgrade(Request $rq)
     {
-        $uid = base64_decode($rq->uid);
+        // $uid = base64_decode($rq->uid);
 
-        return $this->_user->upgrade($uid);
+        $this->_user->upgrade($rq->id_arr);
+
+        return response()->json([
+            'error' => false,
+        ]);
     }
 
     public function downgrade(Request $rq)
     {
-        $uid = base64_decode($rq->uid);
+        // $uid = base64_decode($rq->uid);
 
-        return $this->_user->downgrade($uid);
+        $this->_user->downgrade($rq->id_arr);
+
+        return response()->axios([
+            'error' => false,
+        ]);
+
     }
 
     public function perform(Request $rq)
     {
-        $val = $rq->operabox;
-
-        switch ($val) {
+        $type = $rq->type;
+      
+        switch ($type) {
             case 1:
-                $this->destroy();
+                return $this->destroy($rq);
                 break;
             case 2:
-                $this->upgrade();
+                return $this->restore($rq);
                 break;
             case 3:
-                $this->downgrade();
+                return $this->upgrade($rq);
                 break;
             case 4:
-                $this->restore();
+                return $this->downgrade($rq);
                 break;
             case 5:
-                $this->forceDelete();
+                return $this->forceDelete($rq);
                 break;
             default:
                 break;

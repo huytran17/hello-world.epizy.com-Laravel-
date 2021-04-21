@@ -51,7 +51,7 @@ class CategoryPolicy
      * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function update(User $user, Category $category)
+    public function update(User $user)
     {
         return $user->isSuperAdmin();
     }
@@ -88,6 +88,11 @@ class CategoryPolicy
      * @return mixed
      */
     public function forceDelete(User $user, Category $category)
+    {
+        return $user->isSuperAdmin();
+    }
+
+    public function superAdmin(User $user)
     {
         return $user->isSuperAdmin();
     }

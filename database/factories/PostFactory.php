@@ -28,14 +28,11 @@ class PostFactory extends Factory
             'description' => $this->faker->paragraph($nbSentences = 10, $variableNbSentences = true),
             'content' => $this->faker->paragraph($nbSentences = 30, $variableNbSentences = true),
             'meta_data' => [
-                'keywords' => $this->faker->word,
+                'keywords' => [$this->faker->word, $this->faker->word, $this->faker->word],
                 'source' => $this->faker->name,
-                'view' => $this->faker->randomDigit,
             ],
             'user_id' => $this->faker->numberBetween($min = 1, $max = 29),
             'category_id' => $this->faker->numberBetween($min = 1, $max = 29),
-            'created_at' => $this->faker->date($format = 'Y-m-d', $max = 'now') . $this->faker->time($format = 'H:i:s', $max = 'now'),
-            'updated_at' => $this->faker->date($format = 'Y-m-d', $max = 'now') . $this->faker->time($format = 'H:i:s', $max = 'now'),
         ];
     }
 }

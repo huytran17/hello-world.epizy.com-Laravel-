@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserCommentRequest;
+use App\Http\Requests\UserReplyCommentRequest;
 
 class CommentController extends Controller
 {
+    protected $_cmt;
+
+    public function __construct(Comment $cmt)
+    {
+        $this->_cmt = $cmt;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,17 +31,6 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
     {
         //
     }
@@ -81,5 +78,28 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         //
+    }
+
+    public function store(UserCommentRequest $rq)
+    {
+        $this->_cmt->createComment([
+            'content' => $rq->content,
+            'user_id' => auth()->id(),
+            'post_id' => $rq->pid
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function reply(UserReplyCommentRequest $rq)
+    {
+        $this->_cmt->createComment([
+            'content' => $rq->content_rep,
+            'user_id' => auth()->id(),
+            'post_id' => $rq->pid,
+            'parent_id' => $rq->id
+        ]);
+
+        return redirect()->back();
     }
 }

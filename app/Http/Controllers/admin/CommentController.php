@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    protected $_comment;
+
+    public function __construct(Comment $comment)
+    {
+        $this->_comment = $comment;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.comment-panel');
     }
 
     /**
@@ -78,8 +84,30 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $rq)
     {
-        //
+        $comment = $this->_comment->getById($rq->id);
+
+        $this->authorize('comment.delete', $comment);
+
+        return $this->_comment->destroyComment($comment);
+    }
+
+    public function forceDelete(Request $rq)
+    {
+        $comment = $this->_comment->getById($rq->id);
+
+        $this->authorize('comment.forceDelete', $comment);
+
+        return $this->_comment->forceDeleteComment($comment);
+    }
+
+    public function restore(Request $rq)
+    {
+        $comment = $this->_comment->getById($rq->id);
+
+        $this->authorize('comment.restore', $comment);
+
+        return $this->_comment->restoreComment($comment);
     }
 }

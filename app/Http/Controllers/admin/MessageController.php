@@ -4,9 +4,19 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Message;
+use Illuminate\Support\Facades\View;
+use App\Events\SuperAdminNewMessageEvent;
+use App\Events\lowerAdminNewMessageEvent;
 
 class MessageController extends Controller
 {
+    protected $_message;
+
+    public function __construct(Message $message)
+    {
+        $this->_message = $message;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        return view('admin.conversation');
+        return view('admin.conversation-panel');
     }
 
     /**
@@ -24,7 +34,7 @@ class MessageController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -33,9 +43,9 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $rq)
     {
-        //
+        return $this->dispatchNewMessage(trim($rq->content));
     }
 
     /**
@@ -78,8 +88,34 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $rq)
     {
-        //
+        
+    }
+
+    public function dispatchNewMessage($content)
+    {
+        if (!empty($content)) {
+            $message = $this->_message->createMessage([
+                'content' => $content,
+                'user_id' => auth()->id(),
+                'role' => auth()->user()->role
+            ]);
+                
+            $message = $this->_message->getById($message->id)->with(['user'])->firstOrFail();
+
+            $message_item = View::make('admin.message.message-item', [
+                'msg' => $message,
+            ])->render();
+
+            auth()->user()->isSuperAdmin() ? event(new SuperAdminNewMessageEvent($message_item)) : event(new LowerAdminNewMessageEvent($message_item));
+                
+            return response()->axios([
+                'error' => false
+            ]);
+        }
+        else return response()->axios([
+            'error' => true
+        ]);
     }
 }

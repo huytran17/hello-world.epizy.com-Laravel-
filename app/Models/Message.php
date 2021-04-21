@@ -11,9 +11,9 @@ use App\Traits\TimestampFormat;
 class Message extends Model
 {
     use HasFactory, TimestampFormat;
-
+    
     protected $fillable = [
-    	'content', 'user_id'
+    	'content', 'user_id', 'role'
     ];
 
     protected $appends = [
@@ -32,9 +32,12 @@ class Message extends Model
 
     public function scopeGetByUserRole($query, $role)
     {
-        return $this->whereHas('user', function($query) use ($role) {
-            $query->where('role', $role);
-        })->with('user');
+        return $this->where('role', $role);
+    }
+
+    public function scopeGetMessageById($query, $id)
+    {
+        return $query->where('id', $id);
     }
 
     public function getTimeCreatedAttribute()
@@ -50,5 +53,35 @@ class Message extends Model
     public function superMessages()
     {
         return $this->getByUserRole(0)->get();
+    }
+
+    public function getById($id)
+    {
+        return $this->getMessageById($id);
+    }
+
+    public function destroyMessage($message)
+    {
+        try {
+            DB::transaction(function() use ($message) {
+                return $message->delete($data);
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
+
+    public function createMessage($data)
+    {
+        $message = $this;
+        try {
+            $message = $this->create($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+
+        return $message;
     }
 }

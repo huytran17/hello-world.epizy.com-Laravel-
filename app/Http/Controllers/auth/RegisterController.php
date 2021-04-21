@@ -18,11 +18,11 @@ class RegisterController extends Controller
 
     public function register(UserRegisterRequest $rq)
     {
-        $user = $this->_user->createUser([
+        $user = $this->_user->store([
             'name' => $rq->name,
             'email' => $rq->email,
             'slug' => $rq->name,
-            'password' => $this->_user->makeHash($rq->password),
+            'password' => $rq->password,
         ]);
 
         auth()->login($user);

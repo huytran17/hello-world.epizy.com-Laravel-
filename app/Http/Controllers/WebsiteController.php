@@ -14,7 +14,7 @@ class WebsiteController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.setting-panel');
     }
 
     /**
@@ -57,7 +57,7 @@ class WebsiteController extends Controller
      */
     public function edit(Website $website)
     {
-        //
+        
     }
 
     /**
@@ -67,9 +67,9 @@ class WebsiteController extends Controller
      * @param  \App\Models\Website  $website
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Website $website)
+    public function update(Request $rq)
     {
-        //
+        
     }
 
     /**

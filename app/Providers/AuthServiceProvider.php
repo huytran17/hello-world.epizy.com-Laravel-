@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Quote;
 use App\Models\Comment;
 use App\Models\Website;
+use App\Models\Feedback;
 use App\Policies\UserPolicy;
 use App\Policies\PostPolicy;
 use App\Policies\CategoryPolicy;
@@ -15,6 +16,7 @@ use App\Policies\QuotePolicy;
 use App\Policies\CommentPolicy;
 use App\Policies\WebsitePolicy;
 use App\Policies\MessagePolicy;
+use App\Policies\FeedbackPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -33,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         Comment::class => CommentPolicy::class,
         Website::class => WebsitePolicy::class,
         Message::class => MessagePolicy::class,
+        Feedback::class => FeedbackPolicy::class,
     ];
 
     /**
@@ -46,10 +49,14 @@ class AuthServiceProvider extends ServiceProvider
 
         //user
         Gate::resource('user', UserPolicy::class);
+        Gate::define('user.superAdmin', [UserPolicy::class, 'superAdmin']);
         //post
         Gate::resource('post', PostPolicy::class);
+        //
+        Gate::define('post.isAdministrator', [PostPolicy::class, 'isAdministrator']);
         //category
         Gate::resource('category', CategoryPolicy::class);
+        Gate::define('category.superAdmin', [CategoryPolicy::class, 'superAdmin']);
         //quote
         Gate::resource('quote', QuotePolicy::class);
         //comment
@@ -58,5 +65,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('message', MessagePolicy::class);
         //website
         Gate::resource('website', WebsitePolicy::class);
+        //feedback
+        Gate::resource('feedback', FeedbackPolicy::class);
+        //
     }
 }

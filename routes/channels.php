@@ -20,3 +20,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('super-admin', function ($user) {
 	return $user->isSuperAdmin();
 });
+
+roadcast::channel('lower-admin', function ($user) {
+	return $user->isLowerAdmin();
+});

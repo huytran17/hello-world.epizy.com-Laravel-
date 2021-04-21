@@ -27,9 +27,9 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function view(User $user)
     {
-        return $user->isSuperAdmin() or ($user->id === $model->id);
+        return $user->isAdministrator();
     }
 
     /**
@@ -87,6 +87,12 @@ class UserPolicy
      * @return mixed
      */
     public function forceDelete(User $user, User $model)
+    {
+        return $user->isSuperAdmin();
+    }
+
+
+    public function superAdmin(User $user)
     {
         return $user->isSuperAdmin();
     }

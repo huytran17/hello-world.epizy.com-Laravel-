@@ -58,7 +58,7 @@ class WebsitePolicy
      */
     public function update(User $user, Website $website)
     {
-        //
+        return $user->isSuperAdmin();
     }
 
     /**

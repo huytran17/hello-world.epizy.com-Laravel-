@@ -6,14 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\UpdateCateThumb;
+use App\Services\UploadFileService;
+
 
 class CategoryController extends Controller
 {
     protected $_category;
 
-    public function __construct(Category $category)
+    public function __construct(Category $category, UploadFileService $uploadFileService)
     {
         $this->_category = $category;
+
+        $this->_uploadFileService = $uploadFileService;
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +38,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        $parentCates = $this->_category->getParentWith(['id', 'title'])->get();
+
+        return view('admin.category.create')->with([
+            'parent_cates' => $parentCates
+        ]);
+
     }
 
     /**
@@ -43,7 +54,12 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $rq)
     {
-        return $this->_category->store($rq->all());
+        $this->_category->store($rq->all());
+
+        return response()->axios([
+            'error' => false
+        ]);
+
     }
 
     /**
@@ -54,7 +70,9 @@ class CategoryController extends Controller
      */
     public function show(Request $rq)
     {
-        
+        $cate = $this->_category->getById($rq->id)->with(['children', 'posts'])->firstOrFail();
+
+        return view('admin.category.show', ['cate' => $cate]);
     }
 
     /**
@@ -65,7 +83,11 @@ class CategoryController extends Controller
      */
     public function edit(Request $rq)
     {
-        //
+        $cate = $this->_category->getById($rq->id)->firstOrFail();
+
+        $parents = $this->_category->getParentWith(['id', 'title'])->get();
+
+        return view('admin.category.edit', ['cate' => $cate, 'parents' => $parents]);
     }
 
     /**
@@ -75,9 +97,40 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $rq)
     {
-        //
+        $cate = $this->_category->getById($rq->id)->firstOrFail();
+
+        $this->_category->updateCategory($rq->id, $rq->all());
+
+        return response()->axios([
+            'error' => false,
+        ]);
+    }
+
+    public function updateThumbnail(UpdateCateThumb $rq)
+    {
+        $cate = $this->_category->getById($rq->id)->firstOrFail();
+
+        $b64_img = $this->_uploadFileService->getBase64Image($rq->file('thumbnail_photo_path'));
+
+        $cate->thumbnail_photo_path = $b64_img;
+
+        $cate->save();
+
+        return redirect()->back();
+    }
+
+    public function getChildCate(Request $rq)
+    {
+        $pid = $rq->pid;
+
+        $parents = $this->_category->getChildWith(['id', 'title', 'created_at', 'updated_at', 'deleted_at'], $pid)->get();
+
+        return response()->axios([
+            'error' => false,
+            'cates' => $parents
+        ]);
     }
 
     /**
@@ -88,50 +141,47 @@ class CategoryController extends Controller
      */
     public function destroy(Request $rq)
     {
-        $id = base64_decode($rq->id);
+        $this->_category->destroyCategory($rq->id_arr);
 
-        $cate = $this->_category->getById($id);
+        return response()->axios([
+            'error' => false,
+        ]);
 
-        $this->authorize('category.delete', $cate);
-
-        return $this->_category->destroyCategory($cate);
     }
 
     public function restore(Request $rq)
     {
-        $id = base64_decode($rq->id);
+        $this->_category->restoreCategory($rq->id_arr);
 
-        $cate = $this->_category->getById($id);
+        return response()->json([
+            'error' => false,
+        ]);
 
-        $this->authorize('category.restore', $cate);
-
-        return $this->_category->restoreCategory($cate);
     }
 
     public function forceDelete(Request $rq)
     {
-        $id = base64_decode($rq->id);
+        $this->_category->forceDeleteCategory($rq->id_arr);
 
-        $cate = $this->_category->getById($id);
+        return response()->json([
+            'error' => false,
+        ]);
 
-        $this->authorize('category.forceDelete', $cate);
-
-        return $this->_category->forceDeleteCategory($cate);
     }
 
     public function perform(Request $rq)
     {
-        $val = $rq->operabox;
+        $type = $rq->type;
 
-        switch ($val) {
+        switch ($type) {
             case 1:
-                $this->destroy();
+                return $this->destroy($rq);
                 break;
             case 2:
-                $this->restore();
+                return $this->restore($rq);
                 break;
             case 3:
-                $this->forceDelete();
+                return $this->forceDelete($rq);
                 break;
             default:
                 break;

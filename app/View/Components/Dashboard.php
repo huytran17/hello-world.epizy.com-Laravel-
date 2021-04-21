@@ -6,13 +6,13 @@ use Illuminate\View\Component;
 
 class Dashboard extends Component
 {
-    public $posts, $users, $new_user_in_month, $new_post_in_month;
+    public $posts, $users, $new_user_in_month, $new_post_in_month, $inCurrentMonthCount;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($posts, $users, $newPostInMonth, $newUserInMonth)
+    public function __construct($posts, $users, $newPostInMonth, $newUserInMonth, $inCurrentMonthCount)
     {
         $this->posts = $posts;
 
@@ -21,6 +21,8 @@ class Dashboard extends Component
         $this->new_post_in_month = $newPostInMonth;
 
         $this->new_user_in_month = $newUserInMonth;
+
+        $this->inCurrentMonthCount = $inCurrentMonthCount;
     }
 
     /**

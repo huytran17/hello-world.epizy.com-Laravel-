@@ -1,0 +1,94 @@
+.btn:active:focus:not(:disabled):not(.disabled),
+.btn:focus,
+.btn:active,
+button:active:focus:not(:disabled):not(.disabled),
+button:focus,
+button:active,
+textarea:active:focus:not(:disabled):not(.disabled),
+textarea:focus,
+textarea:active,
+input[type=button]:active:focus:not(:disabled):not(.disabled),
+input[type=button]:focus,
+input[type=button]:active,
+input[type=submit]:active:focus:not(:disabled):not(.disabled),
+input[type=submit]:focus,
+input[type=submit]:active,
+audio,
+textarea,
+input {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  outline: 0 !important; }
+
+.btn,
+button,
+input[type=button],
+input[type=submit] {
+  font-size: 14px !important;
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid black !important; }
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px; }
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff; }
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #777777; }
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; }
+
+.text-collapse {
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 50px;
+  line-height: 25px;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical; }
+
+.table-title, .panel-title {
+  font-size: 30px;
+  margin: 0 0 1rem .8rem;
+  padding: 0 0 1rem 0;
+  border-bottom: 1px solid #e1e9f2;
+  color: #1e91ce; }
+
+.panel-title {
+  margin-left: 0; }
+
+.form-wrapper .form-body * {
+  font-size: 16px; }
+.form-wrapper .form-body form {
+  display: flex;
+  flex-direction: column; }
+  .form-wrapper .form-body form input {
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 10px 5px; }
+  .form-wrapper .form-body form label {
+    margin: 0; }
+  .form-wrapper .form-body form textarea {
+    resize: none; }
+  .form-wrapper .form-body form .current_img {
+    width: 100%; }
+    .form-wrapper .form-body form .current_img .thumbnail img {
+      width: 100px;
+      height: 100px; }
+
+#FormUpdAvt input[type=submit] {
+  padding: 6px 12px; }
+#FormUpdAvt .thumbnail img {
+  width: 70px;
+  height: 70px; }
+
+/*# sourceMappingURL=app.css.map */

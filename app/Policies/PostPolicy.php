@@ -53,7 +53,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return $user->isSuperAdmin() or $user->id === $post->user->id;
+        return $user->isSuperAdmin() or ($user->id === $post->user->id);
     }
 
     /**
@@ -65,7 +65,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        return $user->isSuperAdmin() or $user->id === $post->user->id;
+        return $user->isSuperAdmin() or ($user->id === $post->user->id);
     }
 
     /**
@@ -77,7 +77,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post)
     {
-        return $user->isSuperAdmin() or $user->id === $post->user->id;
+        return $user->isSuperAdmin() or ($user->id === $post->user->id);
     }
 
     /**
@@ -89,6 +89,11 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post)
     {
-        return $user->isSuperAdmin() or $user->id === $post->user->id;
+        return $user->isSuperAdmin() or ($user->id === $post->user->id);
+    }
+
+    public function isAdministrator(User $user)
+    {
+        return $user->isAdministrator();
     }
 }

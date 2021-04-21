@@ -8,16 +8,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Hash;
 use App\Traits\TimestampFormat;
 use App\Traits\IsAlready;
 use App\Services\UserRoleService;
+use DB;
 use Avatar;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes, TimestampFormat, IsAlready;
 
+    protected $dates = ['deleted_at'];
+    
     const SUPER_ADMIN_TYPE = 0, LOWER_ADMIN_TYPE = 1, CLIENT_TYPE = 2;
 
     /**
@@ -48,7 +51,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_subscribed_at' => 'datetime',
     ];
 
     protected $appends = [
@@ -118,14 +121,14 @@ class User extends Authenticatable
 
     public function getProfilePhotoPathAttribute($value)
     {
-        if (empty($this->profile_photo_path)) {
+        if (empty($this->attributes['profile_photo_path'])) {
             return Avatar::create($this->name)
             ->setDimension(80, 80)
             ->setFontSize(40)
             ->setShape('circle')
             ->toBase64();
         }
-        return $this->profile_photo_path;
+        return $this->attributes['profile_photo_path'];
     }
 
     public function getDmyCreatedAtAttribute()
@@ -163,22 +166,9 @@ class User extends Authenticatable
         return $this->role === 0 ? 'Super Admin' : ($this->role === 1 ? 'Vice Admin' : 'Client');
     }
 
-    public function createUser($data)
+    public function setPasswordAttribute($value)
     {
-        $user = $this;
-        try {
-            $user = $this->create($data);
-        }
-        catch (\Illuminate\Database\QueryException $ex) {
-            dd($ex->getMessage());
-        }
-
-        return $user;
-    }
-
-    public function makeHash($value)
-    {
-        return Hash::make($value);
+        $this->attributes['password'] = Hash::make($value);
     }
 
     public function scopeGetNewInMonth($query, $month, $year)
@@ -191,9 +181,19 @@ class User extends Authenticatable
         return $query->where('role', $role);
     }
 
+    public function scopeGetUserByEmail($query, $email)
+    {
+        return $query->where('email', $email);
+    }
+
     public function scopeGetUserById($query, $id)
     {
-        return $query->where('id', $id);
+        return $query->where('id', $id)->withTrashed();
+    }
+
+    public function scopeGetSubedUser($query)
+    {
+        return $query->whereNotNull('email_subscribed_at');
     }
 
     public function getByRole($role)
@@ -206,35 +206,70 @@ class User extends Authenticatable
         return $this->getNewInMonth($month, $year)->withTrashed();
     }
 
+    public function subedUser()
+    {
+        return $this->getSubedUser();
+    }
+
     public function getById($uid)
     {
         return $this->getUserById($uid);
     }
 
-    public static function destroyUser($uid)
+    public function getByEmail($email)
     {
-        return $this->getById($uid)->delete();
+        return $this->getUserByEmail($email);
     }
 
-    public function restoreUser($uid)
+    public function destroyUser($id_arr)
     {
-        return $this->getById($uid)->restore();
+        try {
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->delete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
-    public function forceDeleteUser($uid)
+    public function restoreUser($id_arr)
     {
-        return $this->getById($uid)->forceDelete();
+        try {
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->restore();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
+
+    public function forceDeleteUser($id_arr)
+    {
+        try {
+            DB::transaction(function() use ($id_arr) {
+                $this->whereIn('id', $id_arr)->forceDelete();
+            });
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
     }
 
     //user role
-    public function upgrade($uid)
+    public function upgrade($id_arr)
     {
-        $this->updateRole($uid, 1);
+        foreach ($id_arr as $uid) {
+            $this->updateRole($uid, 1);       
+        }
     }
 
-    public function downgrade($uid)
+    public function downgrade($id_arr)
     {
-        $this->updateRole($uid, 0);
+        foreach ($id_arr as $uid) {
+            $this->updateRole($uid, 0);       
+        }
     }
 
     public function updateRole($uid, $action)
@@ -243,19 +278,50 @@ class User extends Authenticatable
         
         $role = UserRoleService::getRole($user, $action);
 
-        $user->updateUser([
+        $this->getUserById($uid)->update([
             'role' => $role
         ]);
+        
     }
 
-    public function updateUser($data)
+    public function updateUser($uid, $data)
     {
         try {
-            $this->update($data);
+            $this->getUserById($uid)->update($data);
         }
         catch (\Illuminate\Database\QueryException $ex) {
             dd($ex->getMessage());
         }
+    }
+
+    public function subscribe($email)
+    {
+        try {
+            $this->getUserByEmail($email)->update([
+                'email_subscribed_at' => \Carbon\Carbon::now()
+            ]);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+    }
+
+    public function store($data)
+    {
+        return $this->createUser($data);
+    }
+    
+    public function createUser($data)
+    {
+        $user = $this;
+        try {
+            $user = $this->create($data);
+        }
+        catch (\Illuminate\Database\QueryException $ex) {
+            dd($ex->getMessage());
+        }
+
+        return $user;
     }
 
 }

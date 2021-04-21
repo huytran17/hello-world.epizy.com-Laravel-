@@ -2,6 +2,7 @@
 
 return [
 
+    'email' => env('APP_MAIL', 'alpha.lloyd1368@gmail.com'),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +14,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'hello-world'),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,6 +179,7 @@ return [
         App\Providers\ResponseMacroServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
+        App\Providers\ObserverServiceProvider::class,
 
     ],
 
@@ -234,6 +236,7 @@ return [
         'Avatar'    => Laravolt\Avatar\Facade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Pusher' => Pusher\Pusher::class,
     ],
 
 ];
